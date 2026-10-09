@@ -1,0 +1,94 @@
+{
+  "key": "about",
+  "seo": {
+    "title": "About growthGrid | Digital Product Development Studio",
+    "description": "Meet growthGrid, a digital product studio helping businesses turn ideas into scalable products through technology, AI and automation.",
+    "keywords": [
+      "digital product studio",
+      "product development studio",
+      "digital transformation company",
+      "technology consulting company",
+      "digital innovation company",
+      "software product studio",
+      "startup technology partner",
+      "digital product development"
+    ]
+  },
+  "hero": {
+    "eyebrow": "About the studio",
+    "headline": "We don't follow *what's next* We *build* it",
+    "lede": "We are growthGrid, a digital experience studio where strategy meets design and technology meets ambition. We turn complex challenges into meaningful digital solutions, helping ambitious brands move beyond limitations and build what comes next."
+  },
+  "story": {
+    "eyebrow": "Our story",
+    "heading": "Most agencies hand you a website *and disappear.*",
+    "paragraphs": [
+      "We started growthGrid with a clear vision: to change how businesses approach digital innovation.",
+      "Too often, software overlooks essential elements like performance, search visibility, analytics, and user experience. We saw an opportunity to do things differently by bringing strategy, design, and engineering together to create seamless, scalable digital solutions that deliver lasting business value.",
+      "We think beyond launch, using real insights and evolving technology to keep every solution relevant, effective, and ready to scale."
+    ],
+    "highlight": "Every decision has a purpose. Every solution has a direction. Every step is focused on your business success."
+  },
+  "stats": {
+    "eyebrow": "By the numbers",
+    "heading": "Small team \n*Measurable impact*"
+  },
+  "principles": {
+    "eyebrow": "Principles",
+    "heading": "What we *won't compromise on.*",
+    "lede": "The way we think shapes what we build. These four principles guide every decision, from the first idea to long-term growth."
+  },
+  "process": {
+    "eyebrow": "How we work",
+    "heading": "From first call to *continuous growth.*",
+    "lede": "A clear, transparent process that keeps every step focused, aligned, and moving forward."
+  },
+  "engagement": {
+    "eyebrow": "Ways to work together",
+    "heading": "Engagements that *fit the stage you're in.*",
+    "lede": "Whether you're shaping an idea, building a product, or scaling what already exists, we offer flexible ways to turn your vision into progress.",
+    "bestForLabel": "Best for",
+    "durationLabel": "Typical length",
+    "models": [
+      {
+        "title": "Discovery sprint",
+        "icon": "compass",
+        "summary": "We turn early ideas into actionable product strategies through research, planning, and interactive prototypes.",
+        "bestFor": "New ideas, early-stage products, and businesses seeking direction before investing.",
+        "duration": "2–3 weeks"
+      },
+      {
+        "title": "Product build",
+        "icon": "rocket",
+        "summary": "A dedicated team brings design and engineering together to build, test, and launch your product in focused two-week cycles.",
+        "bestFor": "MVPs, web platforms, mobile apps, product rebuilds, and AI-powered solutions.",
+        "duration": "8–16 weeks"
+      },
+      {
+        "title": "Growth partnership",
+        "icon": "handshake",
+        "summary": "We continuously improve your digital product through design, engineering, and data-driven optimization aligned with your goals.",
+        "bestFor": "Live products ready to scale, improve performance, and unlock new opportunities.",
+        "duration": "Monthly, ongoing"
+      }
+    ]
+  },
+  "team": {
+    "eyebrow": "The team",
+    "heading": "Good work starts with the *right minds*",
+    "lede": "We combine creative thinking, technical expertise, and collaboration to build meaningful digital experiences.",
+    "socialLabel": "{name} on {platform}"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "heading": "Questions about *the studio.*",
+    "lede": "Who we work with, how we fit alongside your team, and how we collaborate across time zones."
+  },
+  "cta": {
+    "eyebrow": "Work with us",
+    "heading": "Let's build something *that lasts.*",
+    "lede": "Tell us where your business is heading. We'll show you the fastest, safest way to build what gets it there.",
+    "primary": { "label": "Start a project", "href": "/contact" },
+    "secondary": { "label": "See our work", "href": "/work" }
+  }
+}

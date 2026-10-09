@@ -1,0 +1,111 @@
+{
+  "name": "growthGrid",
+  "legalName": "growthGrid Studio",
+  "wordmark": "growthGrid",
+  "brand": {
+    "logo": {
+      "image": { "src": "/logo/primary.png", "width": 576, "height": 128 },
+      "style": "logo-only",
+      "height": 30,
+      "mark": { "src": "/logo/submark.png", "width": 237, "height": 256 },
+      "stacked": { "src": "/logo/secondary.png", "width": 406, "height": 240 }
+    },
+    "app": {
+      "icon": { "src": "/logo/app-icon.png", "width": 893, "height": 926 },
+      "iconBackground": null,
+      "themeColor": "#04070a"
+    }
+  },
+  "tagline": "We build digital products that move businesses forward.",
+  "description": "growthGrid is a growth-focused digital product studio. Strategy, design and engineering in one system — websites, web apps, mobile apps and AI automation built to grow your business.",
+  "url": "https://growthgrid.studio",
+  "locale": "en_US",
+  "contact": {
+    "email": "hello@growthgrid.studio",
+    "phone": null,
+    "bookingUrl": null,
+    "responseTime": "We reply to every enquiry within one business day."
+  },
+  "location": {
+    "label": "Remote-first studio · Working worldwide",
+    "city": null,
+    "country": null,
+    "timezone": null
+  },
+  "availability": {
+    "status": "open",
+    "label": "Booking new projects for Q4 2026"
+  },
+  "socials": [
+    { "platform": "instagram", "label": "Instagram", "url": "https://www.instagram.com/growthgrid" },
+    { "platform": "facebook", "label": "Facebook", "url": "https://www.facebook.com/growthgrid" },
+    { "platform": "x", "label": "X", "url": "https://x.com/growthgrid" },
+    { "platform": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/company/growthgrid" }
+  ],
+  "navigation": {
+    "primary": [
+      { "label": "Services", "href": "/services" },
+      { "label": "Work", "href": "/work" },
+      { "label": "About", "href": "/about" },
+      { "label": "Insights", "href": "/insights" }
+    ],
+    "cta": { "label": "Start a project", "href": "/contact" },
+    "footer": [
+      {
+        "title": "Studio",
+        "links": [
+          { "label": "About", "href": "/about" },
+          { "label": "Work", "href": "/work" },
+          { "label": "Insights", "href": "/insights" },
+          { "label": "Contact", "href": "/contact" }
+        ]
+      }
+    ],
+    "legal": [
+      { "label": "Privacy", "href": "/privacy" },
+      { "label": "Terms", "href": "/terms" }
+    ]
+  },
+  "seo": {
+    "defaultTitle": "growthGrid — Digital Product Studio for Growing Businesses",
+    "titleTemplate": "%s | growthGrid",
+    "description": "growthGrid builds websites, web apps, mobile apps and AI automation for growing businesses. Strategy, design and engineering in one accountable team.",
+    "keywords": [
+      "digital product studio",
+      "web development agency",
+      "web app development",
+      "UI/UX design agency",
+      "mobile app development",
+      "AI automation agency",
+      "SaaS development",
+      "Next.js development agency",
+      "SEO-friendly website development"
+    ],
+    "twitterHandle": "@growthgrid"
+  },
+  "analytics": {
+    "gaId": null
+  },
+  "ui": {
+    "home": "Home",
+    "skipToContent": "Skip to content",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "servicesTitle": "Services",
+    "connectTitle": "Connect",
+    "backToTop": "Back to top",
+    "rights": "All rights reserved.",
+    "localTime": "Studio time"
+  },
+  "consent": {
+    "title": "A quick word on cookies",
+    "message": "We'd like to use analytics cookies to understand which pages help people and improve the site. They're only set if you agree, and never used for advertising.",
+    "policyLabel": "Privacy policy",
+    "accept": "Accept analytics",
+    "decline": "No thanks",
+    "settings": "Cookie settings",
+    "essentialMessage": "We don't use tracking or advertising cookies. Only a few essential settings are kept in your browser, like this choice, so the site works properly.",
+    "acknowledge": "Accept"
+  }
+}

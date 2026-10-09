@@ -1,0 +1,147 @@
+{
+  "key": "services",
+  "seo": {
+    "title": "Software & AI Development Services | growthGrid",
+    "description": "Explore growthGrid's software, AI, SaaS, web, mobile and automation services designed to help businesses build, scale and improve digital products.",
+    "keywords": [
+      "software development services",
+      "AI development services",
+      "digital product development",
+      "SaaS development services",
+      "web application services",
+      "mobile app development services",
+      "business process automation",
+      "technology consulting services"
+    ]
+  },
+  "hero": {
+    "eyebrow": "Services",
+    "headline": "Six ways we help businesses *grow with software.*",
+    "lede": "We takes complicated concepts and turns them into technologically advanced products following consultations, designs, and development that very promptly and effectively respond to the needs of products."
+  },
+  "list": {
+    "eyebrow": "What we build",
+    "heading": "Solutions designed to *move business forward*",
+    "lede": "Every solution is shaped around your goals, combining strategic thinking, purposeful design, and the right technology to deliver measurable results.",
+    "viewLabel": "Explore service"
+  },
+  "process": {
+    "eyebrow": "How we deliver",
+    "heading": "Precision in *process* Power in *execution*",
+    "lede": "Every step engineered to turn vision into measurable progress."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "heading": "Common questions about *working with us.*"
+  },
+  "cta": {
+    "eyebrow": "Not sure where to start?",
+    "heading": "Tell us the problem. *We'll map the solution.*",
+    "lede": "Most projects span more than one service. Share what you're trying to achieve and we'll recommend the right mix — with an honest estimate.",
+    "primary": { "label": "Start a project", "href": "/contact" },
+    "secondary": { "label": "See case studies", "href": "/work" }
+  },
+  "aftercare": {
+    "eyebrow": "After launch",
+    "heading": "Launch day is just *the beginning*",
+    "lede": "We ensure long-term product success through seamless handovers, proactive maintenance, and ongoing technical support.",
+    "warranty": {
+      "days": 30,
+      "unit": "days",
+      "label": "Bug-fix warranty",
+      "title": "30 days of support, at no extra cost",
+      "text": "If something we built doesn't work as agreed after launch, we'll fix it at no additional cost. No extra charges, just a reliable start for your digital product.",
+      "timeline": ["Launch", "Day {days}", "Care plan"]
+    },
+    "handover": {
+      "label": "Everything You Need for a Smooth Handover",
+      "items": [
+        {
+          "icon": "book-open",
+          "title": "Documentation",
+          "text": "Clear technical documentation, setup guides, and system instructions that make managing your digital product easier."
+        },
+        {
+          "icon": "graduation-cap",
+          "title": "Team training",
+          "text": "Practical training sessions to help your team confidently manage content, product updates, releases, and dashboards."
+        },
+        {
+          "icon": "key-round",
+          "title": "Full code ownership",
+          "text": "Complete ownership of your source code, repositories, & intellectual property. Your product stays fully in your hands."
+        }
+      ]
+    },
+    "plans": {
+      "label": "Care plans",
+      "lede": "Pick the level of cover that fits. Every plan is tailored to your stack and quoted up front.",
+      "responseLabel": "Response time",
+      "bestForLabel": "Best for",
+      "featuredLabel": "Most chosen",
+      "items": [
+        {
+          "name": "Essential",
+          "icon": "shield-check",
+          "summary": "Keep it safe, backed up and online.",
+          "bestFor": "Marketing sites and stable products",
+          "response": "Next business day",
+          "features": [
+            "24/7 uptime monitoring and alerts",
+            "Daily backups with tested restores",
+            "Monthly security and dependency updates",
+            "Email support"
+          ],
+          "cta": { "label": "Get a quote", "href": "/contact?plan=Essential" }
+        },
+        {
+          "name": "Growth",
+          "icon": "activity",
+          "summary": "Priority care for products your customers rely on.",
+          "bestFor": "SaaS and apps with active users",
+          "response": "Within 4 business hours",
+          "features": [
+            "Everything in Essential",
+            "Priority support with a response-time SLA",
+            "Error and performance monitoring",
+            "Security patches applied within 48 hours",
+            "Quarterly health and security review"
+          ],
+          "featured": true,
+          "cta": { "label": "Get a quote", "href": "/contact?plan=Growth" }
+        },
+        {
+          "name": "Partner",
+          "icon": "life-buoy",
+          "summary": "A team on call for business-critical systems.",
+          "bestFor": "Platforms where downtime costs revenue",
+          "response": "1 hour, 24/7 for critical issues",
+          "features": [
+            "Everything in Growth",
+            "24/7 critical-incident response",
+            "A dedicated engineer who knows your product",
+            "Monthly reliability report and review call"
+          ],
+          "cta": { "label": "Get a quote", "href": "/contact?plan=Partner" }
+        }
+      ],
+      "note": "Care plans start when your warranty ends. Switch or cancel any month."
+    },
+    "moreLink": { "label": "Compare care plans", "href": "/#aftercare" }
+  },
+  "detail": {
+    "overviewLabel": "Overview",
+    "outcomesHeading": "Typical outcomes",
+    "deliverablesHeading": "What you get",
+    "capabilitiesHeading": "What we build",
+    "approachHeading": "How we approach it",
+    "technologiesHeading": "Tools we use",
+    "workHeading": "Related work",
+    "faqHeading": "Frequently asked questions",
+    "nextLabel": "Next service",
+    "ctaLabel": "Discuss your project",
+    "viewWorkLabel": "View case study",
+    "allLabel": "All services",
+    "tocLabel": "On this page"
+  }
+}

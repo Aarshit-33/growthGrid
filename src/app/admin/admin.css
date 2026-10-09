@@ -1,0 +1,195 @@
+/* ─────────────────────────────────────────────────────────────
+   Admin-only styles (imported by src/app/admin/layout.tsx, so
+   none of this ships with the public site). Everything else is
+   Tailwind utilities on the site's design tokens.
+   ───────────────────────────────────────────────────────────── */
+
+/* Wrong password: a short, damped shake. */
+@keyframes admin-shake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(3px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-6px);
+  }
+  40%,
+  60% {
+    transform: translateX(6px);
+  }
+}
+
+.admin-shake {
+  animation: admin-shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* The studio's ambient light: a slow drift of the emerald glow. */
+@keyframes admin-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, 3%, 0) scale(1.08);
+  }
+}
+
+.admin-glow {
+  animation: admin-drift 18s ease-in-out infinite;
+}
+
+/* A row that was just dropped into a new place. */
+@keyframes admin-settle {
+  0% {
+    box-shadow:
+      0 0 0 1px rgb(60 228 154 / 0.55),
+      0 0 24px -4px rgb(60 228 154 / 0.55);
+  }
+  100% {
+    box-shadow:
+      0 0 0 1px rgb(60 228 154 / 0),
+      0 0 24px -4px rgb(60 228 154 / 0);
+  }
+}
+
+.admin-settle {
+  animation: admin-settle 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Thin, quiet scrollbars inside admin panels. */
+.admin-root {
+  scrollbar-color: rgb(140 170 190 / 0.25) transparent;
+  scrollbar-width: thin;
+}
+
+/* Native date pickers and selects follow the dark theme. */
+.admin-root input,
+.admin-root select,
+.admin-root textarea {
+  color-scheme: dark;
+}
+
+/* Dropdown lists. Their light system colours sat under the studio's light
+   text (white on white), so the options carry the dark surface themselves. */
+.admin-root option,
+.admin-root optgroup {
+  background-color: var(--color-surface-2);
+  color: var(--color-ink);
+}
+
+.admin-root optgroup {
+  color: var(--color-muted);
+}
+
+/* Where the browser allows it (Chromium 135+), the open list is fully
+   themed: a dark panel with emerald selection, like the rest of the studio. */
+@supports (appearance: base-select) {
+  .admin-root select,
+  .admin-root select::picker(select) {
+    appearance: base-select;
+  }
+
+  /* The closed control: text centred like the other inputs. */
+  .admin-root select {
+    align-items: center;
+  }
+
+  /* Each select draws its own chevron. */
+  .admin-root select::picker-icon {
+    display: none;
+  }
+
+  .admin-root select::picker(select) {
+    margin-block: 0.375rem;
+    padding: 0.3125rem;
+    max-block-size: min(22rem, 60dvh);
+    border: 1px solid var(--color-line-strong);
+    border-radius: 0.875rem;
+    background-color: var(--color-surface-2);
+    color: var(--color-ink);
+    box-shadow:
+      0 24px 60px -24px rgb(0 0 0 / 0.9),
+      0 0 0 1px rgb(0 0 0 / 0.25);
+    scrollbar-width: thin;
+    scrollbar-color: rgb(140 170 190 / 0.25) transparent;
+    opacity: 0;
+    translate: 0 -0.25rem;
+    transition:
+      opacity 0.16s ease,
+      translate 0.28s var(--ease-out-expo),
+      overlay 0.28s allow-discrete,
+      display 0.28s allow-discrete;
+  }
+
+  .admin-root select:open::picker(select) {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .admin-root select:open::picker(select) {
+      opacity: 0;
+      translate: 0 -0.25rem;
+    }
+  }
+
+  .admin-root select option {
+    gap: 0.625rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5625rem;
+    background-color: transparent;
+    color: var(--color-dim);
+    font-size: 0.86rem;
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .admin-root select option:hover,
+  .admin-root select option:focus-visible {
+    background-color: rgb(255 255 255 / 0.06);
+    color: var(--color-ink);
+    outline: none;
+  }
+
+  .admin-root select option:checked {
+    background-color: rgb(60 228 154 / 0.1);
+    color: var(--color-hot);
+  }
+
+  .admin-root select option::checkmark {
+    order: 1;
+    margin-inline-start: auto;
+    color: var(--color-em);
+  }
+
+  /* Group labels (technology categories…) as small mono captions. */
+  .admin-root select optgroup {
+    padding-block: 0.25rem;
+    background-color: transparent;
+    color: var(--color-faint);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .admin-root select optgroup + optgroup {
+    margin-top: 0.25rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .admin-root select optgroup option {
+    font-family: var(--font-sans);
+    letter-spacing: normal;
+    text-transform: none;
+  }
+}

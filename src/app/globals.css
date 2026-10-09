@@ -1,0 +1,1241 @@
+@import "tailwindcss";
+
+/* No GPU (see components/three/gfx.ts): `lite:bg-bg/95` etc. */
+@custom-variant lite (&:where([data-gfx="lite"] *));
+
+/* ═══════════════════════════════════════════════════════════════
+   GrowthGrid design system — Tailwind CSS v4 (CSS-first config)
+   Dark "field" canvas · emerald signal · precise grid geometry
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* Surfaces */
+  --color-bg: #04070a;
+  --color-bg-2: #080d12;
+  --color-surface: #0a1117;
+  --color-surface-2: #0f1820;
+  --color-surface-3: #14202a;
+
+  /* Ink: every step clears WCAG AA (4.5:1) for small text on bg → surface-2. */
+  --color-ink: #f0f4f7;
+  --color-dim: #c8d4dc;
+  --color-muted: #8a9aaa;
+  --color-faint: #74859a;
+
+  /* Lines */
+  --color-line: rgb(140 170 190 / 0.14);
+  --color-line-strong: rgb(140 170 190 / 0.28);
+
+  /* Signal */
+  --color-em: #3ce49a;
+  --color-hot: #7dffc4;
+  --color-deep: #0f6b47;
+  --color-danger: #ff6b6b;
+  --color-warn: #ffbf5a;
+  --color-info: #6cc7ff;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Breakpoints (mobile-first; Tailwind defaults + xs) */
+  --breakpoint-xs: 26rem;
+
+  /* Radii */
+  --radius-card: 1.25rem;
+  --radius-panel: 1.75rem;
+
+  /* Shadows */
+  --shadow-glow: 0 0 0 1px rgb(60 228 154 / 0.35), 0 10px 40px -10px rgb(60 228 154 / 0.45);
+  --shadow-panel: 0 30px 80px -30px rgb(0 0 0 / 0.8), 0 0 0 1px var(--color-line);
+
+  /* Animations */
+  --animate-pulse-dot: pulse-dot 2.4s var(--ease-out-expo) infinite;
+  --animate-blink: blink 1.1s steps(2, start) infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-scan: scan 3.2s var(--ease-in-out-quart) infinite;
+  --animate-dash: dash-flow 1.6s linear infinite;
+  --animate-flicker: flicker 2.6s steps(1, end) infinite;
+  --animate-rise-in: rise-in 0.9s var(--ease-out-expo) both;
+  --animate-card-scan: card-scan 1.3s var(--ease-out-expo) both;
+
+  @keyframes pulse-dot {
+    0% {
+      box-shadow: 0 0 0 0 rgb(60 228 154 / 0.6);
+    }
+
+    70% {
+      box-shadow: 0 0 0 10px rgb(60 228 154 / 0);
+    }
+
+    100% {
+      box-shadow: 0 0 0 0 rgb(60 228 154 / 0);
+    }
+  }
+
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+      transform: translate3d(0, -10px, 0);
+    }
+  }
+
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    15% {
+      opacity: 1;
+    }
+
+    85% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes dash-flow {
+    to {
+      stroke-dashoffset: -20;
+    }
+  }
+
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 24px, 0) scale(0.98);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes flicker {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    7% {
+      opacity: 0.25;
+    }
+
+    9% {
+      opacity: 1;
+    }
+
+    52% {
+      opacity: 0.45;
+    }
+
+    55% {
+      opacity: 1;
+    }
+  }
+
+  /* One diagnostic pass down a card (animates `top`; the line is 1px tall). */
+  @keyframes card-scan {
+    0% {
+      top: 0;
+      opacity: 0;
+    }
+
+    12% {
+      opacity: 1;
+    }
+
+    100% {
+      top: 100%;
+      opacity: 0;
+    }
+  }
+}
+
+/* Font families come from next/font CSS variables (set on <html>). */
+@theme inline {
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-serif: var(--font-instrument-serif), "Iowan Old Style", Georgia, serif;
+}
+
+/* Animations tuned per element (style="--marquee-duration: 38s"). Inline, so
+   the utility carries the var() itself and it resolves on the element; a
+   plain theme variable resolves it once on :root and ignores overrides. */
+@theme inline {
+  --animate-marquee: marquee var(--marquee-duration, 45s) linear infinite;
+  --animate-grow-x: grow-x var(--grow-duration, 7s) var(--grow-ease, linear) forwards;
+
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes grow-x {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+
+@layer base {
+  :root {
+    --gutter: clamp(1.25rem, 4.5vw, 3.5rem);
+    --header-h: 4.25rem;
+    --section-y: clamp(5rem, 3.5rem + 6vw, 9.5rem);
+    color-scheme: dark;
+  }
+
+  @media (min-width: 64rem) {
+    :root {
+      --header-h: 5rem;
+    }
+  }
+
+  html {
+    background-color: var(--color-bg);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 1.5rem);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    min-height: 100svh;
+    /* Transparent: <html> paints the page colour, so the starfield (z-index -1)
+       shows between the two and behind all content. */
+    background-color: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv11", "ss01", "ss03";
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: rgb(60 228 154 / 0.32);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-em);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  a,
+  button,
+  [role="tab"],
+  summary {
+    touch-action: manipulation;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  /* Custom scrollbar (desktop) */
+  @media (pointer: fine) {
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--color-bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-surface-3);
+      border: 3px solid var(--color-bg);
+      border-radius: 99px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-deep);
+    }
+  }
+}
+
+/* ── Lenis smooth scroll ──────────────────────────────────── */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ── Layout utilities ─────────────────────────────────────── */
+
+@utility container-x {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility section-y {
+  padding-block: var(--section-y);
+}
+
+/* ── Typography utilities (fluid, mobile-first) ───────────── */
+
+@utility text-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  /* Width-driven; a full-screen hero can also cap it by height (--display-fit)
+     and lower the floor (--display-min) so a long headline fits narrow phones. */
+  font-size: clamp(var(--display-min, 2.65rem), min(1.05rem + 6.9vw, var(--display-fit, 8rem)), 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+@utility text-h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 1.35rem + 4.6vw, 5.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.042em;
+}
+
+@utility text-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.05rem, 1.3rem + 3.3vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.038em;
+}
+
+@utility text-h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 1.12rem + 0.8vw, 1.8rem);
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+}
+
+@utility text-h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.08rem, 1.02rem + 0.3vw, 1.25rem);
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+}
+
+@utility text-lede {
+  font-size: clamp(1.05rem, 0.98rem + 0.36vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--color-dim);
+}
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  /* Roomy enough for long eyebrows that wrap on phones. */
+  line-height: 1.5;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: var(--color-em);
+}
+
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/** Emphasised words in headings: serif italic with an emerald sheen. */
+@utility em-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* background-clip:text only paints inside the box, and Instrument Serif's
+     italic ink (descenders, the tails of y/g/p/j) spills well past it — so pad
+     every side and cancel it with negative margins: same layout, full glyphs.
+     Right keeps its original +0.04em of breathing room. */
+  padding: 0.1em 0.2em 0.28em 0.18em;
+  margin: -0.1em -0.16em -0.28em -0.18em;
+  background-image: linear-gradient(100deg, var(--color-em) 10%, var(--color-hot) 55%, #e6fff4 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility ink-gradient {
+  background-image: linear-gradient(180deg, var(--color-ink) 30%, rgb(240 244 247 / 0.45));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Surface utilities ────────────────────────────────────── */
+
+@utility glass {
+  background-color: rgb(8 13 18 / 0.72);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid var(--color-line);
+}
+
+/** Copy that sits over a 3D prop: a soft dark halo (inherited by every
+ *  line inside) lifts the glyphs off bright wireframes behind them.
+ *  Gradient-clipped text is skipped, its shadow would show through. */
+@utility scene-text {
+  text-shadow:
+    0 1px 2px rgb(4 7 10 / 0.7),
+    0 0 18px rgb(4 7 10 / 0.85);
+
+  /* Buttons and cards bring their own backgrounds. */
+  & :where(.ink-gradient, .em-serif, .group\/btn, .card) {
+    text-shadow: none;
+  }
+}
+
+@utility card {
+  position: relative;
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.028), rgb(255 255 255 / 0.008)),
+    var(--color-surface);
+  border: 1px solid var(--color-line);
+}
+
+/** 1px emerald gradient border that brightens on hover (uses mask). */
+@utility edge-glow {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(140deg, rgb(60 228 154 / 0.55), rgb(60 228 154 / 0) 40%, rgb(125 255 196 / 0) 60%, rgb(125 255 196 / 0.35));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+    transition: opacity 0.5s var(--ease-out-expo);
+  }
+
+  &:hover::before,
+  &:focus-within::before {
+    opacity: 1;
+  }
+}
+
+/** Shared hover for every boxed card: the border lights emerald with a soft
+ *  halo. Nothing moves, so each card keeps its own inner touches. */
+@utility card-hover {
+  transition:
+    border-color 0.5s var(--ease-out-expo),
+    box-shadow 0.5s var(--ease-out-expo),
+    background-color 0.5s var(--ease-out-expo);
+
+  &:hover,
+  &:has(:focus-visible) {
+    border-color: rgb(60 228 154 / 0.6);
+    box-shadow:
+      0 0 0 1px rgb(60 228 154 / 0.25),
+      0 0 22px -2px rgb(60 228 154 / 0.45);
+  }
+}
+
+/** The brand grid: hairlines on a fixed module. */
+@utility blueprint {
+  background-image:
+    linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: var(--grid-size, 4.5rem) var(--grid-size, 4.5rem);
+  background-position: var(--grid-x, 0) var(--grid-y, 0);
+}
+
+@utility dot-matrix {
+  background-image: radial-gradient(rgb(140 170 190 / 0.22) 1px, transparent 1.2px);
+  background-size: var(--grid-size, 1.5rem) var(--grid-size, 1.5rem);
+}
+
+@utility fade-y {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+}
+
+@utility fade-x {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+@utility fade-radial {
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 72%);
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 72%);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/**
+ * Full-screen slide row: each slide is (nearly) the viewport width, centred,
+ * with a sliver of its neighbours visible on both sides. Slides take
+ * `w-(--deck-w)`; without JS the row is a native scroll-snap carousel.
+ */
+@utility deck-track {
+  --deck-peek: 1.25rem;
+  --deck-gap: 0.625rem;
+  --deck-w: min(calc(100vw - 2 * (var(--deck-peek) + var(--deck-gap))), 88rem);
+  display: flex;
+  gap: var(--deck-gap);
+  padding-inline: calc((100vw - var(--deck-w)) / 2);
+
+  @media (width >=64rem) {
+    --deck-peek: 4vw;
+    --deck-gap: 1.5rem;
+  }
+}
+
+/* ── Components ───────────────────────────────────────────── */
+
+@layer components {
+
+  /* Keyboard skip link: hidden until focused. */
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    padding: 0.75rem 1.1rem;
+    border-radius: 999px;
+    background: var(--color-em);
+    color: var(--color-bg);
+    font-weight: 600;
+    transform: translateY(-160%);
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+
+  .skip-link:focus-visible {
+    transform: none;
+  }
+
+  /* Twinkling starfield behind everything (see components/layout/starfield). */
+  .starfield {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Film grain over everything (very subtle). */
+  .grain {
+    pointer-events: none;
+    position: fixed;
+    inset: -50%;
+    z-index: 60;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Crosshair markers at grid intersections. */
+  .crosshair {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    pointer-events: none;
+    color: var(--color-line-strong);
+    background:
+      linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
+      linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+  }
+
+  /* Rich text rendered from content blocks. */
+  .prose-gg {
+    color: var(--color-dim);
+    font-size: clamp(1.02rem, 0.98rem + 0.2vw, 1.12rem);
+    line-height: 1.75;
+  }
+
+  .prose-gg>*+* {
+    margin-top: 1.35em;
+  }
+
+  .prose-gg h2 {
+    margin-top: 2.4em;
+    color: var(--color-ink);
+    font-size: clamp(1.5rem, 1.25rem + 1vw, 2.1rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+
+  .prose-gg h3 {
+    margin-top: 2em;
+    color: var(--color-ink);
+    font-size: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .prose-gg h2+*,
+  .prose-gg h3+* {
+    margin-top: 0.8em;
+  }
+
+  .prose-gg strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .prose-gg a {
+    color: var(--color-hot);
+    text-decoration: underline;
+    text-decoration-color: rgb(125 255 196 / 0.35);
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color 0.3s;
+  }
+
+  .prose-gg a:hover {
+    text-decoration-color: var(--color-hot);
+  }
+
+  .prose-gg code:not(pre code) {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    padding: 0.15em 0.4em;
+    border-radius: 0.4em;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-line);
+    color: var(--color-hot);
+  }
+
+  .prose-gg ul,
+  .prose-gg ol {
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.7em;
+  }
+
+  .prose-gg ul>li,
+  .prose-gg ol>li {
+    position: relative;
+    padding-left: 1.9em;
+  }
+
+  .prose-gg ul>li::before {
+    content: "";
+    position: absolute;
+    left: 0.35em;
+    top: 0.72em;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 2px;
+    background: var(--color-em);
+    box-shadow: 0 0 12px rgb(60 228 154 / 0.6);
+    transform: rotate(45deg);
+  }
+
+  .prose-gg ol {
+    counter-reset: gg;
+  }
+
+  .prose-gg ol>li {
+    counter-increment: gg;
+  }
+
+  .prose-gg ol>li::before {
+    content: counter(gg, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    color: var(--color-em);
+  }
+}
+
+/* ── Reveal system (SSR-safe; toggled by <RevealObserver />) ── */
+
+[data-reveal] {
+  --reveal-delay: 0ms;
+  transition:
+    opacity 0.9s var(--ease-out-expo) var(--reveal-delay),
+    transform 1.1s var(--ease-out-expo) var(--reveal-delay),
+    filter 0.9s var(--ease-out-expo) var(--reveal-delay);
+}
+
+/* Revealed cards keep their hover transition (the rule above would replace it). */
+[data-reveal].card-hover {
+  transition:
+    opacity 0.9s var(--ease-out-expo) var(--reveal-delay),
+    transform 1.1s var(--ease-out-expo) var(--reveal-delay),
+    filter 0.9s var(--ease-out-expo) var(--reveal-delay),
+    border-color 0.5s var(--ease-out-expo),
+    box-shadow 0.5s var(--ease-out-expo),
+    background-color 0.5s var(--ease-out-expo);
+}
+
+[data-reveal]:not([data-inview]) {
+  opacity: 0;
+  transform: translate3d(0, 1.75rem, 0);
+}
+
+[data-reveal="fade"]:not([data-inview]) {
+  transform: none;
+}
+
+[data-reveal="scale"]:not([data-inview]) {
+  transform: scale(0.96);
+  filter: blur(6px);
+}
+
+/* Split headings: each word slides up from behind a mask. */
+.split-word {
+  display: inline-block;
+  overflow: clip;
+  overflow-clip-margin: 0.08em;
+  vertical-align: top;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  /* Room for italic overhang either side (horizontal only, so the vertical
+     slide-up mask is unchanged). */
+  padding-inline: 0.2em;
+  margin-inline: -0.2em;
+}
+
+.split-word>span {
+  display: inline-block;
+  transform: translate3d(0, 0, 0);
+  transition: transform 1.15s var(--ease-out-expo);
+  transition-delay: calc(var(--i, 0) * 38ms + var(--split-delay, 0ms));
+}
+
+/* Only scroll-revealed headings start hidden. Load headings get their start
+   state from the animation's `both` fill, so if animations are disabled the
+   h1 (the LCP element) is still visible. */
+[data-split="view"]:not([data-inview]) .split-word>span {
+  transform: translate3d(0, 108%, 0);
+}
+
+/* Above-the-fold headings animate on load with pure CSS (no JS needed). */
+[data-split="load"] .split-word>span {
+  animation: split-in 1.15s var(--ease-out-expo) both;
+  animation-delay: calc(var(--i, 0) * 45ms + var(--split-delay, 120ms));
+  transition: none;
+}
+
+@keyframes split-in {
+  from {
+    transform: translate3d(0, 108%, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.load-fade {
+  animation: load-fade 1.2s var(--ease-out-expo) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes load-fade {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Intro loader (components/layout/intro-loader.tsx) ─────────
+   Covers the first screen until the 3D on it has drawn. It exists only
+   while <html data-intro> is "on" (covering) or "out" (lifting): the gate
+   script sets it before first paint, and only where the 3D will run, so
+   with no GPU, data saver, reduced motion or no JS nothing ever shows. */
+
+.intro {
+  display: none;
+}
+
+:root:is([data-intro="on"], [data-intro="out"]) .intro {
+  position: fixed;
+  inset: 0;
+  /* Over the header (50), grain (60), page curtain (70) and consent banner
+     (80); under the skip link (100) and the cursor (110). */
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgb(60 228 154 / 0.085), transparent 72%),
+    var(--color-bg);
+  /* The rising edge: an emerald hairline and glow under the panel as it lifts. */
+  box-shadow:
+    0 1px 0 rgb(60 228 154 / 0.5),
+    0 28px 80px -18px rgb(60 228 154 / 0.38);
+}
+
+/* Until the app boots, the meter creeps on its own (a slow network never
+   shows it parked at zero); the component carries on from there. Still
+   applied while lifting, so the meter holds rather than resetting. */
+@property --intro-boot {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+:root:is([data-intro="on"], [data-intro="out"]) .intro {
+  animation: intro-boot 6s var(--ease-out-expo) 0.3s both;
+}
+
+/* The brand grid, centred and fading out toward the edges. */
+.intro-field {
+  position: absolute;
+  inset: 0;
+  --grid-size: 4.5rem;
+  background-position: center;
+  opacity: 0.55;
+  animation: intro-field 1.6s var(--ease-out-expo) both;
+}
+
+/* A slow survey line across the grid. */
+.intro-scan {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(60 228 154 / 0.45) 50%, transparent);
+  opacity: 0.6;
+  animation: intro-scan 4.2s var(--ease-in-out-quart) 0.6s infinite both;
+}
+
+.intro-corner {
+  animation: intro-fade 1s var(--ease-out-expo) 0.3s both;
+}
+
+.intro-core {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 1.35rem;
+}
+
+/* The grid mark assembles from the bottom-left cell, then its lit diagonal
+   keeps rising in a wave: the grid that grows. */
+.intro-mark {
+  width: 4.5rem;
+  height: 4.5rem;
+  overflow: visible;
+  color: var(--color-ink);
+  filter: drop-shadow(0 0 1.25rem rgb(60 228 154 / 0.3));
+}
+
+.intro-mark rect {
+  fill: currentColor;
+  opacity: var(--o);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: intro-cell 0.7s var(--ease-spring) var(--d) both;
+}
+
+.intro-mark rect[data-lit] {
+  fill: var(--color-em);
+  animation:
+    intro-cell 0.7s var(--ease-spring) var(--d) both,
+    intro-grow 2.1s var(--ease-in-out-quart) calc(0.9s + var(--g)) infinite;
+}
+
+/* A Branding mark (image) breathes instead. */
+.intro-brand {
+  display: block;
+  filter: drop-shadow(0 0 1.25rem rgb(60 228 154 / 0.3));
+  animation:
+    intro-cell 0.8s var(--ease-spring) both,
+    intro-breathe 2.4s ease-in-out 0.8s infinite;
+}
+
+.intro-word {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--color-ink);
+  animation: intro-word 1.2s var(--ease-out-expo) 0.35s both;
+}
+
+/* A stacked Branding logo (symbol above the name) in place of both: it
+   focuses in, then breathes gently (it carries lettering, so no scaling). */
+.intro-lockup {
+  display: block;
+  width: auto;
+  height: clamp(5.75rem, 4.9rem + 2.6vw, 7.25rem);
+  max-width: min(18rem, 72vw);
+  object-fit: contain;
+  /* Same filter list in the keyframes, so it interpolates. */
+  filter: blur(0) drop-shadow(0 0 1.5rem rgb(60 228 154 / 0.2));
+  animation:
+    intro-lockup 1.1s var(--ease-out-expo) both,
+    intro-breathe-soft 2.8s ease-in-out 1.1s infinite;
+}
+
+.intro-meter {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: min(14rem, 64vw);
+  margin-top: 0.4rem;
+  animation: intro-fade 0.9s var(--ease-out-expo) 0.55s both;
+}
+
+.intro-track {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  background: var(--color-line-strong);
+}
+
+/* --intro-p (0…1) is written every frame by the component. */
+.intro-fill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: calc(max(var(--intro-p, 0), var(--intro-boot) / 100) * 100%);
+  background: linear-gradient(90deg, rgb(60 228 154 / 0.15), var(--color-em));
+}
+
+.intro-fill::after {
+  content: "";
+  position: absolute;
+  right: -2.5px;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-hot);
+  box-shadow: 0 0 10px 2px rgb(60 228 154 / 0.65);
+}
+
+.intro-pct {
+  min-width: 3ch;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+  color: var(--color-muted);
+}
+
+/* The CSS creep's number, until the component writes its own. */
+.intro-pct:empty::before {
+  counter-reset: intro-pct var(--intro-boot);
+  content: "0" counter(intro-pct, decimal-leading-zero);
+}
+
+/* Lifting: the mark steps back, then the panel rises off the screen. */
+:root[data-intro="out"] .intro {
+  pointer-events: none;
+  transform: translate3d(0, -100%, 0);
+  transition: transform 0.95s var(--ease-in-out-quart) 0.12s;
+}
+
+:root[data-intro="out"] .intro-core {
+  opacity: 0;
+  transform: translate3d(0, -0.75rem, 0) scale(0.96);
+  transition:
+    opacity 0.35s var(--ease-out-expo),
+    transform 0.5s var(--ease-out-expo);
+}
+
+/* The hero's entrance already ran, unseen, under the loader; it replays
+   as the panel lifts (a new keyframe name restarts an animation). */
+:root:is([data-intro="out"], [data-intro="done"]) .load-fade {
+  animation-name: load-fade-replay;
+}
+
+:root:is([data-intro="out"], [data-intro="done"]) [data-split="load"] .split-word>span {
+  animation-name: split-in-replay;
+}
+
+@keyframes load-fade-replay {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes split-in-replay {
+  from {
+    transform: translate3d(0, 108%, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes intro-field {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes intro-boot {
+  to {
+    --intro-boot: 24;
+  }
+}
+
+@keyframes intro-scan {
+  from {
+    transform: translate3d(0, -5vh, 0);
+    opacity: 0;
+  }
+
+  15%,
+  85% {
+    opacity: 0.6;
+  }
+
+  to {
+    transform: translate3d(0, 105vh, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes intro-cell {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+@keyframes intro-grow {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  45% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes intro-breathe {
+  50% {
+    opacity: 0.55;
+    transform: scale(0.94);
+  }
+}
+
+@keyframes intro-word {
+  from {
+    opacity: 0;
+    letter-spacing: 0.3em;
+    filter: blur(6px);
+  }
+}
+
+@keyframes intro-lockup {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+    filter: blur(10px) drop-shadow(0 0 1.5rem rgb(60 228 154 / 0));
+  }
+}
+
+/* Opacity only: the compositor runs it without repainting. */
+@keyframes intro-breathe-soft {
+  50% {
+    opacity: 0.78;
+  }
+}
+
+@media print {
+  .intro {
+    display: none !important;
+  }
+}
+
+/* ── Custom cursor (components/layout/cursor.tsx) ─────────────
+   While the dot + ring cursor is mounted, <html data-custom-cursor> hides
+   the native pointer everywhere. !important so inline cursor styles can't
+   bring it back; without the flag (touch, reduced motion, no JS, admin)
+   the native cursor is untouched. */
+:root[data-custom-cursor],
+:root[data-custom-cursor] *,
+:root[data-custom-cursor] *::before,
+:root[data-custom-cursor] *::after {
+  cursor: none !important;
+}
+
+/* ── Accessibility & motion preferences ───────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    /* 0s, not 0.01ms: every element defaults to `transition-property: all`, so any
+       non-zero duration would make every style change (e.g. ScrollTrigger's pin
+       spacers) transition and be measured stale. */
+    transition-duration: 0s !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal]:not([data-inview]),
+  [data-split]:not([data-inview]) .split-word>span {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .em-serif {
+    color: CanvasText;
+    background: none;
+  }
+}
+
+/* ── No GPU: html[data-gfx="lite"] (components/three/gfx.ts) ──
+   With graphics acceleration off (or WebGL unavailable) every pixel is
+   painted on the CPU. The 3D scenes already show their static fallbacks;
+   here the effects that repaint on every scroll frame give way to static
+   equivalents: live backdrop blurs become tints, the full-screen grain
+   goes, and reveals fade without blurring. Unlayered, so it wins over
+   the utilities layer without !important. */
+:root[data-gfx="lite"] *,
+:root[data-gfx="lite"] *::before,
+:root[data-gfx="lite"] *::after {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+:root[data-gfx="lite"] .glass {
+  background-color: rgb(8 13 18 / 0.94);
+}
+
+:root[data-gfx="lite"] .grain {
+  display: none;
+}
+
+:root[data-gfx="lite"] [data-reveal="scale"]:not([data-inview]) {
+  filter: none;
+}

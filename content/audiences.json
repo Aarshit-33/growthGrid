@@ -1,0 +1,53 @@
+[
+  {
+    "key": "startups",
+    "order": 1,
+    "tab": { "title": "Startups", "subtitle": "From idea to impact" },
+    "label": "Early-stage product",
+    "title": "Turn your idea into a product",
+    "copy": "We turn promising ideas into market-ready products through strategic validation, focused MVP development, and seamless execution.",
+    "steps": [
+      { "label": "First", "text": "Validate your idea" },
+      { "label": "Then", "text": "Build your MVP" },
+      { "label": "Next", "text": "Launch and learn" }
+    ],
+    "outcome": {
+      "title": "Test your idea before scaling",
+      "detail": "We prioritize essential features, optimize development costs, and build solutions around real customer needs."
+    }
+  },
+  {
+    "key": "growing-teams",
+    "order": 2,
+    "tab": { "title": "Growing teams", "subtitle": "From traction to scale" },
+    "label": "Growing business",
+    "title": "Build for your next stage of growth",
+    "copy": "We scale your digital capabilities, optimize workflows, and enhance existing products to support sustainable business growth.",
+    "steps": [
+      { "label": "First", "text": "Spot growth gaps" },
+      { "label": "Then", "text": "Optimize workflows" },
+      { "label": "Next", "text": "Scale products" }
+    ],
+    "outcome": {
+      "title": "Grow without slowing down",
+      "detail": "Improve performance, simplify operations, and create a technology foundation that supports sustainable business growth."
+    }
+  },
+  {
+    "key": "established",
+    "order": 3,
+    "tab": { "title": "Established", "subtitle": "From legacy to what's next" },
+    "label": "Established organization",
+    "title": "Turn experience into new possibilities",
+    "copy": "We modernize digital platforms and build tailored solutions that help established businesses adapt, innovate, and unlock new opportunities.",
+    "steps": [
+      { "label": "First", "text": "Identify opportunities" },
+      { "label": "Then", "text": "Modernize experiences" },
+      { "label": "Next", "text": "Expand capabilities" }
+    ],
+    "outcome": {
+      "title": "Make technology work smarter",
+      "detail": "Connect existing systems, improve customer experiences, and create new ways to innovate and compete."
+    }
+  }
+]

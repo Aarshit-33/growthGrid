@@ -1,0 +1,156 @@
+{
+  "key": "home",
+  "seo": {
+    "title": "Software Development & AI Solutions Company | growthGrid",
+    "description": "Build smarter with growthGrid. We develop custom software, AI, SaaS, web apps and automation solutions for startups and growing businesses.",
+    "keywords": [
+      "Digital product service  ",
+      "software development company",
+      "custom software development",
+      "AI development company",
+      "SaaS development company",
+      "web application development",
+      "business automation solutions",
+      "AI automation services",
+      "custom web development"
+    ]
+  },
+  "sections": [
+    { "id": "proof", "enabled": true },
+    { "id": "problem", "enabled": true },
+    { "id": "services", "enabled": true },
+    { "id": "process", "enabled": true },
+    { "id": "aftercare", "enabled": true },
+    { "id": "work", "enabled": true },
+    { "id": "principles", "enabled": true },
+    { "id": "technology", "enabled": true },
+    { "id": "audiences", "enabled": true },
+    { "id": "testimonials", "enabled": false },
+    { "id": "insights", "enabled": true },
+    { "id": "faq", "enabled": true },
+    { "id": "cta", "enabled": true }
+  ],
+  "hero": {
+    "eyebrow": "Digital Experience Studio for Growing Brands ",
+    "headline": "We create digital experiences that *help brands grow*",
+    "lede": "growthGrid is a digital studio creating websites, applications, and brand identities through strategy, design, and development for growth-oriented businesses",
+    "primaryCta": { "label": "Start a project", "href": "/contact" },
+    "secondaryCta": { "label": "See our work", "href": "/work" },
+    "scrollCue": "Scroll to explore"
+  },
+  "proof": {
+    "eyebrow": "Building for teams in",
+    "industries": [
+      "Healthcare",
+      "E-commerce",
+      "B2B SaaS",
+      "Logistics",
+      "Manufacturing",
+      "Subscriptions",
+      "Fintech",
+      "Professional services"
+    ]
+  },
+  "problem": {
+    "eyebrow": "The problem",
+    "heading": "A great idea is not enough,\n*It needs the right plan to grow*",
+    "lede": "We eliminate bugs and delays, keeping your digital growth smooth, reliable, and on track",
+    "monitor": {
+      "label": "system-monitor · live",
+      "brokenState": "Degraded",
+      "healedState": "Healthy",
+      "hint": "Scroll to watch the system heal",
+      "brokenLogs": [
+        { "level": "err", "text": "[DB-001] Connection pool exhausted — max 50 reached" },
+        { "level": "warn", "text": "[API] Response time 4.2s — threshold exceeded (800ms)" },
+        { "level": "err", "text": "[SVC] Service mesh timeout: payments → inventory" },
+        { "level": "warn", "text": "[CACHE] Miss rate 78% — consider warming strategy" },
+        { "level": "err", "text": "[AUTH] Token refresh loop detected — session degraded" }
+      ],
+      "healedLogs": [
+        { "level": "ok", "text": "[DEPLOY] v2.0.0 released — health checks passing" },
+        { "level": "ok", "text": "[DB-001] Pool rebalanced — 12/50 connections in use" },
+        { "level": "ok", "text": "[API] p95 response time 180ms — within budget" },
+        { "level": "info", "text": "[CACHE] Warm-up complete — hit rate 96%" },
+        { "level": "ok", "text": "[AUTH] Sessions stable — 0 refresh errors" }
+      ],
+      "stats": {
+        "errors": { "label": "Errors", "from": 47, "to": 0 },
+        "warnings": { "label": "Warnings", "from": 128, "to": 2 },
+        "uptime": { "label": "Uptime", "from": 91.2, "to": 99.98, "decimals": 2, "suffix": "%" }
+      }
+    }
+  },
+  "services": {
+    "eyebrow": "What we build",
+    "heading": "We build results, not just *digital products* ",
+    "lede": "Tools don't grow businesses, results do. growthGrid starts with your goal, then picks the tech that gets there fastest.",
+    "cta": { "label": "Explore all services", "href": "/services" }
+  },
+  "process": {
+    "eyebrow": "OUR PROCESS ",
+    "heading": "This isn't just a process.\n*It's a system.*",
+    "lede": "Six stages are interconnected, and there is a question behind each action you take: can it benefit your business? That's the growthGrid way."
+  },
+  "aftercare": {
+    "eyebrow": "After launch",
+    "heading": "Launch day is just *the beginning*",
+    "lede": "Launching your digital product is only the first step. We provide ongoing technical support, a smooth handover, and reliable maintenance to keep your product secure, running smoothly, and ready to grow."
+  },
+  "work": {
+    "eyebrow": "Selected work",
+    "heading": "Problems *we've solved.*",
+    "lede": "Recent engagements — and the numbers that moved because of them.",
+    "cta": { "label": "View all case studies", "href": "/work" },
+    "prevLabel": "Previous project",
+    "nextLabel": "Next project"
+  },
+  "principles": {
+    "eyebrow": "Why growthGrid",
+    "heading": "Built to create, \nDesigned to move *you forward*",
+    "lede": "Four principles guide every decision we make. Scroll through them to explore each one's instrument."
+  },
+  "technology": {
+    "eyebrow": "Technology",
+    "heading": "A modern stack, *chosen on purpose.*",
+    "lede": "Proven, well-supported tools across six disciplines — picked for what your product needs to do, not for what's fashionable.",
+    "hint": "Hover or tap a planet or a logo to inspect it"
+  },
+  "audiences": {
+    "eyebrow": "Who we work with",
+    "heading": "Whatever your stage, we *build for growth*",
+    "lede": "Startups, growing teams and established organizations each need a different next step. Scroll to find yours."
+  },
+  "testimonials": {
+    "eyebrow": "Client voices",
+    "heading": "Partners, *not vendors.*",
+    "lede": "We measure ourselves by what changes for the teams we work with.",
+    "prevLabel": "Previous testimonial",
+    "nextLabel": "Next testimonial",
+    "pauseLabel": "Pause testimonials",
+    "playLabel": "Play testimonials",
+    "slideLabel": "{index} of {total}",
+    "projectLabel": "Read the case study"
+  },
+  "insights": {
+    "eyebrow": "Insights",
+    "heading": "We build *in public.*",
+    "lede": "Field notes on architecture, applied AI, product design and growth.",
+    "cta": { "label": "Read all insights", "href": "/insights" },
+    "readLabel": "Read article",
+    "prevLabel": "Previous insight",
+    "nextLabel": "Next insight"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "heading": "Questions, *answered.*",
+    "lede": "The things founders and product leaders ask us most before a project starts."
+  },
+  "cta": {
+    "eyebrow": "Ready to build",
+    "heading": "Got an idea? \nLet's make *it real*",
+    "lede": "From the first spark to a fully functional digital product, we turn ambitious ideas into digital experiences built for growth.",
+    "primary": { "label": "Start a project", "href": "/contact" },
+    "secondary": { "label": "See how we work", "href": "/about#process" }
+  }
+}

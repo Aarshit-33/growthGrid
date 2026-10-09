@@ -1,0 +1,326 @@
+[
+  {
+    "slug": "digital-products",
+    "order": 1,
+    "title": "Digital Products",
+    "headline": "Big ideas deserve more than basic *software*",
+    "tagline": "SaaS · Web apps · Dashboards · Portals",
+    "summary": "We build scalable web applications, SaaS platforms, and tailored digital solutions that simplify complexity and support your business growth.",
+    "description": [
+      "Great digital experiences are built with purpose, driven by innovation, and designed to create lasting impact.",
+      "We transform business challenges into scalable digital solutions through strategic thinking, intuitive design, and reliable engineering, building powerful web applications and platforms that simplify operations and drive lasting growth."
+    ],
+    "icon": "layers",
+    "accent": "#3ce49a",
+    "outcomes": [
+      { "value": "8–12 wks", "label": "Typical time to first release" },
+      { "value": "99.9%", "label": "Uptime on the platforms we run" },
+      { "value": "−40%", "label": "Average drop in support tickets" }
+    ],
+    "deliverables": [
+      "Product discovery & roadmap",
+      "UX flows and clickable prototypes",
+      "Design system and interface design",
+      "Full-stack web application",
+      "Admin panels & dashboards",
+      "Authentication, roles and billing",
+      "Analytics & product instrumentation",
+      "Automated testing and CI/CD"
+    ],
+    "capabilities": [
+      { "title": "SaaS platforms", "description": "Build powerful SaaS platforms  with multi-tenant architecture, subscription billing, seamless user onboarding, and centralized admin tools." },
+      { "title": "Dashboards & analytics", "description": "Transform scattered data into actionable insights with interactive dashboards, real-time analytics, custom reporting, and data visualization tools." },
+      { "title": "Customer portals", "description": "Create secure, self-service customer portals with personalized dashboards, real-time updates, and integrated support features that simplify customer interactions." },
+      { "title": "MVPs that scale", "description": "Launch market-ready MVPs with essential features, scalable architecture, and a flexible technology stack designed to support future growth without costly rebuilds." }
+    ],
+    "approach": [
+      { "title": "Define the Direction", "description": "We define user needs, core requirements, and measurable goals to shape a focused product strategy." },
+      { "title": "Prototype Before You Build", "description": "We design interactive prototypes, refine user journeys, and validate key features before development begins." },
+      { "title": "Ship in Increments", "description": "We build through agile sprints, delivering functional software and refining features through continuous feedback." },
+      { "title": "Measure and Iterate ", "description": "We integrate analytics from day one to track performance, understand user behaviour, and drive data-informed improvements." }
+    ],
+    "technologies": ["nextjs", "react", "typescript", "nodejs", "postgresql", "aws"],
+    "relatedProjects": ["unified-patient-workflow", "realtime-operations-hub"],
+    "keywords": [
+      "SaaS development company",
+      "custom web app development",
+      "dashboard development",
+      "MVP development",
+      "product development studio"
+    ],
+    "seo": {
+      "title": "Digital Product Development: SaaS & Web Apps",
+      "description": "growthGrid designs and builds SaaS platforms, web apps, dashboards and customer portals. Senior product, design and engineering in one accountable team."
+    }
+  },
+  {
+    "slug": "websites",
+    "order": 2,
+    "title": "Websites",
+    "headline": "Make your website *impossible to ignore*",
+    "tagline": "Marketing sites · Headless CMS · Technical SEO",
+    "summary": "We build high-performance websites with modern design and technical SEO that load fast, rank higher, and turn visitors into customers",
+    "description": [
+      "A well-crafted website goes beyond aesthetics, delivering seamless experiences that drive engagement and lasting business growth.",
+      "We create high-performance websites that combine modern design, seamless functionality, and technical SEO to enhance visibility, drive conversions, and support long-term business growth."
+    ],
+    "icon": "globe",
+    "accent": "#61dafb",
+    "outcomes": [
+      { "value": "<1s", "label": "Largest Contentful Paint target" },
+      { "value": "95+", "label": "Lighthouse performance score" },
+      { "value": "2×", "label": "Typical lift in qualified leads" }
+    ],
+    "deliverables": [
+      "Conversion-focused UX and page structure",
+      "Custom design — no templates",
+      "Next.js and headless CMS build",
+      "Technical SEO & structured data",
+      "Core Web Vitals optimization",
+      "Analytics, events and goal tracking",
+      "Accessibility to WCAG 2.2 AA",
+      "Migration with redirects and no ranking loss"
+    ],
+    "capabilities": [
+      { "title": "Marketing websites", "description": "We create distinctive, responsive websites with purposeful design and clear messaging that drive engagement and conversions." },
+      { "title": "Headless CMS", "description": "We develop headless CMS solutions with seamless content management & scalable architecture that empower teams & accelerate growth." },
+      { "title": "Technical SEO", "description": "We optimize site architecture, technical SEO, and performance to strengthen search visibility and drive sustainable organic growth." },
+      { "title": "Landing pages & CRO", "description": "We craft conversion-focused landing pages with strategic design and clear calls to action that turn traffic into measurable results." }
+    ],
+    "approach": [
+      { "title": "Find the gaps", "description": "We analyse performance, search data, and competitors to identify opportunities for improvement." },
+      { "title": "Plan before you design", "description": "We define site architecture, user journeys, and content before crafting the visual experience.\n" },
+      { "title": "Make every second count", "description": "We leverage optimized media, lightweight code, and modern rendering for fast, responsive performance." },
+      { "title": "Launch and optimize", "description": "We streamline redirects, monitor performance, and optimize conversions for sustained results." }
+    ],
+    "technologies": ["nextjs", "react", "typescript", "tailwind", "headless-cms", "aws"],
+    "relatedProjects": ["b2b-saas-website-relaunch"],
+    "keywords": [
+      "website development agency",
+      "Next.js website development",
+      "SEO-friendly website design",
+      "high-performance websites",
+      "headless CMS development"
+    ],
+    "seo": {
+      "title": "Website Design & Development That Ranks",
+      "description": "Fast, SEO-ready marketing websites built on Next.js and a headless CMS. Core Web Vitals in the green, content your team controls, conversion built in."
+    }
+  },
+  {
+    "slug": "ai-automation",
+    "order": 3,
+    "title": "AI & Automation",
+    "headline": "*Intelligence* that works beyond the conversation",
+    "tagline": "LLMs · Workflows · Agents · RAG",
+    "summary": "We build AI-powered workflows, integrations, and intelligent assistants that automate processes, simplify operations, and deliver faster, smarter results.",
+    "description": [
+      "Intelligent AI solutions designed to simplify operations, enhance efficiency, and drive meaningful business impact.",
+      "We build intelligent AI solutions that streamline workflows, connect business data, and automate operations through advanced technologies, delivering greater efficiency, accuracy, and measurable impact while keeping people in control."
+    ],
+    "icon": "sparkles",
+    "accent": "#f6ad55",
+    "outcomes": [
+      { "value": "12×", "label": "Faster first response on support queues" },
+      { "value": "−60%", "label": "Less manual data entry" },
+      { "value": "94%", "label": "Routing accuracy in production" }
+    ],
+    "deliverables": [
+      "AI opportunity audit",
+      "Workflow and data mapping",
+      "LLM assistants & chatbots",
+      "Retrieval-augmented generation (RAG)",
+      "Document & email processing",
+      "Human-in-the-loop review tools",
+      "Evaluation sets and guardrails",
+      "Integrations with your existing tools"
+    ],
+    "capabilities": [
+      { "title": "AI Assistants", "description": "Build intelligent chat and voice assistants powered by your policies, products, and business data." },
+      { "title": "Workflow Automation", "description": "Automate multi-step processes with intelligent workflows that handle routine tasks and flag exceptions." },
+      { "title": "Document Intelligence", "description": "Extract, classify, and validate information from PDFs, emails, and forms with AI-powered processing." },
+      { "title": "AI-Powered Product ", "description": "Integrate AI-driven search, summarization, and recommendations directly into your digital products." }
+    ],
+    "approach": [
+      { "title": "Find the right task", "description": "We identify repetitive work, measure its impact, and prioritize the tasks with the greatest potential for automation." },
+      { "title": "Test before building", "description": "We validate AI solutions using real data, practical scenarios, and edge cases before development." },
+      { "title": "Build in control", "description": "We add evaluation frameworks, confidence thresholds, and human oversight to ensure reliable outcomes." },
+      { "title": "Measure what matters", "description": "We track accuracy, time saved, and correction effort, then scale what delivers measurable value." }
+    ],
+    "technologies": ["llms", "rag", "automation", "python", "nodejs", "postgresql"],
+    "relatedProjects": ["intelligent-support-pipeline"],
+    "keywords": [
+      "AI automation agency",
+      "LLM integration services",
+      "AI chatbot development",
+      "RAG development",
+      "business process automation"
+    ],
+    "seo": {
+      "title": "AI Automation & LLM Integration Services",
+      "description": "Production-grade AI assistants, RAG and workflow automation grounded in your own data — measured on hours saved and accuracy, not demos."
+    }
+  },
+  {
+    "slug": "mobile-apps",
+    "order": 4,
+    "title": "Mobile Apps",
+    "headline": "Mobile experiences built for *everyday impact*",
+    "tagline": "iOS · Android · Cross-platform",
+    "summary": "We build scalable iOS, Android, and cross-platform apps that deliver seamless experiences and reliable performance.",
+    "description": [
+      "Seamless mobile experiences engineered for performance, designed for users, and built for growth.",
+      "We develop high-performance mobile applications that combine intuitive design, reliable functionality, and scalable technology to deliver seamless user experiences and support business growth."
+    ],
+    "icon": "smartphone",
+    "accent": "#b794f4",
+    "outcomes": [
+      { "value": "4.8★", "label": "Average app store rating" },
+      { "value": "1 codebase", "label": "iOS and Android from a shared core" },
+      { "value": "<24h", "label": "Over-the-air update rollout" }
+    ],
+    "deliverables": [
+      "Mobile product strategy",
+      "Native-feeling UI for iOS and Android",
+      "React Native & Expo development",
+      "Offline-first data sync",
+      "Push notifications & deep links",
+      "Secure authentication & payments",
+      "App Store and Google Play launch",
+      "Crash reporting and product analytics"
+    ],
+    "capabilities": [
+      { "title": "Cross-Platform Apps", "description": "We build cross-platform iOS and Android apps with native performance and seamless functionality." },
+      { "title": "Field & Operations Apps", "description": "We empower field teams with offline-ready apps, real-time data, and seamless workflows." },
+      { "title": "Consumer Apps", "description": "We craft intuitive mobile experiences that drive engagement, simplify onboarding, and encourage lasting user retention." },
+      { "title": "App Modernization", "description": "We modernize legacy mobile apps with scalable architecture and enhanced performance while preserving user trust and experience." }
+    ],
+    "approach": [
+      { "title": "Understand the user", "description": "We map real-world usage, user needs, and key interactions to shape the app experience." },
+      { "title": "Test on real devices", "description": "We prototype and validate interactions on actual phones to refine usability and performance early." },
+      { "title": "Streamline every release", "description": "We establish CI/CD pipelines, beta testing, and staged rollouts from the first sprint." },
+      { "title": "Launch and evolve", "description": "We optimize app store presence, track user behaviour, and improve the app through continuous updates." }
+    ],
+    "technologies": ["react-native", "expo", "typescript", "nodejs", "postgresql", "aws"],
+    "relatedProjects": ["field-service-mobile-app"],
+    "keywords": [
+      "mobile app development company",
+      "React Native app development",
+      "iOS and Android app development",
+      "cross-platform app development",
+      "offline-first mobile apps"
+    ],
+    "seo": {
+      "title": "Mobile App Development for iOS & Android",
+      "description": "Cross-platform mobile apps with native feel, offline sync and fast release pipelines. growthGrid designs, builds and launches iOS and Android apps."
+    }
+  },
+  {
+    "slug": "business-systems",
+    "order": 5,
+    "title": "Business Systems",
+    "headline": "Connected systems for *better business flow*",
+    "tagline": "Internal tools · CRM · Operations platforms",
+    "summary": "We build secure, scalable business platforms that connect teams, streamline workflows, and simplify operations.",
+    "description": [
+      "Intelligent systems designed to streamline operations, enhance efficiency, and accelerate business growth.",
+      "We build connected digital systems that streamline operations, automate workflows, and integrate business tools through tailored solutions designed to enhance efficiency and support scalable growth."
+    ],
+    "icon": "workflow",
+    "accent": "#68d391",
+    "outcomes": [
+      { "value": "4 → 1", "label": "Tools consolidated on average" },
+      { "value": "15 hrs", "label": "Saved per person, per month" },
+      { "value": "100%", "label": "Audit trail on critical workflows" }
+    ],
+    "deliverables": [
+      "Process mapping & system design",
+      "Custom CRM and pipeline tools",
+      "Internal admin tools",
+      "Role-based access & permissions",
+      "Integrations & data sync (APIs, webhooks)",
+      "Reporting and operational dashboards",
+      "Data migration from legacy tools",
+      "Training and documentation"
+    ],
+    "capabilities": [
+      { "title": "Custom CRM", "description": "We build custom CRM platforms with streamlined sales pipelines, customer insights, and automated workflows." },
+      { "title": "Internal Tools", "description": "We replace manual processes with tailored internal tools that streamline workflows and enhance productivity." },
+      { "title": "System Integrations", "description": "We connect core business systems to streamline data flow and minimize manual effort." },
+      { "title": "Operations Platforms", "description": "We unify business operations on a centralized platform for improved visibility, coordination, and efficiency." }
+    ],
+    "approach": [
+      { "title": "Understand the workflow", "description": "We map your processes to identify inefficiencies, data gaps, and opportunities for improvement." },
+      { "title": "Unify your data", "description": "We create a centralized data model that keeps teams and systems aligned." },
+      { "title": "Design for daily use", "description": "We build intuitive interfaces around the needs of the people who use them every day." },
+      { "title": "Migrate with confidence", "description": "We validate data, run parallel systems, and train your team for a smooth transition." }
+    ],
+    "technologies": ["nextjs", "nodejs", "postgresql", "redis", "rest-apis", "docker"],
+    "relatedProjects": ["realtime-operations-hub", "unified-patient-workflow"],
+    "keywords": [
+      "custom CRM development",
+      "internal tools development",
+      "business process software",
+      "system integration services",
+      "operations platform development"
+    ],
+    "seo": {
+      "title": "Custom Business Systems, CRMs & Internal Tools",
+      "description": "Custom CRMs, internal tools and integrations that replace spreadsheets and disconnected SaaS — one source of truth, built around how your business works."
+    }
+  },
+  {
+    "slug": "modernization",
+    "order": 6,
+    "title": "Modernization",
+    "headline": "Evolve your *tech* Elevate your *edge*",
+    "tagline": "Re-platforming · Architecture · Performance",
+    "summary": "We modernize legacy systems, optimize performance, and build scalable architecture to keep your business ready for what’s next.",
+    "description": [
+      "Seamless system modernization designed to enhance performance, ensure continuity, and support future growth.",
+      "We modernize legacy systems through strategic analysis, incremental upgrades, and performance optimization, creating secure, scalable, and adaptable technology while ensuring business continuity."
+    ],
+    "icon": "refresh-cw",
+    "accent": "#fc8181",
+    "outcomes": [
+      { "value": "70%", "label": "Faster page and API response times" },
+      { "value": "0 min", "label": "Downtime during migration" },
+      { "value": "−45%", "label": "Infrastructure cost after re-platforming" }
+    ],
+    "deliverables": [
+      "Technical audit & risk map",
+      "Architecture roadmap",
+      "Incremental re-platforming (strangler pattern)",
+      "Performance and database optimization",
+      "Cloud migration & containerization",
+      "UX redesign of legacy screens",
+      "Test coverage & CI/CD",
+      "Security hardening and dependency upgrades"
+    ],
+    "capabilities": [
+      { "title": "Re-platforming", "description": "We upgrade legacy technology with modern frameworks while preserving functionality and ensuring continuity." },
+      { "title": "Performance Engineering", "description": "We optimize application performance across frontend, APIs, and databases for greater speed and reliability." },
+      { "title": "Cloud Migration", "description": "We modernize cloud infrastructure with containerized deployments, real-time monitoring, and scalable architecture." },
+      { "title": "Legacy UX Redesign", "description": "We modernize interfaces with intuitive design while preserving essential business logic and functionality." }
+    ],
+    "approach": [
+      { "title": "Assess the system", "description": "We analyse code, infrastructure, and usage to identify risks and improvement opportunities." },
+      { "title": "Secure the foundation", "description": "We introduce automated tests to preserve existing functionality before making changes." },
+      { "title": "Modernize in stages", "description": "We replace outdated components incrementally, reducing risk and maintaining business continuity." },
+      { "title": "Optimize for the future", "description": "We strengthen performance, provide clear documentation, and equip your team for continuous improvement." }
+    ],
+    "technologies": ["docker", "terraform", "aws", "ci-cd", "postgresql", "typescript"],
+    "relatedProjects": ["legacy-erp-modernization"],
+    "keywords": [
+      "legacy software modernization",
+      "application re-platforming",
+      "performance optimization services",
+      "cloud migration services",
+      "technical debt reduction"
+    ],
+    "seo": {
+      "title": "Legacy Software Modernization & Re-platforming",
+      "description": "Modernize legacy systems incrementally, without a big-bang rewrite. Architecture, performance, cloud migration and UX — delivered without stopping the business."
+    }
+  }
+]

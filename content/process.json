@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "discover",
+    "order": 1,
+    "title": "Discover",
+    "summary": "We research your business, target audience, and market to understand your goals. This helps shape a clear digital product strategy, align priorities, and build a strong foundation for your project.",
+    "tags": ["Research", "Strategy", "Alignment"],
+    "duration": "Weeks 1–2",
+    "deliverables": ["Stakeholder interviews", "User research", "Opportunity map"]
+  },
+  {
+    "slug": "define",
+    "order": 2,
+    "title": "Define",
+    "summary": "We shape your digital product strategy, technical architecture, and project roadmap around your business goals. With a clear scope and design direction, we turn ideas into a structured plan ready for development.",
+    "tags": ["Architecture", "Roadmap", "Scope"],
+    "duration": "Weeks 2–3",
+    "deliverables": ["Product roadmap", "Technical architecture", "Fixed-scope plan"]
+  },
+  {
+    "slug": "design",
+    "order": 3,
+    "title": "Design",
+    "summary": "We invent UI/UX designs that put the user in center of the design. The design uses user friendly interface that enables seamless communication with the end user",
+    "tags": ["UI/UX", "Prototyping", "Systems"],
+    "duration": "Weeks 3–6",
+    "deliverables": ["User flows", "Clickable prototype", "Design system"]
+  },
+  {
+    "slug": "build",
+    "order": 4,
+    "title": "Build",
+    "summary": "Utilizing cutting-edge technology and streamlined integrations, we create highly efficient and protected digital products that scale to meet your commercial needs. ",
+    "tags": ["Engineering", "APIs", "Infrastructure"],
+    "duration": "Weeks 4–10",
+    "deliverables": ["Two-week sprints", "Automated tests", "Staging environment"]
+  },
+  {
+    "slug": "launch",
+    "order": 5,
+    "title": "Launch",
+    "summary": "We launch your digital product with a smooth deployment process, ensuring performance, security, and reliability. Through continuous monitoring and optimization, we make sure your product is ready for real users and real-world demands.",
+    "tags": ["Deploy", "Monitor", "Optimize"],
+    "duration": "Launch week",
+    "deliverables": ["Production deployment", "Monitoring & alerts", "Launch checklist"]
+  },
+  {
+    "slug": "grow",
+    "order": 6,
+    "title": "Grow",
+    "summary": "We help your digital product evolve through continuous improvement, data-driven insights, and performance optimization. By tracking user behaviour, refining features, and scaling technology, we support long-term business growth.",
+    "tags": ["Analytics", "Iteration", "Scale"],
+    "duration": "Ongoing",
+    "deliverables": ["Analytics reviews", "Experiment roadmap", "Performance tuning"]
+  }
+]

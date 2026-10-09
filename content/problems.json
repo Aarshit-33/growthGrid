@@ -1,0 +1,50 @@
+[
+  {
+    "key": "no-clear-plan",
+    "order": 1,
+    "icon": "target",
+    "title": "No clear plan",
+    "description": "Work starts without a strategy, so time and money are wasted on things that don't help your business.",
+    "node": 4
+  },
+  {
+    "key": "slow-delivery",
+    "order": 2,
+    "icon": "hourglass",
+    "title": "Slow delivery",
+    "description": "Vision without execution. Products that never make it past the whiteboard.",
+    "node": 1
+  },
+  {
+    "key": "design-and-tech",
+    "order": 3,
+    "icon": "unplug",
+    "title": "Design and tech don't match",
+    "description": "The design looks good but is hard to build, or the product works well but looks outdated.",
+    "node": 2
+  },
+  {
+    "key": "no-results-after-launch",
+    "order": 4,
+    "icon": "rocket",
+    "title": "No results after launch",
+    "description": "The website or app goes live, but it doesn't bring in visitors, leads or sales.",
+    "node": 3
+  },
+  {
+    "key": "bugs-and-slow-performance",
+    "order": 5,
+    "icon": "repeat",
+    "title": "Bugs and slow performance",
+    "description": "Broken Pages, buggy features for a new few users, but crashes or slows down when more people start using it.",
+    "node": 5
+  },
+  {
+    "key": "cannot-handle-growth",
+    "order": 6,
+    "icon": "trending-down",
+    "title": "Can't handle growth",
+    "description": "The product works for a few users, but crashes or slows down when more people start using it.",
+    "node": 6
+  }
+]

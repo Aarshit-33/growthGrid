@@ -1,0 +1,79 @@
+[
+  {
+    "key": "frontend",
+    "order": 1,
+    "name": "Frontend",
+    "color": "#61dafb",
+    "description": "Fast, accessible interfaces and content platforms.",
+    "technologies": [
+      { "slug": "react", "name": "React", "short": "Re", "description": "Component-driven UIs, fast re-renders and reusable design systems." },
+      { "slug": "nextjs", "name": "Next.js", "short": "Nx", "description": "Full-stack React framework — server rendering, static generation and APIs in one codebase." },
+      { "slug": "typescript", "name": "TypeScript", "short": "TS", "description": "Type safety that catches bugs before they ever reach production." },
+      { "slug": "tailwind", "name": "Tailwind CSS", "short": "TW", "description": "Utility-first styling that keeps design consistent at any scale." },
+      { "slug": "headless-cms", "name": "Headless CMS", "short": "CMS", "description": "Structured, editor-friendly content your marketing team controls." }
+    ]
+  },
+  {
+    "key": "mobile",
+    "order": 2,
+    "name": "Mobile",
+    "color": "#8b9cf7",
+    "description": "Cross-platform and native apps for iOS and Android.",
+    "technologies": [
+      { "slug": "react-native", "name": "React Native", "short": "RN", "description": "One codebase for iOS and Android with genuinely native performance." },
+      { "slug": "expo", "name": "Expo", "short": "Ex", "description": "Managed builds, over-the-air updates and a fast release workflow." },
+      { "slug": "swift", "name": "Swift", "short": "Sw", "description": "Native iOS modules where platform-specific power really matters." },
+      { "slug": "kotlin", "name": "Kotlin", "short": "Kt", "description": "Native Android modules for deep platform integrations." }
+    ]
+  },
+  {
+    "key": "backend",
+    "order": 3,
+    "name": "Backend",
+    "color": "#68d391",
+    "description": "APIs and services engineered to last.",
+    "technologies": [
+      { "slug": "nodejs", "name": "Node.js", "short": "Nd", "description": "Event-driven runtime — fast I/O and JavaScript end to end." },
+      { "slug": "python", "name": "Python", "short": "Py", "description": "Data pipelines, machine learning and rapid API prototyping." },
+      { "slug": "graphql", "name": "GraphQL", "short": "GQ", "description": "Query exactly the data you need — nothing more, nothing less." },
+      { "slug": "rest-apis", "name": "REST APIs", "short": "API", "description": "Standard, well-documented HTTP APIs built to scale." }
+    ]
+  },
+  {
+    "key": "data",
+    "order": 4,
+    "name": "Data",
+    "color": "#f6ad55",
+    "description": "Reliable storage, caching and real-time data.",
+    "technologies": [
+      { "slug": "postgresql", "name": "PostgreSQL", "short": "PG", "description": "ACID-compliant relational database — complex queries, rock-solid integrity." },
+      { "slug": "mongodb", "name": "MongoDB", "short": "Mg", "description": "Flexible document store for nested and evolving data." },
+      { "slug": "redis", "name": "Redis", "short": "Rd", "description": "In-memory cache and pub/sub — response times in microseconds." }
+    ]
+  },
+  {
+    "key": "cloud",
+    "order": 5,
+    "name": "Cloud",
+    "color": "#4fd1c5",
+    "description": "Observable infrastructure that scales on demand.",
+    "technologies": [
+      { "slug": "aws", "name": "AWS", "short": "AWS", "description": "S3, Lambda, RDS and more — the backbone of most of what we deploy." },
+      { "slug": "docker", "name": "Docker", "short": "Dk", "description": "Containers that run identically from a laptop to production." },
+      { "slug": "ci-cd", "name": "CI/CD", "short": "CI", "description": "Automated pipelines that test, build and deploy on every push." },
+      { "slug": "terraform", "name": "Terraform", "short": "TF", "description": "Infrastructure as code — reproducible, auditable environments." }
+    ]
+  },
+  {
+    "key": "ai",
+    "order": 6,
+    "name": "AI",
+    "color": "#b794f4",
+    "description": "Applied AI grounded in your data and workflows.",
+    "technologies": [
+      { "slug": "llms", "name": "LLMs", "short": "AI", "description": "Leading language models, integrated where reasoning adds real value." },
+      { "slug": "automation", "name": "Automation", "short": "Au", "description": "Workflows that remove manual steps and compound your team's output." },
+      { "slug": "rag", "name": "RAG", "short": "RAG", "description": "Retrieval-augmented generation — AI answers grounded in your own data." }
+    ]
+  }
+]

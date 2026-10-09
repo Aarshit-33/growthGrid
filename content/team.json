@@ -1,0 +1,105 @@
+[
+  {
+    "slug": "arshit-jolapara",
+    "order": 1,
+    "name": "Arshit Jolapara",
+    "role": "CEO (Chief Everything Officer)",
+    "bio": "Driving vision, strategy, development, and delivery.",
+    "focus": ["Product strategy", "Roadmapping", "Development"],
+    "avatar": null,
+    "socials": [
+      { "platform": "linkedin", "url": "https://in.linkedin.com/in/aarshitjolapara" },
+      { "platform": "github", "url": "https://aarshit-33.github.io/Aarshit-33/" }
+    ]
+  },
+  {
+    "slug": "maya-chen",
+    "order": 2,
+    "published": false,
+    "name": "Maya Chex",
+    "role": "Founder & Product Strategy",
+    "bio": "Bringing business vision and product strategy together to create solutions with purpose.",
+    "focus": ["Product strategy", "Discovery", "Roadmapping"],
+    "avatar": null,
+    "socials": [{ "platform": "linkedin", "url": "https://www.linkedin.com/company/growthgrid" }]
+  },
+  {
+    "slug": "daniel-okafor",
+    "order": 3,
+    "published": false,
+    "name": "Daniel Okafor",
+    "role": "Engineering Lead",
+    "bio": "Building scalable, reliable digital systems through thoughtful engineering.",
+    "focus": ["Architecture", "Cloud", "Performance"],
+    "avatar": null,
+    "socials": [{ "platform": "github", "url": "https://github.com/growthgrid" }]
+  },
+  {
+    "slug": "sofia-marin",
+    "order": 4,
+    "published": false,
+    "name": "Sofia Marín",
+    "role": "Design Director",
+    "bio": "Crafting intuitive digital experiences where creativity meets functionality.",
+    "focus": ["UX research", "Interface design", "Design systems"],
+    "avatar": null,
+    "socials": [{ "platform": "instagram", "url": "https://www.instagram.com/growthgrid" }]
+  },
+  {
+    "slug": "arjun-rao",
+    "order": 5,
+    "published": false,
+    "name": "Arjun Rao",
+    "role": "AI & Automation Lead",
+    "bio": "Building intelligent AI workflows that simplify processes and improve business efficiency.",
+    "focus": ["LLMs", "Automation", "Data pipelines"],
+    "avatar": null,
+    "socials": [{ "platform": "linkedin", "url": "https://www.linkedin.com/company/growthgrid" }]
+  },
+  {
+    "slug": "rana-rajdeep-sinh",
+    "order": 6,
+    "name": "Rana Rajdeep Sinh",
+    "role": "Business Administrator & Developer",
+    "bio": "Driving business strategy, product development, and digital growth.",
+    "focus": ["Business Strategy", "Product Development", "Digital Solutions"],
+    "avatar": null,
+    "socials": [
+      { "platform": "linkedin", "url": "https://www.linkedin.com/in/rajdeep-rana-0445722aa" }
+    ]
+  },
+  {
+    "slug": "anjali-bokhiriya",
+    "order": 7,
+    "name": "Anjali Bokhiriya ",
+    "role": "Marketing & Content Strategist",
+    "bio": "Creating content and marketing strategies that build brand visibility.",
+    "focus": ["Digital Marketing", "Social Media", "Content Writing"],
+    "avatar": null,
+    "socials": [
+      { "platform": "linkedin", "url": "https://www.linkedin.com/in/anjali-bokhiriya-96a78331a" }
+    ]
+  },
+  {
+    "slug": "prashil-parekh",
+    "order": 8,
+    "name": "Prashil Parekh",
+    "role": "Developer & Designer",
+    "bio": "Building digital products with clean design and reliable technology.",
+    "focus": ["Web Development", "UI/UX Design", "Product Design"],
+    "avatar": null,
+    "socials": [{ "platform": "linkedin", "url": "https://www.linkedin.com/in/prashil-parekh/" }]
+  },
+  {
+    "slug": "shrut-sitapara",
+    "order": 9,
+    "name": "Shrut Sitapara",
+    "role": "Business Analyst",
+    "bio": "Turning business data and insights into better decisions.",
+    "focus": ["Business Analysis", "Data & Insights", "Process Improvement"],
+    "avatar": null,
+    "socials": [
+      { "platform": "linkedin", "url": "https://www.linkedin.com/in/shrut-sitapara-14b3a1257/" }
+    ]
+  }
+]

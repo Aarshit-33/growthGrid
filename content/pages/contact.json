@@ -1,0 +1,85 @@
+{
+  "key": "contact",
+  "seo": {
+    "title": "Contact growthGrid | Start Your Software Project",
+    "description": "Contact growthGrid to discuss your software, AI, SaaS or digital product idea and explore how we can help bring your project to life.",
+    "keywords": [
+      "hire software development team",
+      "software development consultation",
+      "software project consultation",
+      "AI development consultation",
+      "SaaS development consultation",
+      "digital product consultation",
+      "technology consulting",
+      "software development partner"
+    ]
+  },
+  "hero": {
+    "eyebrow": "Start a project",
+    "headline": "Let's build something *meaningful*",
+    "lede": "Every great project starts with a conversation. Tell us what you're planning, what you're solving, or where you want to go. We'll help you find the right way forward."
+  },
+  "form": {
+    "nameLabel": "Your name",
+    "namePlaceholder": "Jane Cooper",
+    "emailLabel": "Work email",
+    "emailPlaceholder": "jane@company.com",
+    "companyLabel": "Company",
+    "companyPlaceholder": "Company name (optional)",
+    "servicesLabel": "What do you need help with?",
+    "timelineLabel": "Timeline",
+    "timelineOptions": ["ASAP", "In a few months", "Just exploring"],
+    "messageLabel": "Project details",
+    "messagePlaceholder": "What are you building, who is it for, and what would success look like?",
+    "submitLabel": "Send enquiry",
+    "submittingLabel": "Sending…",
+    "successTitle": "Thanks — we've got it.",
+    "successMessage": "A senior member of the team will reply within one business day. Keep an eye on your inbox (and your spam folder, just in case).",
+    "errorMessage": "Something went wrong sending your message. Please try again, or email us directly.",
+    "privacyNote": "We only use your details to reply to this enquiry. See our [privacy policy](/privacy).",
+    "heading": "Project enquiry",
+    "optionalLabel": "Optional",
+    "honeypotLabel": "Leave this field empty",
+    "resetLabel": "Send another message",
+    "planMessage": "Hi! I'd like a quote for the {plan} care plan.",
+    "errors": {
+      "nameMin": "Please enter your name.",
+      "nameMax": "That name is a little long.",
+      "email": "Please enter a valid email address.",
+      "companyMax": "Please shorten the company name.",
+      "messageMin": "Tell us a little more — at least 20 characters.",
+      "messageMax": "Please keep it under 5,000 characters.",
+      "invalid": "Please check this field.",
+      "summary": "Please check the highlighted fields and try again.",
+      "rateLimited": "You've sent several messages in a short time. Please wait a few minutes and try again, or email us directly."
+    }
+  },
+  "details": {
+    "heading": "Prefer email?",
+    "emailLabel": "Email",
+    "responseLabel": "Response time",
+    "locationLabel": "Studio",
+    "bookingLabel": "Book a call"
+  },
+  "steps": {
+    "heading": "What happens next",
+    "items": [
+      {
+        "title": "We Review Your Enquiry",
+        "description": "We understand your goals and respond within one business day."
+      },
+      {
+        "title": "A 30-minute intro call",
+        "description": "We dig into your goals, constraints and timeline, and tell you honestly whether we're the right fit."
+      },
+      {
+        "title": "A clear proposal",
+        "description": "You get a scoped plan with milestones, team and a fixed estimate — usually within a week."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "heading": "Before you *reach out.*"
+  }
+}

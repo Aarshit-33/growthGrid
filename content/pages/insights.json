@@ -1,0 +1,49 @@
+{
+  "key": "insights",
+  "seo": {
+    "title": "Insights | AI, Software & Digital Product Trends",
+    "description": "Read growthGrid insights on AI, software, SaaS, automation and digital product development to make smarter technology and business decisions.",
+    "keywords": [
+      "technology insights",
+      "AI technology insights",
+      "software development trends",
+      "digital product trends",
+      "SaaS industry insights",
+      "business automation trends",
+      "AI business trends",
+      "technology trends for businesses"
+    ]
+  },
+  "hero": {
+    "eyebrow": "Insights",
+    "headline": "Ideas that move *innovation forward*",
+    "lede": "Exploring technology, design, and strategy through fresh perspectives, practical insights, and ideas shaping the future of digital products."
+  },
+  "filters": {
+    "label": "Filter articles by topic",
+    "all": "All topics",
+    "results": {
+      "one": "{count} article",
+      "other": "{count} articles"
+    }
+  },
+  "featuredLabel": "Featured",
+  "cta": {
+    "eyebrow": "Put it into practice",
+    "heading": "Ready to turn \n*insight into impact?*",
+    "lede": "Let's turn fresh perspectives into practical solutions built around your product and business goals.",
+    "primary": { "label": "Start a project", "href": "/contact" },
+    "secondary": { "label": "See our work", "href": "/work" }
+  },
+  "detail": {
+    "takeaway": "Working takeaway",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "copied": "Link copied",
+    "related": "Keep reading",
+    "minRead": "min read",
+    "writtenBy": "Written by",
+    "updated": "Updated",
+    "contents": "On this page"
+  }
+}

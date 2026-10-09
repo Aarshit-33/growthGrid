@@ -1,0 +1,58 @@
+{
+  "key": "work",
+  "seo": {
+    "title": "Our Work | Software & Digital Product Case Studies",
+    "description": "Explore growthGrid's portfolio of software, SaaS, AI and digital products built to solve real business challenges and deliver measurable results.",
+    "keywords": [
+      "software development portfolio",
+      "digital product portfolio",
+      "software case studies",
+      "SaaS case studies",
+      "AI project portfolio",
+      "web development portfolio",
+      "digital product case studies",
+      "technology case studies"
+    ]
+  },
+  "hero": {
+    "eyebrow": "Selected work",
+    "headline": "Turning challenges into *breakthroughs*",
+    "lede": "Every challenge holds an opportunity to build something better. Explore how we transform complex business problems into purposeful digital solutions that create lasting impact."
+  },
+  "breadcrumb": "Work",
+  "filters": {
+    "label": "Filter case studies by service",
+    "all": "All work",
+    "empty": "No case studies for this service yet — check back soon.",
+    "count": "{count} of {total} case studies"
+  },
+  "cta": {
+    "eyebrow": "Your project next?",
+    "heading": "Let's write *your case study.*",
+    "lede": "Tell us about the problem you're facing. We'll show you how we'd approach it — and what success could look like.",
+    "primary": { "label": "Start a project", "href": "/contact" },
+    "secondary": { "label": "Explore services", "href": "/services" }
+  },
+  "detail": {
+    "client": "Client",
+    "industry": "Industry",
+    "year": "Year",
+    "duration": "Timeline",
+    "services": "Services",
+    "challenge": "The challenge",
+    "approach": "Our approach",
+    "solution": "The solution",
+    "highlights": "What we built",
+    "results": "Results",
+    "snapshot": "Live snapshot",
+    "snapshotLede": "An interactive recreation of the product's core flow — try it.",
+    "stack": "Stack",
+    "testimonial": "In their words",
+    "next": "Next case study",
+    "view": "View case study",
+    "toc": "On this page",
+    "confidence": "Confidence",
+    "pause": "Pause",
+    "replay": "Replay"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "key": "terms",
+  "seo": {
+    "title": "Terms of Use",
+    "description": "The terms that apply when you use the growthGrid website, including intellectual property, acceptable use and limitations of liability."
+  },
+  "eyebrow": "Legal",
+  "title": "Terms of use",
+  "updatedAt": "2026-09-01",
+  "updatedLabel": "Last updated",
+  "contentsLabel": "On this page",
+  "body": [
+    {
+      "type": "paragraph",
+      "text": "These terms apply to your use of **growthgrid.studio** (the \"website\"), operated by growthGrid Studio (\"growthGrid\", \"we\", \"us\"). By using the website you agree to them. If you don't agree, please don't use the website."
+    },
+    { "type": "heading", "level": 2, "text": "Using the website" },
+    {
+      "type": "paragraph",
+      "text": "You may browse, read and share links to the website for your own information. You agree not to misuse it — for example by attempting to gain unauthorized access, interfering with its operation, scraping it at a volume that degrades service, or using it to send spam or malicious code."
+    },
+    { "type": "heading", "level": 2, "text": "Intellectual property" },
+    {
+      "type": "paragraph",
+      "text": "Unless stated otherwise, the content on this website — including text, graphics, code, interactive visuals and the growthGrid name and logo — belongs to growthGrid or its licensors and is protected by intellectual-property laws. You may quote short excerpts with attribution and a link back; any other reuse requires our written permission."
+    },
+    {
+      "type": "paragraph",
+      "text": "Client names, case studies and results are shared with permission or in anonymized form. They remain the property of their respective owners."
+    },
+    { "type": "heading", "level": 2, "text": "Information on the website" },
+    {
+      "type": "paragraph",
+      "text": "Articles, case studies and other content are provided for general information only. They are not professional advice for your specific situation, and results described in case studies depend on each client's circumstances. We work to keep content accurate and up to date, but we make no guarantees that it is complete or current."
+    },
+    { "type": "heading", "level": 2, "text": "Project engagements" },
+    {
+      "type": "paragraph",
+      "text": "Sending an enquiry does not create a contract. Any project work is governed by a separate written agreement between you and growthGrid, which takes precedence over these terms."
+    },
+    { "type": "heading", "level": 2, "text": "Third-party links" },
+    {
+      "type": "paragraph",
+      "text": "The website may link to websites we don't control. We are not responsible for their content, policies or practices, and a link does not imply endorsement."
+    },
+    { "type": "heading", "level": 2, "text": "Limitation of liability" },
+    {
+      "type": "paragraph",
+      "text": "To the fullest extent permitted by law, the website is provided \"as is\" and growthGrid is not liable for any indirect, incidental or consequential loss arising from your use of it. Nothing in these terms limits liability that cannot be limited under applicable law."
+    },
+    { "type": "heading", "level": 2, "text": "Changes" },
+    {
+      "type": "paragraph",
+      "text": "We may update these terms from time to time. The date at the top of the page shows when they last changed. Continuing to use the website after an update means you accept the revised terms."
+    },
+    { "type": "heading", "level": 2, "text": "Governing law" },
+    {
+      "type": "paragraph",
+      "text": "These terms are governed by the laws of the jurisdiction in which growthGrid Studio is registered, and any disputes will be handled by the courts of that jurisdiction."
+    },
+    { "type": "heading", "level": 2, "text": "Contact" },
+    {
+      "type": "paragraph",
+      "text": "Questions about these terms? Email [hello@growthgrid.studio](mailto:hello@growthgrid.studio)."
+    }
+  ]
+}

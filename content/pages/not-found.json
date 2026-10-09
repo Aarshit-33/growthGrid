@@ -1,0 +1,14 @@
+{
+  "key": "not-found",
+  "eyebrow": "Error 404",
+  "headline": "This page *drifted off the grid.*",
+  "lede": "The page you're looking for doesn't exist or has moved. Here are a few good places to pick up the trail.",
+  "linksLabel": "Pick up the trail",
+  "links": [
+    { "label": "Home", "href": "/" },
+    { "label": "Services", "href": "/services" },
+    { "label": "Work", "href": "/work" },
+    { "label": "Insights", "href": "/insights" },
+    { "label": "Contact", "href": "/contact" }
+  ]
+}

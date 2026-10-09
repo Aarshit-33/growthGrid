@@ -1,0 +1,34 @@
+[
+  {
+    "key": "focus",
+    "order": 1,
+    "label": "Focus",
+    "title": "Business-first thinking",
+    "summary": "We align technology with your business goals, crafting tailored digital solutions that address real challenges and drive meaningful growth.",
+    "instrument": { "name": "Decision prism", "shape": "prism" }
+  },
+  {
+    "key": "foundation",
+    "order": 2,
+    "label": "Foundation",
+    "title": "Technology built to scale",
+    "summary": "We build high-performance, scalable digital solutions using modern technologies and refined engineering.",
+    "instrument": { "name": "Load-bearing frame", "shape": "lattice" }
+  },
+  {
+    "key": "momentum",
+    "order": 3,
+    "label": "Momentum",
+    "title": "Design that drives action",
+    "summary": "We design intuitive, user-focused digital experiences that blend thoughtful design with seamless interactions to drive engagement and conversions.",
+    "instrument": { "name": "Choice runway", "shape": "runway" }
+  },
+  {
+    "key": "continuity",
+    "order": 4,
+    "label": "Continuity",
+    "title": "A partnership beyond launch",
+    "summary": "We provide ongoing support, continuous optimization, and strategic collaboration to keep your digital product evolving and performing at its best.",
+    "instrument": { "name": "Continuity link", "shape": "rings" }
+  }
+]

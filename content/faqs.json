@@ -1,0 +1,289 @@
+[
+  {
+    "id": "service-provide",
+    "order": 1,
+    "question": "What services does growthGrid provide?",
+    "answer": "growthGrid provides digital product development, web development, mobile apps, AI automation, business systems, and legacy software modernization.",
+    "scopes": ["home"]
+  },
+  {
+    "id": "digital-products",
+    "order": 2,
+    "question": "Can growthGrid build a custom digital product?",
+    "answer": "Yes. We design and develop custom SaaS platforms, web applications, business tools, and digital products based on your specific goals and requirements.",
+    "scopes": ["home"]
+  },
+  {
+    "id": "growthgrid-work",
+    "order": 3,
+    "question": "Does growthGrid work with startups and established businesses?",
+    "answer": "Yes. We work with startups, growing businesses, and established companies looking to build, improve, or modernize their digital products and technology.",
+    "scopes": ["home"]
+  },
+  {
+    "id": "digital-product",
+    "order": 4,
+    "question": "How long does it take to build a digital product?",
+    "answer": "Timelines depend on the scope and complexity of the project. After understanding your requirements, we provide a clear timeline and development plan.",
+    "scopes": ["home"]
+  },
+  {
+    "id": "after-launch",
+    "order": 5,
+    "question": "Does growthGrid provide support after launch?",
+    "answer": "Yes. We provide post-launch support, maintenance, performance monitoring, security updates, and ongoing technical assistance through tailored care plans.",
+    "scopes": ["home"]
+  },
+  {
+    "id": "start-a-project",
+    "order": 6,
+    "question": "How can I start a project with growthGrid?",
+    "answer": "Simply fill out our contact form and get in touch with us. We’ll connect with you to understand your requirements and share a clear approach and proposal for your project.",
+    "scopes": ["home"]
+  },
+  {
+    "id": "digital-product-development",
+    "order": 7,
+    "question": "What digital product development services does growthGrid offer?",
+    "answer": "We provide end-to-end digital product development, including strategy, UI/UX design, web development, mobile apps, SaaS platforms, integrations, and ongoing support.",
+    "scopes": ["services"]
+  },
+  {
+    "id": "saas-product",
+    "order": 8,
+    "question": "Can you build a custom SaaS product?",
+    "answer": "Yes. We design and develop scalable SaaS products with custom features, secure architecture, intuitive user experiences, and integrations tailored to your business.",
+    "scopes": ["services"]
+  },
+  {
+    "id": "websites-and-web",
+    "order": 9,
+    "question": "What types of websites and web applications do you develop?",
+    "answer": "We build custom business websites, web applications, customer portals, dashboards, e-commerce platforms, and other high-performance digital experiences.",
+    "scopes": ["services"]
+  },
+  {
+    "id": "ai-and-automation",
+    "order": 10,
+    "question": "Does growthGrid provide AI and automation solutions?",
+    "answer": "Yes. We develop AI-powered applications, intelligent workflows, AI assistants, LLM solutions, and business automation systems designed around specific business needs.",
+    "scopes": ["services"]
+  },
+  {
+    "id": "mobile-app",
+    "order": 11,
+    "question": "Do you provide mobile app development services?",
+    "answer": "Yes. We develop mobile applications for iOS, Android, and cross-platform environments, with a focus on usability, performance, and scalability.",
+    "scopes": ["services"]
+  },
+  {
+    "id": "modernize-existing",
+    "order": 12,
+    "question": "Can you modernize existing or legacy software?",
+    "answer": "Yes. We modernize legacy applications by upgrading technology, improving performance, redesigning interfaces, and migrating systems while minimizing business disruption.",
+    "scopes": ["services"]
+  },
+  {
+    "id": "ui-ux-design",
+    "order": 13,
+    "question": "Do you provide UI/UX design as part of your services?",
+    "answer": "Yes. Our UI/UX design process covers user flows, wireframes, prototypes, visual design, and design systems to create intuitive digital experiences.",
+    "scopes": ["services"]
+  },
+  {
+    "id": "new-solutions",
+    "order": 14,
+    "question": "Can you integrate new solutions with our existing systems?",
+    "answer": "Yes. We connect new digital products with existing software, APIs, databases, third-party platforms, and business systems for a more connected workflow.",
+    "scopes": ["services"]
+  },
+  {
+    "id": "product-development",
+    "order": 15,
+    "question": "What is digital product development?",
+    "answer": "Digital product development is the process of turning a business idea or requirement into a functional digital product, from strategy and UX/UI design to development, launch, and ongoing support.",
+    "scopes": ["service:digital-products"]
+  },
+  {
+    "id": "types-of-digital-products",
+    "order": 16,
+    "question": "What types of digital products can growthGrid build?",
+    "answer": "We build custom SaaS platforms, web applications, customer portals, dashboards, internal tools, and other scalable digital products tailored to specific business needs.",
+    "scopes": ["service:digital-products"]
+  },
+  {
+    "id": "growthgrid-approach",
+    "order": 17,
+    "question": "How does growthGrid approach digital product development?",
+    "answer": "We follow a structured process covering discovery, product strategy, UX/UI design, development, testing, launch, and post-launch support to create reliable products built for long-term growth. ",
+    "scopes": ["service:digital-products"]
+  },
+  {
+    "id": "types-of-websites",
+    "order": 18,
+    "question": "What types of websites does growthGrid develop?",
+    "answer": "We develop custom business websites, corporate websites, e-commerce platforms, landing pages, and high-performance web experiences tailored to your goals.",
+    "scopes": ["service:websites"]
+  },
+  {
+    "id": "seo-and-performance",
+    "order": 19,
+    "question": "Are growthGrid websites optimized for SEO and performance?",
+    "answer": "Yes. We build websites with technical SEO, responsive design, fast performance, clean architecture, and search-engine-friendly structures in mind.",
+    "scopes": ["service:websites"]
+  },
+  {
+    "id": "redesign-or-improve",
+    "order": 20,
+    "question": "Can growthGrid redesign or improve an existing website?",
+    "answer": "Yes. We can redesign outdated websites, improve UI/UX, optimize performance, modernize the technology, and create a better digital experience without disrupting your business.",
+    "scopes": ["service:websites"]
+  },
+  {
+    "id": "ai-automation",
+    "order": 21,
+    "question": "What AI and automation services does growthGrid provide?",
+    "answer": "We build AI-powered applications, intelligent workflows, AI assistants, LLM solutions, and automated business processes tailored to specific operational needs.",
+    "scopes": ["service:ai-automation"]
+  },
+  {
+    "id": "existing-business-systems",
+    "order": 22,
+    "question": "Can AI automation integrate with our existing business systems?",
+    "answer": "Yes. We can connect AI solutions with your existing software, APIs, databases, and business tools to automate workflows and improve operational efficiency.",
+    "scopes": ["service:ai-automation"]
+  },
+  {
+    "id": "help-my-business",
+    "order": 23,
+    "question": "How can AI automation help my business?",
+    "answer": "AI automation can reduce repetitive work, streamline business processes, improve response times, and help teams make faster, more informed decisions.",
+    "scopes": ["service:ai-automation"]
+  },
+  {
+    "id": "mobile-apps",
+    "order": 24,
+    "question": "What types of mobile apps does growthGrid develop?",
+    "answer": "We develop custom mobile applications for businesses, including customer-facing apps, internal business apps, marketplaces, and on-demand platforms.",
+    "scopes": ["service:mobile-apps"]
+  },
+  {
+    "id": "ios-and-android",
+    "order": 25,
+    "question": "Can you develop apps for both iOS and Android?",
+    "answer": "Yes. We develop mobile apps for iOS and Android using native and cross-platform technologies based on your product requirements.",
+    "scopes": ["service:mobile-apps"]
+  },
+  {
+    "id": "integrate-a-mobile-app",
+    "order": 26,
+    "question": "Can you integrate a mobile app with existing business systems?",
+    "answer": "Yes. We can connect mobile applications with APIs, databases, payment systems, third-party platforms, and existing business software.",
+    "scopes": ["service:mobile-apps"]
+  },
+  {
+    "id": "what-are-custom-business-systems",
+    "order": 27,
+    "question": "What are custom business systems?",
+    "answer": "Custom business systems are software solutions built around your specific processes, such as internal tools, dashboards, CRM platforms, workflow systems, and operational applications.",
+    "scopes": ["service:business-systems"]
+  },
+  {
+    "id": "build-a-business-system-around",
+    "order": 28,
+    "question": "Can growthGrid build a business system around our existing processes?",
+    "answer": "Yes. We understand your current workflows and build custom systems that simplify operations, connect data, automate repetitive tasks, and support your business requirements.",
+    "scopes": ["service:business-systems"]
+  },
+  {
+    "id": "existing-software",
+    "order": 29,
+    "question": "Can business systems integrate with our existing software?",
+    "answer": "Yes. We can integrate custom business systems with APIs, databases, CRM platforms, ERP systems, payment solutions, and other third-party tools.",
+    "scopes": ["service:business-systems"]
+  },
+  {
+    "id": "what-is-software-modernization",
+    "order": 30,
+    "question": "What is software modernization?",
+    "answer": "Software modernization is the process of upgrading outdated applications, technology, and infrastructure to improve performance, security, scalability, and maintainability.",
+    "scopes": ["service:modernization"]
+  },
+  {
+    "id": "modernize-legacy-software-without",
+    "order": 31,
+    "question": "Can growthGrid modernize legacy software without replacing it completely?",
+    "answer": "Yes. We use an incremental modernization approach that improves existing systems while preserving essential business functionality and minimizing disruption.",
+    "scopes": ["service:modernization"]
+  },
+  {
+    "id": "how-can-software-modernization-improve",
+    "order": 32,
+    "question": "How can software modernization improve an existing application?",
+    "answer": "Modernization can improve application performance, user experience, scalability, security, and maintainability while reducing the limitations of outdated technology.",
+    "scopes": ["service:modernization"]
+  },
+  {
+    "id": "what-is-growthgrid",
+    "order": 33,
+    "question": "What is growthGrid?",
+    "answer": "growthGrid is a digital experience studio that helps businesses design, build, and improve digital products, websites, applications, and business systems.",
+    "scopes": ["about"]
+  },
+  {
+    "id": "what-does-growthgrid-specialize-in",
+    "order": 34,
+    "question": "What does growthGrid specialize in?",
+    "answer": "We specialize in digital product development, web development, AI automation, mobile applications, business systems, and software modernization.",
+    "scopes": ["about"]
+  },
+  {
+    "id": "how-does-growthgrid-approach-digital-projects",
+    "order": 35,
+    "question": "How does growthGrid approach digital projects?",
+    "answer": "We combine strategy, design, technology, and business goals to create practical digital solutions that are built for performance, scalability, and long-term growth.",
+    "scopes": ["about"]
+  },
+  {
+    "id": "who-does-growthgrid-work-with",
+    "order": 36,
+    "question": "Who does growthGrid work with?",
+    "answer": "We work with startups, growing businesses, and established companies looking to build new digital products or improve their existing technology.",
+    "scopes": ["about"]
+  },
+  {
+    "id": "why-choose-growthgrid-for-digital-development",
+    "order": 37,
+    "question": "Why choose growthGrid for digital development?",
+    "answer": "We focus on understanding the business problem before building the solution, with a clear process, practical technology choices, and ongoing support after launch.",
+    "scopes": ["about"]
+  },
+  {
+    "id": "project-enquiry",
+    "order": 38,
+    "question": "What information should I include in my project enquiry?",
+    "answer": "Share your goals, project requirements, expected timeline, and any existing product or technology details. The more context you provide, the better we can understand your needs.",
+    "scopes": ["contact"]
+  },
+  {
+    "id": "project-before-committing",
+    "order": 39,
+    "question": "Can I discuss my project before committing?",
+    "answer": "Yes. We start with an introductory conversation to understand your goals, challenges, and requirements before recommending the right approach.",
+    "scopes": ["contact"]
+  },
+  {
+    "id": "what-happens-after-i-submit-the-contact-form",
+    "order": 40,
+    "question": "What happens after I submit the contact form?",
+    "answer": "We review your enquiry, connect with you to discuss your requirements, and then provide a clear approach, project scope, timeline, and proposal.",
+    "scopes": ["contact"]
+  },
+  {
+    "id": "do-you-work-with-clients-remotely",
+    "order": 41,
+    "question": "Do you work with clients remotely?",
+    "answer": "Yes. growthGrid works with businesses remotely and can collaborate with teams across different locations and time zones.",
+    "scopes": ["contact"]
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "key": "products-shipped",
+    "order": 1,
+    "value": 40,
+    "decimals": 0,
+    "prefix": "",
+    "suffix": "+",
+    "label": "Products shipped"
+  },
+  {
+    "key": "lighthouse",
+    "order": 2,
+    "value": 98,
+    "decimals": 0,
+    "prefix": "",
+    "suffix": "",
+    "label": "Average Lighthouse performance"
+  },
+  {
+    "key": "phase-two",
+    "order": 3,
+    "value": 92,
+    "decimals": 0,
+    "prefix": "",
+    "suffix": "%",
+    "label": "Clients who return for phase two"
+  },
+  {
+    "key": "hours-automated",
+    "order": 4,
+    "value": 25,
+    "decimals": 0,
+    "prefix": "",
+    "suffix": "k+",
+    "label": "Hours of manual work automated"
+  }
+]

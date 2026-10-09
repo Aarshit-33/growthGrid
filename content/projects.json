@@ -1,0 +1,1412 @@
+[
+  {
+    "slug": "unified-patient-workflow",
+    "order": 1,
+    "published": false,
+    "featured": false,
+    "title": "Unified patient workflow",
+    "category": "Healthcare platform",
+    "client": {
+      "name": "Multi-site clinic group",
+      "industry": "Healthcare",
+      "region": "Europe",
+      "anonymized": true
+    },
+    "year": 2025,
+    "duration": "11 weeks",
+    "services": [
+      "business-systems"
+    ],
+    "summary": "Four disconnected systems and a clipboard became one continuous flow — intake to follow-up, with nothing re-typed along the way.",
+    "outcome": "Problem → Platform → 60% less admin time",
+    "challenge": [
+      "Patient details were captured on paper at reception, re-typed into a practice management system, copied again into a separate billing tool and chased by phone for follow-ups. Every hand-off added delay and risk.",
+      "Clinicians were spending more time on admin than with patients, and roughly one in five follow-ups was missed entirely."
+    ],
+    "approach": [
+      "We shadowed reception, clinical and billing teams across three sites to map the real journey — including the workarounds that never made it into any process document.",
+      "A clickable prototype of the new flow was tested with staff in week three, and each workflow shipped to a single pilot site before rolling out to the group."
+    ],
+    "solution": [
+      "A single care-operations platform where intake is captured once and carried forward. Triage scores cases automatically, care plans pre-fill from history and consent, and every discharge schedules its own follow-up with escalation rules.",
+      "Role-based views give reception, clinicians and billing exactly what they need — all from the same record."
+    ],
+    "highlights": [
+      "Digital intake with validation and consent capture",
+      "Rule-based triage with self-ordering queues",
+      "Care plans pre-filled from patient history",
+      "Automated follow-ups that escalate after 72 hours",
+      "Integration with existing billing and calendar systems"
+    ],
+    "results": [
+      {
+        "value": "−60%",
+        "label": "Admin time per patient"
+      },
+      {
+        "value": "4 → 1",
+        "label": "Systems consolidated"
+      },
+      {
+        "value": "11 wks",
+        "label": "From kickoff to launch"
+      }
+    ],
+    "cover": {
+      "src": "/images/work/unified-patient-workflow.jpg",
+      "alt": "Abstract ribbons of emerald light converging into a single flowing stream on a dark background",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": {
+      "type": "flow",
+      "label": "care-ops · live",
+      "hint": "Interactive — pick a stage",
+      "runLabel": "Run the flow",
+      "kpiLabels": [
+        "Before",
+        "After",
+        "Handoffs cut"
+      ],
+      "stages": [
+        {
+          "label": "Intake",
+          "time": "0:40",
+          "title": "One intake, once",
+          "copy": "Details are captured a single time and carried forward — reception, clinic and billing all read the same record.",
+          "kpis": [
+            "12 min",
+            "4 min",
+            "3"
+          ]
+        },
+        {
+          "label": "Triage",
+          "time": "1:10",
+          "title": "Triage by rule, not memory",
+          "copy": "Urgency is scored the moment a case lands, so the queue orders itself instead of waiting for the morning huddle.",
+          "kpis": [
+            "3 hrs",
+            "20 min",
+            "2"
+          ]
+        },
+        {
+          "label": "Care plan",
+          "time": "2:05",
+          "title": "Plans that half-write themselves",
+          "copy": "Templates pull in history, medication and consent. The clinician edits rather than authors.",
+          "kpis": [
+            "25 min",
+            "9 min",
+            "4"
+          ]
+        },
+        {
+          "label": "Follow-up",
+          "time": "0:55",
+          "title": "Follow-up that never drops",
+          "copy": "Every discharge schedules its own check-in and escalates if nobody answers by day three.",
+          "kpis": [
+            "18% missed",
+            "2% missed",
+            "1"
+          ]
+        }
+      ]
+    },
+    "stack": [
+      "nextjs",
+      "typescript",
+      "nodejs",
+      "postgresql",
+      "aws"
+    ],
+    "testimonial": "clinic-operations-director",
+    "publishedAt": "2025-11-12",
+    "seo": {
+      "title": "Case Study: Unified Patient Workflow Platform",
+      "description": "How growthGrid replaced four disconnected clinic systems with one care-operations platform — cutting admin time per patient by 60% in 11 weeks."
+    }
+  },
+  {
+    "slug": "realtime-operations-hub",
+    "order": 2,
+    "published": false,
+    "featured": false,
+    "title": "Real-time operations hub",
+    "category": "E-commerce dashboard",
+    "client": {
+      "name": "Direct-to-consumer apparel brand",
+      "industry": "E-commerce",
+      "region": "North America",
+      "anonymized": true
+    },
+    "year": 2025,
+    "duration": "9 weeks",
+    "services": [
+      "digital-products",
+      "business-systems"
+    ],
+    "summary": "Three disconnected tools replaced by one live view of orders, inventory and revenue — so the morning stand-up stops being an archaeology session.",
+    "outcome": "Problem → Dashboard → Single source of truth",
+    "challenge": [
+      "Orders lived in the storefront, stock in a warehouse system and revenue in a finance spreadsheet updated weekly. Every decision started with an hour of exporting and reconciling data.",
+      "Stock-outs on best-sellers were spotted days late, and nobody trusted the numbers enough to act on them."
+    ],
+    "approach": [
+      "We traced every metric the leadership team relied on back to its source, agreed a single definition for each, and designed the dashboard around the decisions it needed to support.",
+      "Event streams from the storefront and warehouse were normalized into one data model with near real-time sync."
+    ],
+    "solution": [
+      "A live operations hub showing orders, inventory, fulfillment and growth in one place — with alerts for stock thresholds, fulfillment delays and revenue anomalies.",
+      "Drill-downs let any team move from a headline number to the individual orders behind it in two clicks."
+    ],
+    "highlights": [
+      "Unified data model across storefront, warehouse and finance",
+      "Near real-time event sync with a ~4 second lag",
+      "Threshold alerts for stock, fulfillment and revenue",
+      "Two-click drill-down from KPI to individual orders",
+      "Role-based views for leadership, ops and finance"
+    ],
+    "results": [
+      {
+        "value": "3 → 1",
+        "label": "Tools replaced"
+      },
+      {
+        "value": "~4s",
+        "label": "Data freshness"
+      },
+      {
+        "value": "+28%",
+        "label": "Revenue tracked in real time"
+      }
+    ],
+    "cover": {
+      "src": "/images/work/realtime-operations-hub.jpg",
+      "alt": "Glowing emerald columns of light rising like a live bar chart across a dark reflective grid",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": {
+      "type": "dashboard",
+      "label": "ops · realtime",
+      "hint": "Interactive — switch views, scrub the chart",
+      "days": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun",
+        "Today"
+      ],
+      "views": [
+        {
+          "label": "Overview",
+          "unit": "orders",
+          "series": [
+            250,
+            317,
+            286,
+            374,
+            343,
+            437,
+            411,
+            484
+          ],
+          "metrics": [
+            {
+              "label": "Orders",
+              "value": 2840,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "",
+              "note": "last 7 days"
+            },
+            {
+              "label": "Revenue",
+              "value": 28,
+              "decimals": 0,
+              "prefix": "+",
+              "suffix": "%",
+              "note": "vs. prior week"
+            },
+            {
+              "label": "Fulfillment",
+              "value": 99.2,
+              "decimals": 1,
+              "prefix": "",
+              "suffix": "%",
+              "note": "on time"
+            }
+          ]
+        },
+        {
+          "label": "Orders",
+          "unit": "orders",
+          "series": [
+            329,
+            207,
+            273,
+            183,
+            310,
+            235,
+            348,
+            414
+          ],
+          "metrics": [
+            {
+              "label": "New orders",
+              "value": 412,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "",
+              "note": "today"
+            },
+            {
+              "label": "Avg. basket",
+              "value": 86,
+              "decimals": 0,
+              "prefix": "$",
+              "suffix": "",
+              "note": "per order"
+            },
+            {
+              "label": "Returns",
+              "value": 1.8,
+              "decimals": 1,
+              "prefix": "",
+              "suffix": "%",
+              "note": "of volume"
+            }
+          ]
+        },
+        {
+          "label": "Growth",
+          "unit": "sessions",
+          "series": [
+            1386,
+            1953,
+            2394,
+            2898,
+            3465,
+            4284,
+            5040,
+            6111
+          ],
+          "metrics": [
+            {
+              "label": "Sessions",
+              "value": 61400,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "",
+              "note": "this quarter"
+            },
+            {
+              "label": "Conversion",
+              "value": 3.4,
+              "decimals": 1,
+              "prefix": "",
+              "suffix": "%",
+              "note": "at checkout"
+            },
+            {
+              "label": "Repeat rate",
+              "value": 41,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "%",
+              "note": "of customers"
+            }
+          ]
+        }
+      ]
+    },
+    "stack": [
+      "react",
+      "typescript",
+      "nodejs",
+      "redis",
+      "postgresql",
+      "aws"
+    ],
+    "testimonial": "dtc-head-of-operations",
+    "publishedAt": "2025-08-20",
+    "seo": {
+      "title": "Case Study: Real-Time E-commerce Operations Hub",
+      "description": "How growthGrid unified storefront, warehouse and finance data into one live operations dashboard — replacing three tools with a single source of truth."
+    }
+  },
+  {
+    "slug": "intelligent-support-pipeline",
+    "order": 3,
+    "published": false,
+    "featured": false,
+    "title": "Intelligent support pipeline",
+    "category": "AI workflow automation",
+    "client": {
+      "name": "Subscription commerce company",
+      "industry": "Retail & subscriptions",
+      "region": "United Kingdom",
+      "anonymized": true
+    },
+    "year": 2026,
+    "duration": "7 weeks",
+    "services": [
+      "ai-automation"
+    ],
+    "summary": "Incoming queries are classified, routed and answered before a human opens the queue — and the ones that need a person arrive with context attached.",
+    "outcome": "Problem → AI pipeline → 12× faster response",
+    "challenge": [
+      "A small support team was drowning in repetitive questions — order status, refunds, stock availability — while complex cases waited hours in the same queue.",
+      "Average first response time had crept past four hours, and customer satisfaction scores were falling month on month."
+    ],
+    "approach": [
+      "We analyzed six months of tickets to find the handful of intents that covered most of the volume, then built an evaluation set from real conversations before choosing any model.",
+      "Confidence thresholds decide what is answered automatically and what is routed to a person — with the full context pre-attached."
+    ],
+    "solution": [
+      "An AI triage pipeline that classifies every incoming message, pulls order, account and history data, and either resolves it instantly or routes it to the right specialist with a drafted reply.",
+      "A review console lets the team correct answers in one click, feeding the evaluation set every week so accuracy keeps climbing."
+    ],
+    "highlights": [
+      "Intent classification tuned on six months of real tickets",
+      "Retrieval over orders, policies and product catalog",
+      "Confidence thresholds with human-in-the-loop routing",
+      "Drafted replies with full customer context attached",
+      "Weekly evaluation runs to track accuracy drift"
+    ],
+    "results": [
+      {
+        "value": "12×",
+        "label": "Faster first reply"
+      },
+      {
+        "value": "94%",
+        "label": "Routed correctly"
+      },
+      {
+        "value": "0",
+        "label": "Tickets lost"
+      }
+    ],
+    "cover": {
+      "src": "/images/work/intelligent-support-pipeline.jpg",
+      "alt": "A network of glowing emerald nodes and particles forming an abstract neural pathway in darkness",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": {
+      "type": "triage",
+      "label": "triage · pipeline",
+      "hint": "Interactive — send a query",
+      "baseline": "was ~4h",
+      "queries": [
+        {
+          "chip": "Where is my order?",
+          "query": "where is my order #44192",
+          "category": "ORDER_STATUS",
+          "context": "order · account · history",
+          "route": "tracking link + ETA sent",
+          "confidence": 98,
+          "time": "0.6s"
+        },
+        {
+          "chip": "I need a refund",
+          "query": "i need a refund on this",
+          "category": "REFUND_REQUEST",
+          "context": "order · policy · payment",
+          "route": "policy checked · agent queued",
+          "confidence": 94,
+          "time": "0.9s"
+        },
+        {
+          "chip": "Back in stock?",
+          "query": "is the olive one back in stock",
+          "category": "INVENTORY",
+          "context": "catalog · stock · waitlist",
+          "route": "restock date + alert opt-in",
+          "confidence": 91,
+          "time": "0.7s"
+        }
+      ]
+    },
+    "stack": [
+      "llms",
+      "rag",
+      "python",
+      "nodejs",
+      "postgresql"
+    ],
+    "testimonial": "subscription-cx-lead",
+    "publishedAt": "2026-03-04",
+    "seo": {
+      "title": "Case Study: AI Customer Support Triage Pipeline",
+      "description": "How growthGrid built an AI triage pipeline that classifies, routes and answers support queries — cutting first response time 12× with zero lost tickets."
+    }
+  },
+  {
+    "slug": "b2b-saas-website-relaunch",
+    "order": 4,
+    "published": false,
+    "featured": false,
+    "title": "Conversion-first website relaunch",
+    "category": "Marketing website",
+    "client": {
+      "name": "B2B SaaS company",
+      "industry": "Software",
+      "region": "Europe",
+      "anonymized": true
+    },
+    "year": 2026,
+    "duration": "8 weeks",
+    "services": [
+      "websites"
+    ],
+    "summary": "A slow, template-built site rebuilt as a fast, search-ready growth engine — with a CMS the marketing team runs on its own.",
+    "outcome": "Problem → Website → 2.3× demo requests",
+    "challenge": [
+      "The company's website took over five seconds to load on mobile, ranked for almost none of its core keywords and needed a developer for every copy change.",
+      "Paid campaigns were landing visitors on generic pages, and demo requests had plateaued despite rising ad spend."
+    ],
+    "approach": [
+      "Search data and sales-call recordings shaped a new information architecture around the problems buyers actually search for.",
+      "We designed page narratives before visuals, then built a component library the marketing team can assemble into new landing pages without help."
+    ],
+    "solution": [
+      "A statically generated Next.js site with a headless CMS, structured data on every template and Core Web Vitals comfortably in the green.",
+      "Every CTA, form and scroll depth is tracked, so the team can see which pages create pipeline — not just traffic."
+    ],
+    "highlights": [
+      "Information architecture built from search and sales data",
+      "Reusable CMS page sections for self-serve landing pages",
+      "Structured data and technical SEO on every template",
+      "Sub-second LCP on mobile with static generation",
+      "Full-funnel analytics from first visit to demo request"
+    ],
+    "results": [
+      {
+        "value": "2.3×",
+        "label": "Demo requests"
+      },
+      {
+        "value": "+142%",
+        "label": "Organic traffic in 6 months"
+      },
+      {
+        "value": "0.8s",
+        "label": "Largest Contentful Paint"
+      }
+    ],
+    "cover": {
+      "src": "/images/work/b2b-saas-website-relaunch.jpg",
+      "alt": "Layered translucent glass panels floating in perspective with soft emerald and cyan light",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": null,
+    "stack": [
+      "nextjs",
+      "react",
+      "typescript",
+      "tailwind",
+      "headless-cms"
+    ],
+    "testimonial": "saas-vp-marketing",
+    "publishedAt": "2026-05-18",
+    "seo": {
+      "title": "Case Study: B2B SaaS Website Relaunch",
+      "description": "How growthGrid rebuilt a slow B2B SaaS website on Next.js and a headless CMS — delivering 2.3× more demo requests and 142% more organic traffic."
+    }
+  },
+  {
+    "slug": "field-service-mobile-app",
+    "order": 5,
+    "published": false,
+    "featured": false,
+    "title": "Offline-first field service app",
+    "category": "Mobile app",
+    "client": {
+      "name": "Regional logistics operator",
+      "industry": "Logistics",
+      "region": "Asia-Pacific",
+      "anonymized": true
+    },
+    "year": 2025,
+    "duration": "14 weeks",
+    "services": [
+      "mobile-apps",
+      "business-systems"
+    ],
+    "summary": "Paper job sheets replaced with a mobile app that works with no signal — and syncs the moment it finds one.",
+    "outcome": "Problem → Mobile app → 38% more jobs per day",
+    "challenge": [
+      "Technicians worked from printed job sheets, called the office for changes and re-entered everything at the end of the day. Jobs were double-booked, photos went missing and invoices went out a week late.",
+      "Many sites had little or no mobile coverage — which had sunk two previous attempts at an app."
+    ],
+    "approach": [
+      "We rode along with technicians to understand their day, then designed for gloves, bright sunlight and one-handed use.",
+      "An offline-first sync engine was proven on real devices in week two, before any interface polish."
+    ],
+    "solution": [
+      "A cross-platform app with route-optimized job lists, checklists, photo capture, signatures and parts tracking — all available offline and synced conflict-free when a connection returns.",
+      "Office staff dispatch and monitor jobs from a live web console, and invoices are generated the moment a job is signed off."
+    ],
+    "highlights": [
+      "Offline-first sync with conflict resolution",
+      "Route-optimized daily job lists",
+      "Photo capture, checklists and customer signatures",
+      "Live dispatch console for the office team",
+      "Automatic invoicing on job sign-off"
+    ],
+    "results": [
+      {
+        "value": "+38%",
+        "label": "Jobs completed per day"
+      },
+      {
+        "value": "4.8★",
+        "label": "Technician app rating"
+      },
+      {
+        "value": "7 → 0",
+        "label": "Days to invoice"
+      }
+    ],
+    "cover": {
+      "src": "/images/work/field-service-mobile-app.jpg",
+      "alt": "Abstract glowing route lines and waypoints tracing across a dark topographic map",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": null,
+    "stack": [
+      "react-native",
+      "expo",
+      "typescript",
+      "nodejs",
+      "postgresql",
+      "aws"
+    ],
+    "testimonial": null,
+    "publishedAt": "2025-10-02",
+    "seo": {
+      "title": "Case Study: Offline-First Field Service App",
+      "description": "How growthGrid replaced paper job sheets with an offline-first React Native app — lifting jobs completed per day by 38% and invoicing on sign-off."
+    }
+  },
+  {
+    "slug": "legacy-erp-modernization",
+    "order": 6,
+    "published": false,
+    "featured": false,
+    "title": "Legacy ERP modernization",
+    "category": "Platform modernization",
+    "client": {
+      "name": "Industrial components manufacturer",
+      "industry": "Manufacturing",
+      "region": "North America",
+      "anonymized": true
+    },
+    "year": 2026,
+    "duration": "6 months",
+    "services": [
+      "modernization",
+      "business-systems"
+    ],
+    "summary": "A 15-year-old ERP modernized piece by piece — faster, cheaper to run and ready for new products, without a single minute of downtime.",
+    "outcome": "Problem → Re-platform → 70% faster, zero downtime",
+    "challenge": [
+      "The manufacturer's ERP ran on an unsupported framework and a single on-premise server. Screens took seconds to load, every change risked breaking something else, and only one engineer understood the codebase.",
+      "A full rewrite had been quoted at two years — time the business simply didn't have."
+    ],
+    "approach": [
+      "We mapped modules by business value and risk, wrapped critical flows in characterization tests and introduced an API layer in front of the legacy database.",
+      "New services replaced old modules one at a time using the strangler pattern, each released behind feature flags."
+    ],
+    "solution": [
+      "A modern, containerized platform on managed cloud infrastructure, with a redesigned interface for the most-used screens and a clean API for future integrations.",
+      "Monitoring, automated deployments and documentation mean the in-house team now ships changes weekly instead of quarterly."
+    ],
+    "highlights": [
+      "Characterization tests around critical business flows",
+      "API layer in front of the legacy database",
+      "Strangler-pattern migration behind feature flags",
+      "Containerized infrastructure as code",
+      "Redesigned UI for the highest-traffic screens"
+    ],
+    "results": [
+      {
+        "value": "70%",
+        "label": "Faster response times"
+      },
+      {
+        "value": "0 min",
+        "label": "Downtime during migration"
+      },
+      {
+        "value": "−45%",
+        "label": "Infrastructure cost"
+      }
+    ],
+    "cover": {
+      "src": "/images/work/legacy-erp-modernization.jpg",
+      "alt": "Old weathered stone blocks transforming into clean crystalline emerald structures",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": null,
+    "stack": [
+      "typescript",
+      "nodejs",
+      "postgresql",
+      "docker",
+      "terraform",
+      "aws"
+    ],
+    "testimonial": "manufacturing-cto",
+    "publishedAt": "2026-07-09",
+    "seo": {
+      "title": "Case Study: Legacy ERP Modernization",
+      "description": "How growthGrid modernized a 15-year-old manufacturing ERP incrementally — 70% faster response times, 45% lower infrastructure cost and zero downtime."
+    }
+  },
+  {
+    "slug": "boardly",
+    "order": 7,
+    "featured": true,
+    "title": "Boardly: real-time issue tracking",
+    "category": "Project management SaaS",
+    "client": {
+      "name": "In-house product",
+      "industry": "Agencies & product teams",
+      "region": "India",
+      "anonymized": false
+    },
+    "year": 2026,
+    "duration": "3 weeks",
+    "services": [
+      "digital-products",
+      "business-systems",
+      "websites"
+    ],
+    "summary": "A Kanban board and issue tracker that syncs every movement, edit, and comment in real time, while maintaining a comprehensive history for every ticket.",
+    "outcome": "Scattered updates → Live board → One shared picture",
+    "challenge": [
+      "Small teams run projects across chat threads, spreadsheets and a tracker nobody keeps current. By the time the weekly check-in starts, half the board is already out of date.",
+      "The tools they tested were either designed for massive organizations or lacked the two essential features they consistently requested: real-time updates visible to everyone and a transparent log tracking individual contributions."
+    ],
+    "approach": [
+      "We started from the change, not the screen. Every move, edit and comment is written once, stored in the ticket's history and broadcast to everyone viewing that board.",
+      "The API came first, with typed request and response models, so the board, the list view and notifications all read from one contract.",
+      "Roles were settled before the first screen: owners manage boards and members, members move and discuss the work."
+    ],
+    "solution": [
+      "Boardly pairs a Next.js front end with a FastAPI and PostgreSQL back end. Boards update live over WebSockets, so a card dragged on one screen moves on every other open screen within a second.",
+      "Each ticket carries its comments, watchers and a full audit history. Watchers are notified about the changes they care about, and the list view filters, sorts and searches across every board."
+    ],
+    "highlights": [
+      "Drag-and-drop Kanban with live updates over WebSockets",
+      "Owner and member roles with board-level permissions",
+      "Complete change history on every ticket",
+      "Watchers with change notifications",
+      "List view with filters, sorting and search",
+      "Light and dark themes"
+    ],
+    "results": [
+      {
+        "value": "<1s",
+        "label": "For a change to reach every open board"
+      },
+      {
+        "value": "100%",
+        "label": "Of ticket changes kept in the history"
+      },
+      {
+        "value": "2",
+        "label": "Roles, each with its own permissions"
+      }
+    ],
+    "cover": {
+      "src": "/images/stitch/work/boardly/boardly-a-board.jpg",
+      "alt": "Boardly's Kanban board with four columns of tickets, live teammate avatars and an activity feed",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": {
+      "type": "dashboard",
+      "label": "boardly · live",
+      "hint": "Interactive · sample workspace data",
+      "days": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun",
+        "Today"
+      ],
+      "views": [
+        {
+          "label": "Throughput",
+          "unit": "tickets closed",
+          "series": [
+            6,
+            9,
+            7,
+            11,
+            10,
+            3,
+            2,
+            8
+          ],
+          "metrics": [
+            {
+              "label": "Closed",
+              "value": 56,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "",
+              "note": "last 8 days"
+            },
+            {
+              "label": "Open",
+              "value": 23,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "",
+              "note": "across 4 boards"
+            },
+            {
+              "label": "Cycle time",
+              "value": 2.4,
+              "decimals": 1,
+              "prefix": "",
+              "suffix": "d",
+              "note": "median, start to done"
+            }
+          ]
+        },
+        {
+          "label": "Activity",
+          "unit": "live events",
+          "series": [
+            142,
+            188,
+            161,
+            214,
+            197,
+            38,
+            21,
+            176
+          ],
+          "metrics": [
+            {
+              "label": "Events",
+              "value": 1137,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "",
+              "note": "moves, edits, comments"
+            },
+            {
+              "label": "Comments",
+              "value": 214,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "",
+              "note": "this week"
+            },
+            {
+              "label": "Watchers",
+              "value": 3.2,
+              "decimals": 1,
+              "prefix": "",
+              "suffix": "",
+              "note": "per ticket, average"
+            }
+          ]
+        },
+        {
+          "label": "Review",
+          "unit": "tickets in review",
+          "series": [
+            4,
+            6,
+            5,
+            8,
+            3,
+            1,
+            1,
+            5
+          ],
+          "metrics": [
+            {
+              "label": "In review",
+              "value": 5,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "",
+              "note": "right now"
+            },
+            {
+              "label": "Due this week",
+              "value": 9,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "",
+              "note": "across all boards"
+            },
+            {
+              "label": "Reopened",
+              "value": 4,
+              "decimals": 0,
+              "prefix": "",
+              "suffix": "%",
+              "note": "of closed tickets"
+            }
+          ]
+        }
+      ]
+    },
+    "stack": [
+      "nextjs",
+      "typescript",
+      "python",
+      "rest-apis",
+      "postgresql"
+    ],
+    "testimonial": null,
+    "publishedAt": "2026-02-18",
+    "seo": {
+      "title": "Boardly: Real-Time Issue Tracking App",
+      "description": "How we built Boardly, a real-time Kanban and issue tracker on Next.js, FastAPI and PostgreSQL, with live updates, roles, watchers and full ticket history."
+    }
+  },
+  {
+    "slug": "nexus",
+    "order": 8,
+    "featured": true,
+    "title": "Nexus: Small-business accounting",
+    "category": "Accounting platform",
+    "client": {
+      "name": "In-house product",
+      "industry": "Small-business finance",
+      "region": "India",
+      "anonymized": false
+    },
+    "year": 2024,
+    "duration": "5 weeks",
+    "services": [
+      "business-systems",
+      "websites"
+    ],
+    "summary": "Manage expenses, payroll, customers, vendor bills, and invoices within a single cloud workspace, allowing small businesses to track their cash flow without ever touching a spreadsheet.",
+    "outcome": "Spreadsheets → Finance suite → Books in one place",
+    "challenge": [
+      "Most small businesses keep their books in pieces: a spreadsheet for expenses, another for salaries, an invoicing app and a folder of vendor bills. Answering \"how much cash do we actually have?\" takes an afternoon.",
+      "While full ERP suites provide a solution, their pricing and implementation cycles are scaled for massive enterprises, forcing a three-person finance team to overhaul their entire workflow overnight."
+    ],
+    "approach": [
+      "We mapped how money moves through a typical small business: spend, payroll, sales and supplier bills and gave each flow its own module, sharing one record for every customer and vendor.",
+      "The dashboard was designed around three questions an owner asks every week: what came in, what went out, and who still owes us."
+    ],
+    "solution": [
+      "Nexus is a MERN application using MongoDB, Express, React and Node.js with five modules: expenses, employees and payroll, customers, vendor bills, and sales with invoicing.",
+      "One dashboard shows cash in, cash out, receivables and payables, and every total opens the invoices or bills behind it. Sign-in and the API are secured with JSON Web Tokens."
+    ],
+    "highlights": [
+      "Expense tracking with categories and spend analysis",
+      "Employee records with roles and salaries",
+      "Customer and vendor ledgers in one place",
+      "Invoices, payment receipts and vendor bills",
+      "Cash-flow dashboard with drill-down to documents",
+      "JWT-secured sign-in and API"
+    ],
+    "results": [
+      {
+        "value": "5",
+        "label": "Finance modules in one workspace"
+      },
+      {
+        "value": "1",
+        "label": "Dashboard for cash, bills and invoices"
+      },
+      {
+        "value": "2 clicks",
+        "label": "From any total to the document behind it"
+      }
+    ],
+    "cover": {
+      "src": "/images/stitch/work/nexus/nexus-c-modules.jpg",
+      "alt": "Nexus finance dashboard with a cash-flow chart, overdue invoices and an expense breakdown",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": null,
+    "stack": [
+      "react",
+      "nodejs",
+      "rest-apis",
+      "mongodb"
+    ],
+    "testimonial": null,
+    "publishedAt": "2024-08-06",
+    "seo": {
+      "title": "Nexus: Cloud Accounting for Small Business",
+      "description": "Nexus brings expenses, payroll, customers, vendor bills and invoicing into one MERN app, with a cash-flow dashboard that links every total to its documents."
+    }
+  },
+  {
+    "slug": "documind",
+    "order": 9,
+    "featured": true,
+    "title": "DocuMind: answers from your documents",
+    "category": "AI document assistant",
+    "client": {
+      "name": "In-house R&D",
+      "industry": "Legal, HR & operations teams",
+      "region": "India",
+      "anonymized": false
+    },
+    "year": 2024,
+    "duration": "4 weeks",
+    "services": [
+      "ai-automation"
+    ],
+    "summary": "Upload a PDF, Word file or slide deck and ask it anything. Every answer comes back with the page or slide it came from, so nobody has to take the AI's word for it.",
+    "outcome": "Long documents → RAG assistant → Cited answers",
+    "challenge": [
+      "Policies, contracts and decks run to dozens of pages, and the answer someone needs is usually one sentence in the middle. Search finds keywords, not answers.",
+      "General-purpose AI chat makes it worse: it answers confidently without saying where the answer came from a non-starter for HR, legal and compliance work."
+    ],
+    "approach": [
+      "Each file type gets its own parser, so page numbers in PDFs, tables in Word files and speaker notes in slides survive the trip into the index.",
+      "Text is split into overlapping chunks, embedded with an open sentence-transformer model and stored in a FAISS index, so retrieval runs locally and fast.",
+      "The model may only answer from the passages retrieved, and must cite each one it uses. When nothing relevant comes back, it says so instead of guessing."
+    ],
+    "solution": [
+      "DocuMind is a Python service with a chat interface: upload a PDF, DOCX or PPTX, ask a question in plain language, and get a short answer with numbered citations to the exact page or slide.",
+      "It runs on open models, all-mpnet-base-v2 for embeddings and Mistral 7B for answers so it can be hosted privately for documents that shouldn't leave the company."
+    ],
+    "highlights": [
+      "PDF, DOCX and PPTX parsing that keeps page and slide numbers",
+      "Overlapping chunks for answers that span paragraphs",
+      "Local FAISS vector search with mpnet embeddings",
+      "Answers grounded only in retrieved passages",
+      "Numbered citations on every answer",
+      "Open models that can run on private infrastructure"
+    ],
+    "results": [
+      {
+        "value": "3",
+        "label": "Document types: PDF, Word and PowerPoint"
+      },
+      {
+        "value": "100%",
+        "label": "Of answers cite a page or slide"
+      },
+      {
+        "value": "7B",
+        "label": "Open model that can be hosted privately"
+      }
+    ],
+    "cover": {
+      "src": "/images/stitch/work/documind/documind-a-answer.jpg",
+      "alt": "DocuMind workspace with a document library, a chat answer with numbered citations and the cited PDF page highlighted",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": {
+      "type": "triage",
+      "label": "documind · ask",
+      "hint": "Interactive · sample documents",
+      "baseline": "was Ctrl+F",
+      "queries": [
+        {
+          "chip": "Notice period?",
+          "query": "what is the notice period after probation",
+          "category": "HR_POLICY",
+          "context": "employee-handbook.pdf · p.12, p.14",
+          "route": "answer + 2 citations",
+          "confidence": 96,
+          "time": "1.2s"
+        },
+        {
+          "chip": "Contract renewal",
+          "query": "when does the vendor contract renew automatically",
+          "category": "CONTRACT_TERM",
+          "context": "vendor-msa.docx · clause 9.2",
+          "route": "answer + clause quoted",
+          "confidence": 91,
+          "time": "1.4s"
+        },
+        {
+          "chip": "Q3 targets",
+          "query": "q3 revenue target by region",
+          "category": "DECK_DATA",
+          "context": "q3-review.pptx · slides 6–7",
+          "route": "table + 2 citations",
+          "confidence": 88,
+          "time": "1.6s"
+        },
+        {
+          "chip": "Not in the files",
+          "query": "parental leave policy for the germany office",
+          "category": "NO_SOURCE",
+          "context": "no passage above the threshold",
+          "route": "says so · shows closest matches",
+          "confidence": 14,
+          "time": "0.7s"
+        }
+      ]
+    },
+    "stack": [
+      "python",
+      "rag",
+      "llms"
+    ],
+    "testimonial": null,
+    "publishedAt": "2024-07-30",
+    "seo": {
+      "title": "DocuMind: Document Q&A With Citations",
+      "description": "A RAG assistant that answers questions about PDF, Word and PowerPoint files and cites the page or slide behind every answer, using open, self-hostable models."
+    }
+  },
+  {
+    "slug": "clear",
+    "order": 10,
+    "featured": false,
+    "title": "CLEAR: an AI inbox for your head",
+    "category": "AI productivity app",
+    "client": {
+      "name": "In-house product",
+      "industry": "Personal productivity",
+      "region": "India",
+      "anonymized": false
+    },
+    "year": 2026,
+    "duration": "2 weeks",
+    "services": [
+      "mobile-apps",
+      "ai-automation"
+    ],
+    "summary": "Type whatever is on your mind and let go. CLEAR turns each dump into tasks in the background and hands you three things to focus on every morning.",
+    "outcome": "Mental clutter → AI inbox → A daily Top 3",
+    "challenge": [
+      "To-do apps ask you to organize before you've finished a thought: pick a project, a due date, a priority, a label. So the thoughts stay in your head instead.",
+      "The result is a long list nobody trusts, and mornings spent deciding what to do rather than doing it."
+    ],
+    "approach": [
+      "We wrote three rules before any design: dump, don't manage; the backend decides and the frontend obeys; one screen per mode.",
+      "A background worker reads each dump and turns it into tasks with dates and effort, using Gemini when a key is configured and a simple one-dump-one-task rule when it isn't — so the app never stops working.",
+      "Every screen was designed phone-first, for one thumb and a few seconds of attention."
+    ],
+    "solution": [
+      "CLEAR is a React front end on a lightweight TypeScript API. There's one box to dump into, a background brain that sorts what you wrote, and a Daily Focus screen that picks your Top 3 each morning or on demand.",
+      "Lists, filters and settings stay out of the way until you go looking for them."
+    ],
+    "highlights": [
+      "One-box capture: type, press Cmd+Enter, done",
+      "Background worker that turns dumps into tasks",
+      "Daily Top 3, picked every morning or on demand",
+      "Gemini task extraction with a no-AI fallback",
+      "Google sign-in and email reminders",
+      "One screen per mode, designed for one thumb"
+    ],
+    "results": [
+      {
+        "value": "1",
+        "label": "Box for everything on your mind"
+      },
+      {
+        "value": "Top 3",
+        "label": "Tasks picked for you each morning"
+      },
+      {
+        "value": "100%",
+        "label": "Still usable with the AI switched off"
+      }
+    ],
+    "cover": {
+      "src": "/images/stitch/work/clear/clear-c-dump.jpg",
+      "alt": "Three CLEAR phone screens: a single capture box, the sorted task list and the Daily Focus Top 3",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": {
+      "type": "triage",
+      "label": "clear · brain",
+      "hint": "Interactive · sample brain dumps",
+      "baseline": "was manual sorting",
+      "queries": [
+        {
+          "chip": "Morning dump",
+          "query": "call CA about GST before friday, renew domain, book dentist",
+          "category": "3 TASKS",
+          "context": "deadlines · effort · today's load",
+          "route": "GST call → Top 3 today",
+          "confidence": 94,
+          "time": "1.1s"
+        },
+        {
+          "chip": "Half a thought",
+          "query": "maybe redo the pricing page??",
+          "category": "IDEA",
+          "context": "no date · low urgency",
+          "route": "parked in Someday",
+          "confidence": 83,
+          "time": "0.8s"
+        },
+        {
+          "chip": "Big plan",
+          "query": "plan the december trip with family",
+          "category": "PROJECT",
+          "context": "far deadline · several steps",
+          "route": "split into 4 tasks",
+          "confidence": 87,
+          "time": "1.3s"
+        }
+      ]
+    },
+    "stack": [
+      "react",
+      "typescript",
+      "tailwind",
+      "nodejs",
+      "llms",
+      "automation"
+    ],
+    "testimonial": null,
+    "publishedAt": "2026-01-20",
+    "seo": {
+      "title": "CLEAR: An AI Inbox for Your Head",
+      "description": "CLEAR turns brain dumps into tasks in the background and picks a daily Top 3, using Gemini when it's available and a simple fallback when it isn't."
+    }
+  },
+  {
+    "slug": "ayurveda-wellness-store",
+    "order": 11,
+    "featured": false,
+    "title": "Ayurvedic wellness store",
+    "category": "E-commerce website",
+    "client": {
+      "name": "Concept build",
+      "industry": "Ayurveda & wellness retail",
+      "region": "India",
+      "anonymized": false
+    },
+    "year": 2024,
+    "duration": "4 weeks",
+    "services": [
+      "websites"
+    ],
+    "summary": "A mobile-first store for an Ayurvedic wellness range: clear product pages, a UPI-first checkout and a catalog the shop team runs without a developer.",
+    "outcome": "Marketplace listings → Own store → UPI-first checkout",
+    "challenge": [
+      "Ayurvedic wellness brands often sell through marketplaces and WhatsApp messages. That means thin margins, no customer data and no easy way to bring a buyer back for a refill.",
+      "The brief: a store of their own that feels trustworthy on a phone, takes UPI the way Indian buyers expect, and can be updated by the shop team rather than a developer."
+    ],
+    "approach": [
+      "We designed for a phone on a patchy 4G connection first: compressed images, a short path from home page to checkout and buttons sized for thumbs.",
+      "WooCommerce runs the catalog and orders, Razorpay handles UPI, cards and netbanking, and Elementor templates let the team change banners, offers and product pages themselves."
+    ],
+    "solution": [
+      "A WordPress and WooCommerce store with product categories, bundles, customer accounts and order history, and a one-page checkout with Razorpay for UPI, cards and netbanking.",
+      "Product pages lead with ingredients, usage and certifications, and returning customers can reorder a favorite from their account in a couple of taps."
+    ],
+    "highlights": [
+      "Mobile-first theme built for 4G connections",
+      "Razorpay checkout with UPI, cards and netbanking",
+      "Product pages built around ingredients and usage",
+      "Customer accounts with order history and reorder",
+      "Elementor templates the shop team edits themselves"
+    ],
+    "results": [
+      {
+        "value": "UPI",
+        "label": "First at checkout, with cards and netbanking"
+      },
+      {
+        "value": "1 page",
+        "label": "Checkout, guest orders included"
+      },
+      {
+        "value": "0",
+        "label": "Developers needed to add a product or offer"
+      }
+    ],
+    "cover": {
+      "src": "/images/stitch/work/ayurveda-wellness-store/ojas-a-home.jpg",
+      "alt": "Ayurvedic wellness store home page with a product still life, trust badges and a bestseller grid",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": null,
+    "stack": [],
+    "testimonial": null,
+    "publishedAt": "2024-08-01",
+    "seo": {
+      "title": "Ayurvedic D2C Store With UPI Checkout",
+      "description": "A mobile-first WooCommerce store for an Ayurvedic wellness range, with Razorpay UPI checkout, ingredient-led product pages and a catalog the team runs itself."
+    }
+  },
+  {
+    "slug": "lms-replatform",
+    "order": 12,
+    "featured": false,
+    "title": "Re-platforming a legacy LMS",
+    "category": "Platform modernization",
+    "client": {
+      "name": "Concept build",
+      "industry": "Education",
+      "region": "India",
+      "anonymized": false
+    },
+    "year": 2026,
+    "duration": "6 weeks",
+    "services": [
+      "modernization"
+    ],
+    "summary": "A 2022 PHP learning portal, moved to Next.js and a typed API one module at a time — old and new side by side, with no big-bang cutover.",
+    "outcome": "Legacy PHP → Module by module → No big-bang cutover",
+    "challenge": [
+      "Our 2022 learning portal — institute, faculty and student dashboards in plain PHP — still did its job, but every change risked breaking another page. SQL lived inside the templates, sessions handled sign-in, and each dashboard was effectively its own app.",
+      "A full rewrite would have frozen the product for months. The goal was a modern platform without ever switching everything over in one night."
+    ],
+    "approach": [
+      "We listed every PHP page with the module it belongs to and the data it touches, then put a typed API in front of the existing database so old and new screens read the same records.",
+      "Modules move one at a time, smallest risk first: sign-in, then students, timetables, study material and queries. A routing layer sends each path to the old app or the new one.",
+      "Every move ships behind a switch that can send traffic back to the PHP page in seconds."
+    ],
+    "solution": [
+      "The new platform is one Next.js app with role-based views for the institute, faculty and students, backed by a typed Node.js API and deployed in containers alongside the legacy app.",
+      "Timetables update without a reload, study material is served from object storage through signed links, and student queries move out of email and into the app."
+    ],
+    "highlights": [
+      "Page-by-page inventory of the legacy app",
+      "Typed API in front of the existing database",
+      "Routing layer that sends each path to old or new",
+      "One app with institute, faculty and student views",
+      "Instant rollback switch for every module"
+    ],
+    "results": [
+      {
+        "value": "3 → 1",
+        "label": "Separate dashboards merged into one app"
+      },
+      {
+        "value": "5",
+        "label": "Modules moved one at a time"
+      },
+      {
+        "value": "0",
+        "label": "Big-bang cutovers"
+      }
+    ],
+    "cover": {
+      "src": "/images/stitch/work/lms-replatform/campus-b-split.jpg",
+      "alt": "New LMS institute dashboard with today's timetable, student numbers and a module migration tracker",
+      "width": 1600,
+      "height": 1000
+    },
+    "gallery": [],
+    "showcase": {
+      "type": "flow",
+      "label": "lms · migration",
+      "hint": "Interactive · pick a module",
+      "runLabel": "Run the migration",
+      "kpiLabels": [
+        "Legacy",
+        "New",
+        "API routes"
+      ],
+      "stages": [
+        {
+          "label": "Sign-in",
+          "time": "wk 1",
+          "title": "Sign-in moves first",
+          "copy": "PHP sessions give way to token sign-in that both apps trust, so people log in once, whichever app serves the page.",
+          "kpis": [
+            "Session",
+            "JWT",
+            "3"
+          ]
+        },
+        {
+          "label": "Students",
+          "time": "wk 2",
+          "title": "Records behind a typed API",
+          "copy": "Student and faculty records are read through the new API, and SQL leaves the page templates for good.",
+          "kpis": [
+            "Inline SQL",
+            "Typed API",
+            "8"
+          ]
+        },
+        {
+          "label": "Timetable",
+          "time": "wk 3",
+          "title": "Timetables without reloads",
+          "copy": "A change is published once and shows up for every class and teacher straight away.",
+          "kpis": [
+            "Reload",
+            "Live",
+            "4"
+          ]
+        },
+        {
+          "label": "Materials",
+          "time": "wk 4–5",
+          "title": "Study material from storage",
+          "copy": "Uploads move off the web server into object storage and are served through short-lived signed links.",
+          "kpis": [
+            "Disk",
+            "Storage",
+            "5"
+          ]
+        },
+        {
+          "label": "Queries",
+          "time": "wk 6",
+          "title": "Questions inside the app",
+          "copy": "Student questions move out of email threads and into the app, with replies and status in one place.",
+          "kpis": [
+            "Email",
+            "In-app",
+            "4"
+          ]
+        }
+      ]
+    },
+    "stack": [
+      "nextjs",
+      "typescript",
+      "nodejs",
+      "rest-apis",
+      "docker"
+    ],
+    "testimonial": null,
+    "publishedAt": "2026-09-22",
+    "seo": {
+      "title": "Re-Platforming a Legacy PHP LMS",
+      "description": "How a 2022 PHP learning portal moves to Next.js and a typed API one module at a time, with old and new running side by side and no big-bang cutover."
+    }
+  }
+]

@@ -1,0 +1,643 @@
+[
+  {
+    "slug": "start-with-the-workflow",
+    "published": false,
+    "home": false,
+    "title": "Start with the workflow, then choose the model",
+    "excerpt": "Useful AI starts with a clear job: the information it needs, the work it should improve, and where a person stays in control.",
+    "category": { "key": "applied-ai", "label": "Applied AI", "icon": "sparkles" },
+    "tags": ["AI", "Automation", "LLMs", "Evaluation"],
+    "author": "arjun-rao",
+    "cover": {
+      "src": "/images/stitch/insights/start-with-the-workflow/workflow-d-control.jpg",
+      "alt": "Streams of emerald particles flowing through a sequence of glowing gates in darkness",
+      "width": 1600,
+      "height": 900
+    },
+    "publishedAt": "2026-08-05",
+    "featured": true,
+    "takeaway": "Prototype one narrow task with real examples. Measure time saved and correction effort before widening the feature.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Most AI projects we're asked to rescue began with a model and went looking for a problem. A team gets excited about a new release, wires it into a chat window, and six weeks later nobody uses it — because it doesn't fit how the work actually gets done."
+      },
+      {
+        "type": "paragraph",
+        "text": "The projects that succeed start from the opposite direction: a specific, repetitive job that costs the business real time every single day."
+      },
+      { "type": "heading", "level": 2, "text": "Define the job before the technology" },
+      {
+        "type": "paragraph",
+        "text": "Before we evaluate a single model, we write down four things:"
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "items": [
+          "**The job.** One sentence a person on the team would recognize — \"answer order-status questions\", not \"improve customer experience\".",
+          "**The inputs.** The documents, records and history a person uses to do the job well today.",
+          "**The output.** What \"done\" looks like: a routed ticket, a drafted reply, an extracted field.",
+          "**The handover point.** Where a person reviews, corrects or takes over — and how they'll know to."
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "If you can't fill in all four, the problem isn't ready for AI yet. That's a useful outcome too — it usually means the process needs fixing first."
+      },
+      { "type": "heading", "level": 2, "text": "Build the evaluation set first" },
+      {
+        "type": "paragraph",
+        "text": "The single most valuable artifact in an AI project isn't the prompt or the pipeline. It's a set of real examples with known-good answers: fifty to two hundred cases pulled from actual work, including the awkward edge cases nobody likes to talk about."
+      },
+      {
+        "type": "paragraph",
+        "text": "With an evaluation set, choosing a model becomes a measurement instead of a debate. You can compare providers, prompts and retrieval strategies on the same data — and see immediately when a change makes things worse."
+      },
+      {
+        "type": "callout",
+        "tone": "info",
+        "title": "What we measure",
+        "text": "Accuracy on the evaluation set, time saved per task and **correction effort** — how long a person spends fixing the output. A model that is 90% accurate but slow to correct can cost more than doing the job by hand."
+      },
+      { "type": "heading", "level": 2, "text": "Keep a person in control" },
+      {
+        "type": "paragraph",
+        "text": "Confidence thresholds decide what happens automatically and what goes to a person. High-confidence, low-risk tasks — like sending a tracking link — can run on their own. Anything involving money, policy exceptions or an unhappy customer is routed to the team, with the context already attached."
+      },
+      {
+        "type": "quote",
+        "text": "The goal isn't to remove people from the loop. It's to make sure they spend their time on the cases that actually need them.",
+        "cite": "growthGrid AI practice"
+      },
+      { "type": "heading", "level": 2, "text": "Start narrow, then widen" },
+      {
+        "type": "paragraph",
+        "text": "In our [support triage pipeline](/work/intelligent-support-pipeline) project, we didn't try to automate support. We automated three intents that covered most of the volume, measured the results for two weeks, and only then widened the scope. First response time dropped twelvefold — and not a single ticket was lost."
+      },
+      {
+        "type": "list",
+        "style": "number",
+        "items": [
+          "Pick one narrow, high-volume task.",
+          "Collect real examples and define what a good answer looks like.",
+          "Prototype against the evaluation set — not a demo script.",
+          "Ship with human review, then track time saved and correction effort.",
+          "Widen the scope only when the numbers justify it."
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "The model matters less than you think. The workflow around it matters more than anyone expects."
+      }
+    ],
+    "seo": {
+      "title": "Workflow-First AI: Start With the Job",
+      "description": "Why successful AI projects start with a specific workflow and an evaluation set — and how to measure time saved and correction effort before scaling up."
+    }
+  },
+  {
+    "slug": "design-around-what-changes",
+    "published": false,
+    "home": false,
+    "title": "Design around what changes",
+    "excerpt": "Good architecture lets product areas change at different speeds. Find the real business boundaries first, then add the simplest seams that keep them independent.",
+    "category": { "key": "architecture", "label": "Architecture", "icon": "layers" },
+    "tags": ["Architecture", "System design", "Scalability", "Modernization"],
+    "author": "daniel-okafor",
+    "cover": {
+      "src": "/images/stitch/insights/design-around-what-changes/change-b-seam.jpg",
+      "alt": "Modular emerald glass blocks separating and rearranging along a precise dark grid",
+      "width": 1600,
+      "height": 900
+    },
+    "publishedAt": "2026-06-10",
+    "featured": false,
+    "takeaway": "Isolate the most volatile workflow first. A small, clear boundary is more useful than adding layers everywhere.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Every system we inherit tells the same story. It started simple, grew one feature at a time, and one day a small change to pricing meant touching checkout, invoicing, the admin panel and three reports. Nobody designed it that way. It just happened — because nobody decided what was allowed to change independently."
+      },
+      {
+        "type": "paragraph",
+        "text": "Good architecture isn't about layers, patterns or the latest framework. It's about letting different parts of a product change at different speeds without dragging the rest along."
+      },
+      { "type": "heading", "level": 2, "text": "Find the real boundaries first" },
+      {
+        "type": "paragraph",
+        "text": "The most useful boundaries follow the business, not the database. Before drawing any diagrams, we ask three questions of every area of the product:"
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "items": [
+          "**How often does it change?** Pricing rules and onboarding flows change monthly. Authentication and audit logs barely change at all.",
+          "**Who asks for the change?** When marketing, finance and operations all request changes to the same module, it's probably three modules.",
+          "**What breaks if it's wrong?** Areas with a high cost of failure deserve stronger isolation and more tests."
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "The answers usually reveal two or three areas that change far more often than everything else. Those are where boundaries earn their keep."
+      },
+      { "type": "heading", "level": 2, "text": "Add the simplest seam that works" },
+      {
+        "type": "paragraph",
+        "text": "Once you know what's volatile, resist the urge to split everything into services. Most products don't need microservices — they need clear modules with narrow interfaces. A seam can be as simple as a single function the rest of the codebase must go through."
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "// pricing/index.ts — the only door into pricing logic\nexport function quote(input: QuoteInput): Quote {\n  const rules = loadActiveRules(input.region);\n  return applyRules(rules, input);\n}",
+        "caption": "A narrow interface: checkout, invoicing and reporting all call quote() — none of them know how prices are calculated."
+      },
+      {
+        "type": "paragraph",
+        "text": "When pricing changes next quarter, one module changes. Checkout doesn't need a release, and reports don't need to be re-tested."
+      },
+      {
+        "type": "callout",
+        "tone": "tip",
+        "title": "Rule of thumb",
+        "text": "If two parts of the system always change together, they belong together. If they change for different reasons, give them a boundary."
+      },
+      { "type": "heading", "level": 2, "text": "Isolate the most volatile workflow first" },
+      {
+        "type": "paragraph",
+        "text": "You don't need to re-architect a product in one go. Pick the single workflow that changes most often — and causes the most regressions — and put a clean boundary around it. Measure how long changes take before and after. That number is what convinces a team to keep going."
+      },
+      {
+        "type": "quote",
+        "text": "A small, clear boundary is more useful than adding layers everywhere.",
+        "cite": "growthGrid engineering notes"
+      },
+      { "type": "heading", "level": 2, "text": "What this looks like in practice" },
+      {
+        "type": "paragraph",
+        "text": "On a recent [legacy ERP modernization](/work/legacy-erp-modernization), we didn't start with a rewrite. We wrapped the highest-risk flows in characterization tests, put an API layer in front of the legacy database and replaced modules one at a time. The in-house team went from quarterly releases to weekly ones — without a single minute of downtime."
+      },
+      {
+        "type": "list",
+        "style": "number",
+        "items": [
+          "Map modules by change frequency and business risk.",
+          "Protect current behavior with tests before touching anything.",
+          "Introduce one narrow interface around the most volatile area.",
+          "Measure lead time for changes, then repeat for the next area."
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Architecture that ages well isn't the most sophisticated. It's the one that makes the next change cheap."
+      }
+    ],
+    "seo": {
+      "title": "Design Around What Changes",
+      "description": "How to find real business boundaries in a codebase, add the simplest seams that keep them independent, and modernize a system without a risky rewrite."
+    }
+  },
+  {
+    "slug": "study-the-path-to-value",
+    "published": false,
+    "home": false,
+    "title": "Study the path to value, not just the pixels",
+    "excerpt": "We study how a product helps someone reach a goal, the feedback it gives along the way, and where the experience loses momentum.",
+    "category": { "key": "product-design", "label": "Product design", "icon": "mouse-pointer-click" },
+    "tags": ["UX", "Product design", "Conversion", "Research"],
+    "author": "sofia-marin",
+    "cover": {
+      "src": "/images/stitch/insights/study-the-path-to-value/path-d-momentum.jpg",
+      "alt": "A single luminous emerald path winding through layered dark translucent planes toward a bright point",
+      "width": 1600,
+      "height": 900
+    },
+    "publishedAt": "2026-04-22",
+    "featured": false,
+    "takeaway": "Trace one high-value task from start to finish. Every extra step should earn its place.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Design reviews often focus on what a screen looks like: spacing, color, type, the hover state on a button. Those details matter — but they rarely explain why a product succeeds or fails."
+      },
+      {
+        "type": "paragraph",
+        "text": "What matters more is the path: how quickly someone gets from intent to value, how the product responds along the way, and where they lose momentum and leave."
+      },
+      { "type": "heading", "level": 2, "text": "Trace one task from start to finish" },
+      {
+        "type": "paragraph",
+        "text": "Pick the single task that creates the most value for the business — booking a demo, completing a first order, inviting a teammate — and walk through it as a new user would. Record every screen, field, decision and wait."
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "items": [
+          "**Steps:** how many distinct actions does the task take?",
+          "**Decisions:** where does the user have to stop and think?",
+          "**Waits:** where does the product make them wait — for a page, an email, an approval?",
+          "**Dead ends:** where can they get stuck with no obvious way forward?"
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Written down, most paths are longer than anyone on the team realized."
+      },
+      { "type": "heading", "level": 2, "text": "Every extra step should earn its place" },
+      {
+        "type": "paragraph",
+        "text": "For each step, ask a blunt question: what would happen if we removed it? Sometimes the answer is \"we'd lose information we genuinely need\". More often it's \"nothing — we just always did it that way\"."
+      },
+      {
+        "type": "callout",
+        "tone": "tip",
+        "title": "A useful exercise",
+        "text": "Count the fields in your signup or checkout flow, then justify each one out loud to a colleague. Fields that survive the conversation stay. The rest can be collected later — or never."
+      },
+      { "type": "heading", "level": 2, "text": "Feedback is part of the path" },
+      {
+        "type": "paragraph",
+        "text": "Good products tell people what just happened and what to do next. Loading states, confirmations, inline validation and empty states aren't decoration — they're the difference between confidence and confusion."
+      },
+      {
+        "type": "quote",
+        "text": "People don't read interfaces. They scan for the next useful action — and leave when they can't find it.",
+        "cite": "growthGrid design notes"
+      },
+      { "type": "heading", "level": 2, "text": "Measure momentum, not just conversion" },
+      {
+        "type": "paragraph",
+        "text": "Conversion rate tells you how many people finished. It doesn't tell you where the rest gave up. Instrument each step of the path and look for the biggest drop — that's where design effort pays off first."
+      },
+      {
+        "type": "paragraph",
+        "text": "When we relaunched a [B2B SaaS website](/work/b2b-saas-website-relaunch), the biggest win wasn't the new visual design. It was shortening the path from landing page to demo request — which helped more than double demo requests within six months."
+      }
+    ],
+    "seo": {
+      "title": "Study the Path to Value: A Practical UX Method",
+      "description": "A simple product design method: trace one high-value task end to end, remove steps that don't earn their place, and measure where users lose momentum."
+    }
+  },
+  {
+    "slug": "technical-seo-is-an-architecture-decision",
+    "home": false,
+    "title": "Technical SEO is an architecture decision",
+    "excerpt": "Most SEO problems are baked in long before anyone writes a meta description. Rendering, URL structure and performance decide how well a site can rank.",
+    "category": { "key": "growth", "label": "Growth & SEO", "icon": "rocket" },
+    "tags": ["SEO", "Performance", "Next.js", "Core Web Vitals"],
+    "author": "maya-chen",
+    "cover": {
+      "src": "/images/stitch/insights/technical-seo-is-an-architecture-decision/seo-b-vitals.jpg",
+      "alt": "An emerald wireframe blueprint of a website structure rising from a dark grid with glowing connection lines",
+      "width": 1600,
+      "height": 900
+    },
+    "publishedAt": "2026-09-02",
+    "featured": false,
+    "takeaway": "Decide rendering, URLs and structured data before design starts. Retrofitting SEO costs far more than building it in.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "SEO is usually treated as a marketing task that happens after launch: write some meta descriptions, submit a sitemap, wait. By then, the decisions that matter most have already been made — by engineers who were never asked to think about search."
+      },
+      { "type": "heading", "level": 2, "text": "Rendering decides what search engines see" },
+      {
+        "type": "paragraph",
+        "text": "If your content only appears after JavaScript runs in the browser, search engines have to work harder to see it — and some never do. Static generation or server rendering puts complete HTML in front of crawlers on the very first request."
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "items": [
+          "**Static generation** for marketing pages, case studies and articles — fast, cacheable and fully crawlable.",
+          "**Server rendering** for pages that must be fresh on every request.",
+          "**Client rendering** only for interactive, logged-in experiences that don't need to rank."
+        ]
+      },
+      { "type": "heading", "level": 2, "text": "URLs are a long-term commitment" },
+      {
+        "type": "paragraph",
+        "text": "A clear URL structure helps people and search engines understand how your content fits together. It's also expensive to change later: every moved page needs a redirect, and every redirect is a chance to lose ranking signals."
+      },
+      {
+        "type": "callout",
+        "tone": "warning",
+        "title": "Before you migrate",
+        "text": "Map every existing URL to its new home before launch day. A missing redirect map is the most common reason a redesigned site loses traffic."
+      },
+      { "type": "heading", "level": 2, "text": "Performance ranks — and converts" },
+      {
+        "type": "paragraph",
+        "text": "Core Web Vitals measure how fast a page loads, how quickly it responds and how stable it is while loading. They influence rankings, but they influence revenue even more: every extra second of load time costs conversions."
+      },
+      {
+        "type": "list",
+        "style": "number",
+        "items": [
+          "Serve modern image formats at the right size for each device.",
+          "Ship only the JavaScript each page actually needs.",
+          "Load fonts without blocking text from rendering.",
+          "Measure real-user performance, not just lab scores."
+        ]
+      },
+      { "type": "heading", "level": 2, "text": "Structured data tells search engines what things are" },
+      {
+        "type": "paragraph",
+        "text": "Schema markup describes your content in a language search engines understand: this page is an article, this is a service, this is a list of frequently asked questions. It can unlock rich results and helps your content surface in AI-generated answers."
+      },
+      {
+        "type": "code",
+        "language": "json",
+        "code": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Service\",\n  \"name\": \"Website Design & Development\",\n  \"provider\": { \"@type\": \"Organization\", \"name\": \"growthGrid\" }\n}",
+        "caption": "A minimal Service schema. Every page on this site ships structured data generated from the same content that renders the page."
+      },
+      {
+        "type": "paragraph",
+        "text": "Built in from the start, technical SEO costs almost nothing extra. Retrofitted after launch, it can mean rebuilding the site. That's why we think about search before we write a line of code."
+      }
+    ],
+    "seo": {
+      "title": "Technical SEO Is an Architecture Decision",
+      "description": "Why rendering strategy, URL structure, Core Web Vitals and structured data decide how well a website can rank — and why SEO must be planned before the build."
+    }
+  },
+  {
+    "slug": "rag-pipeline-that-cites-its-sources",
+    "title": "Chat with your documents: a RAG pipeline that cites its sources",
+    "excerpt": "Retrieval-augmented generation is easy to demo and hard to trust. How we parse, chunk, retrieve and cite, so every answer can be checked in one click.",
+    "category": { "key": "applied-ai", "label": "Applied AI", "icon": "sparkles" },
+    "tags": ["RAG", "LLMs", "Vector search", "Python"],
+    "author": "arjun-rao",
+    "cover": {
+      "src": "/images/stitch/insights/rag-pipeline-that-cites-its-sources/rag-a-cards.jpg",
+      "alt": "Retrieval inspector showing the pipeline steps, scored passages on either side of a threshold and a cited answer",
+      "width": 1600,
+      "height": 900
+    },
+    "publishedAt": "2026-09-16",
+    "featured": false,
+    "takeaway": "Make citations a requirement, not a feature. If the model can't point to a passage, it shouldn't answer.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Every team that tries \"chat with your PDFs\" has the same first reaction: it feels like magic. The second reaction comes a week later, when someone asks where an answer came from and nobody can say."
+      },
+      {
+        "type": "paragraph",
+        "text": "We built [DocuMind](/work/documind) to answer questions about PDFs, Word files and slide decks. The model was the easy part. Trust came from everything around it."
+      },
+      { "type": "heading", "level": 2, "text": "Parse each format on its own terms" },
+      {
+        "type": "paragraph",
+        "text": "A PDF, a DOCX and a PPTX store text in very different ways. Push them all through one generic extractor and you lose exactly what makes an answer checkable: page numbers, slide titles, table rows."
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "items": [
+          "**PDF:** extract page by page and keep the page number on every chunk.",
+          "**DOCX:** walk paragraphs and tables in order, so a table row stays one row.",
+          "**PPTX:** read slide titles, body text and speaker notes, tagged with the slide number."
+        ]
+      },
+      { "type": "heading", "level": 2, "text": "Chunk with overlap, and keep the metadata" },
+      {
+        "type": "paragraph",
+        "text": "Chunks are the unit of retrieval, so their size decides what the model gets to see. Too small, and an answer is split across two chunks. Too large, and the one relevant sentence drowns. We split on paragraphs first, then by length, with an overlap so a sentence that straddles a boundary survives in both halves."
+      },
+      {
+        "type": "code",
+        "language": "python",
+        "code": "splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=120)\n\nchunks = [\n    Document(page_content=text, metadata={\"source\": file.name, \"page\": page})\n    for page, page_text in pages\n    for text in splitter.split_text(page_text)\n]\n\nembeddings = HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-mpnet-base-v2\")\nindex = FAISS.from_documents(chunks, embeddings)",
+        "caption": "Every chunk carries its file and page. That's what makes a citation possible later."
+      },
+      { "type": "heading", "level": 2, "text": "Retrieve first, and set a floor" },
+      {
+        "type": "paragraph",
+        "text": "Embeddings come from all-mpnet-base-v2, an open sentence-transformer model, and live in a FAISS index on the same machine as the app. Each question returns the top few passages with a similarity score, and anything below a threshold is dropped before the model ever sees it."
+      },
+      {
+        "type": "callout",
+        "tone": "tip",
+        "title": "No passage, no answer",
+        "text": "If nothing clears the threshold, don't call the model at all. Reply \"I couldn't find that in these files\" and show the closest matches. A refusal people can trust beats a fluent guess."
+      },
+      { "type": "heading", "level": 2, "text": "Make the citation part of the contract" },
+      {
+        "type": "paragraph",
+        "text": "The prompt hands the model numbered passages and one rule: answer only from these, and cite every passage you use. After generation, we check that each citation points to a passage we actually sent, and discard answers that cite nothing."
+      },
+      {
+        "type": "code",
+        "language": "prompt",
+        "code": "Answer using only the numbered passages below.\nCite every passage you use, like [2].\nIf the passages don't contain the answer, say you can't find it.",
+        "caption": "The entire instruction. Short prompts are easier to test and harder to misread."
+      },
+      { "type": "heading", "level": 2, "text": "Measure what people actually feel" },
+      {
+        "type": "list",
+        "style": "number",
+        "items": [
+          "Build a small evaluation set: fifty real questions, each with the page that answers it.",
+          "Track retrieval hit rate: did the right page appear in the top results?",
+          "Track citation accuracy: does the cited passage really support the answer?",
+          "Review refusals: was the assistant right not to answer?"
+        ]
+      },
+      {
+        "type": "quote",
+        "text": "If the model can't point to a passage, it shouldn't answer.",
+        "cite": "growthGrid AI practice"
+      },
+      {
+        "type": "paragraph",
+        "text": "None of this needs a frontier model. Mistral 7B, an open-weight model, writes perfectly good answers when retrieval does its job — and it can run on infrastructure you control, which matters more than any benchmark when the documents are contracts or HR files."
+      }
+    ],
+    "seo": {
+      "title": "RAG With Citations: Chat With Your Documents",
+      "description": "How to build a RAG pipeline for PDF, Word and PowerPoint files that cites the page behind every answer: parsing, chunking, FAISS retrieval and evaluation."
+    }
+  },
+  {
+    "slug": "real-time-kanban-live-updates-and-history",
+    "title": "Real-time without the chaos: live updates and history in a Kanban app",
+    "excerpt": "Live boards feel simple until two people move the same card. How we made every change a single event that is stored, broadcast and kept in history.",
+    "category": { "key": "architecture", "label": "Architecture", "icon": "layers" },
+    "tags": ["Real-time", "WebSockets", "FastAPI", "PostgreSQL"],
+    "author": "daniel-okafor",
+    "cover": {
+      "src": "/images/stitch/insights/real-time-kanban-live-updates-and-history/kanban-d-commit.jpg",
+      "alt": "Kanban board with live cursors beside an event stream of committed, broadcast changes",
+      "width": 1600,
+      "height": 900
+    },
+    "publishedAt": "2026-09-23",
+    "featured": false,
+    "takeaway": "Write the change once, then fan it out. If history, notifications and live updates read the same event, they can't disagree.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "A board that updates live is one of those features people only notice when it's missing. Someone drags a card to Done, a teammate still sees it in progress, and the next five minutes go on working out who's right."
+      },
+      {
+        "type": "paragraph",
+        "text": "When we built [Boardly](/work/boardly), live updates, ticket history and watcher notifications were three separate lines on the feature list. They turned out to be one design decision."
+      },
+      { "type": "heading", "level": 2, "text": "Every change is an event" },
+      {
+        "type": "paragraph",
+        "text": "Instead of letting each feature detect changes its own way, every write — a move, an edit, a comment, a new assignee — produces one event: who, what, when, and the values before and after. The event is saved in the same transaction as the change itself."
+      },
+      {
+        "type": "code",
+        "language": "python",
+        "code": "async def move_ticket(ticket_id: int, to_column: str, user: User, db: Session):\n    ticket = get_ticket(db, ticket_id)\n    event = TicketEvent(\n        ticket_id=ticket.id,\n        actor_id=user.id,\n        kind=\"moved\",\n        before={\"column\": ticket.column},\n        after={\"column\": to_column},\n    )\n    ticket.column = to_column\n    db.add(event)\n    db.commit()  # the change and its history land together\n    await hub.publish(ticket.board_id, event.to_message())",
+        "caption": "The change and its event are committed together. Broadcasting happens only after the commit succeeds."
+      },
+      { "type": "heading", "level": 2, "text": "History comes for free" },
+      {
+        "type": "paragraph",
+        "text": "Because every event is stored, a ticket's history is simply its events in order. There's no separate audit table to keep in sync and nothing to reconstruct from logs. \"Who moved this back to In progress?\" becomes a query, not an investigation."
+      },
+      { "type": "heading", "level": 2, "text": "Broadcast after commit, never before" },
+      {
+        "type": "paragraph",
+        "text": "The WebSocket hub only publishes events that have been committed, so nobody ever sees a card move that didn't really happen. Each browser subscribes to the boards it has open, which keeps a busy board from flooding everyone else."
+      },
+      {
+        "type": "callout",
+        "tone": "warning",
+        "title": "The classic bug",
+        "text": "Publish before the commit and a failed write still moves the card on everyone's screen. A refresh moves it back — and people quietly stop trusting the board."
+      },
+      { "type": "heading", "level": 2, "text": "When two people move the same card" },
+      {
+        "type": "paragraph",
+        "text": "Conflicts are rare on a small team, but they happen. Each ticket carries a version number: a move sent with a stale version is rejected and the client fetches the latest ticket. The person sees the card where it really is, and the change that beat them sits at the top of its history."
+      },
+      { "type": "heading", "level": 2, "text": "Notifications are just another subscriber" },
+      {
+        "type": "paragraph",
+        "text": "Watchers subscribe to a ticket. When an event lands, the notifier checks who's watching and skips the person who made the change — nobody needs to hear about their own edit. Because notifications, history and the live board all read the same event, they can't disagree."
+      },
+      {
+        "type": "list",
+        "style": "number",
+        "items": [
+          "Write the change and its event in one transaction.",
+          "Publish to the board's channel only after the commit.",
+          "Render history straight from the stored events.",
+          "Notify watchers from the same event, skipping whoever made the change."
+        ]
+      },
+      {
+        "type": "quote",
+        "text": "Write the change once, then fan it out.",
+        "cite": "growthGrid engineering notes"
+      },
+      {
+        "type": "paragraph",
+        "text": "Real-time features get messy when each one invents its own idea of what changed. Agree on the event first, and live updates, history and notifications become three views of the same truth."
+      }
+    ],
+    "seo": {
+      "title": "Real-Time Kanban: Live Updates and History",
+      "description": "How we built live updates, ticket history and watcher notifications for a Kanban app from a single event model, using FastAPI, PostgreSQL and WebSockets."
+    }
+  },
+  {
+    "slug": "modernize-legacy-php-without-a-rewrite",
+    "title": "Modernizing a legacy PHP app without a big-bang rewrite",
+    "excerpt": "Rewrites stall products for months. How we move a PHP app to a modern stack one module at a time, with old and new running side by side.",
+    "category": { "key": "architecture", "label": "Architecture", "icon": "layers" },
+    "tags": ["Modernization", "PHP", "Next.js", "Architecture"],
+    "author": "daniel-okafor",
+    "cover": {
+      "src": "/images/stitch/insights/modernize-legacy-php-without-a-rewrite/php-c-timeline.jpg",
+      "alt": "Migration router panel sending each module to the new app or the legacy PHP app, with rollback switches",
+      "width": 1600,
+      "height": 900
+    },
+    "publishedAt": "2026-09-30",
+    "featured": false,
+    "takeaway": "Move one module at a time behind a router you control, and keep a way back to the old page until the new one has earned trust.",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Most PHP apps that need modernizing aren't broken. They work, people rely on them every day — and that's exactly what makes a rewrite so risky. For months the business gets nothing new while a second system tries to catch up with the first."
+      },
+      {
+        "type": "paragraph",
+        "text": "Our own 2022 learning portal is a good example: institute, faculty and student dashboards, SQL inside the templates, PHP sessions for sign-in. Here's how we approach [re-platforming it](/work/lms-replatform) without a big-bang cutover."
+      },
+      { "type": "heading", "level": 2, "text": "Inventory before architecture" },
+      {
+        "type": "paragraph",
+        "text": "Start with a list of every page: what it reads and writes, and who uses it. It's unglamorous work and the most useful document in the project, because it turns \"the old system\" into a set of modules you can move one at a time."
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "items": [
+          "**Pages and routes:** every URL, grouped by module.",
+          "**Data:** the tables each page reads and writes.",
+          "**People:** which role uses it, and how often.",
+          "**Risk:** what breaks, and for whom, if it goes wrong."
+        ]
+      },
+      { "type": "heading", "level": 2, "text": "Put an API in front of the data" },
+      {
+        "type": "paragraph",
+        "text": "Before moving a single screen, put a typed API in front of the existing database. New screens use it from day one, and old pages can be pointed at it gradually. Both apps read the same records, so there's never a second copy of the truth to reconcile."
+      },
+      { "type": "heading", "level": 2, "text": "Route by module, not by release" },
+      {
+        "type": "paragraph",
+        "text": "A small routing layer sits in front of both apps and decides, path by path, which one serves the request. Moving a module means adding one line, and moving it back is just as quick."
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "// Send migrated modules to the new app; everything else stays on PHP.\nconst MIGRATED = [\"/login\", \"/students\", \"/timetable\"];\n\nexport function upstreamFor(pathname: string) {\n  return MIGRATED.some((path) => pathname.startsWith(path)) ? NEW_APP : LEGACY_PHP;\n}",
+        "caption": "One list decides who serves each module. Rolling back is a one-line change."
+      },
+      {
+        "type": "callout",
+        "tone": "tip",
+        "title": "Order by risk",
+        "text": "Move something small and visible first, like sign-in, to prove the routing and shared sessions. Leave the module everyone depends on until the team trusts the process."
+      },
+      { "type": "heading", "level": 2, "text": "Share sign-in early" },
+      {
+        "type": "paragraph",
+        "text": "Nothing erodes trust faster than being asked to log in twice. Swapping PHP sessions for a token both apps can verify is the first move, before any screen people would notice."
+      },
+      { "type": "heading", "level": 2, "text": "Measure the boring things" },
+      {
+        "type": "list",
+        "style": "number",
+        "items": [
+          "Error rate per module, old versus new.",
+          "Load time for the screens people use most.",
+          "Support questions after each move.",
+          "Time from a change request to it going live."
+        ]
+      },
+      {
+        "type": "quote",
+        "text": "A rewrite asks for trust up front. Moving module by module earns it one screen at a time.",
+        "cite": "growthGrid engineering notes"
+      },
+      {
+        "type": "paragraph",
+        "text": "When the last PHP page stops receiving traffic, there's no dramatic switch-off. The old app simply goes quiet — which is exactly how a modernization should end."
+      }
+    ],
+    "seo": {
+      "title": "Modernize Legacy PHP Without a Rewrite",
+      "description": "A practical way to move a legacy PHP app to Next.js and a typed API one module at a time: inventory, a shared API, per-module routing and shared sign-in."
+    }
+  }
+]
