@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { brandAssetUrl, resolveBrand } from "@/lib/brand";
 import { getSettings } from "@/lib/data";
 import type { Brand, Settings } from "@/lib/schemas";
@@ -102,7 +103,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     // suppressHydrationWarning: the intro gate (components/layout/intro-gate.ts)
     // sets data-intro / data-gfx here before React hydrates. One level deep only.
     <html lang={settings.locale.replace("_", "-")} className={fontVariables} suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
