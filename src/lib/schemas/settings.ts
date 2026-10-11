@@ -139,9 +139,9 @@ export const settingsSchema = z.object({
     rights: z.string().min(1),
     localTime: z.string().min(1),
   }),
-  /** Cookie banner copy, shown to every first-time visitor. With analytics on it
-   *  asks for consent (message, accept, decline); with analytics off the site
-   *  sets no cookies, so it only says so (essentialMessage, acknowledge). */
+  /** Cookie banner copy, shown to every first-time visitor. With analytics available
+   *  it asks for consent (message, accept, decline); otherwise it notes that only
+   *  essential browser settings are used (essentialMessage, acknowledge). */
   consent: z.object({
     title: z.string().min(1),
     message: z.string().min(1),

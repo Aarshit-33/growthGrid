@@ -30,6 +30,7 @@ export async function SiteChrome({ children }: { children: ReactNode }) {
   const [settings, services, technologies] = await Promise.all([getSettings(), getServices(), getTechnologies()]);
   const brand = resolveBrand(settings);
   const gaId = gaIdOf(settings);
+  const vercelAnalytics = process.env.VERCEL === "1";
   // The topics the studio knows (Organization JSON-LD): its services and its stack.
   const knowsAbout = [
     ...new Set([...services.map((s) => s.title), ...technologies.flatMap((c) => c.technologies.map((t) => t.name))]),
@@ -68,8 +69,8 @@ export async function SiteChrome({ children }: { children: ReactNode }) {
       <Cursor />
       <InteractionGuard />
       <div className="grain" aria-hidden="true" />
-      {/* Every first-time visitor: asks for analytics consent when GA is on, else notes there are no tracking cookies. */}
-      <CookieConsent gaId={gaId} copy={settings.consent} />
+      {/* Ask before loading either analytics provider; Vercel Analytics is available only on Vercel. */}
+      <CookieConsent gaId={gaId} vercelAnalytics={vercelAnalytics} copy={settings.consent} />
 
       <JsonLd
         data={[

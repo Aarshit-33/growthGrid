@@ -2,19 +2,19 @@
 
 import Link from "next/link";
 import Script from "next/script";
+import { Analytics as VercelAnalytics, type BeforeSend } from "@vercel/analytics/next";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { buttonClasses } from "@/components/ui/button";
 import type { Settings } from "@/lib/schemas";
 import { useIntroCovering } from "./intro-loader";
 
 /* ─────────────────────────────────────────────────────────────
-   Cookie banner + Google Analytics 4. Every first-time visitor
+   Cookie banner + optional analytics. Every first-time visitor
    sees it, in one of two forms:
-     · analytics on (a GA4 ID is set): it asks. Nothing is
-       requested from Google until the visitor accepts: gtag.js is
-       only injected after an explicit "Accept". Declining (now or
-       later from the footer's "Cookie settings") revokes consent
-       and clears any _ga cookies;
+     · analytics is available (a GA4 ID or Vercel deployment): it asks.
+       Nothing is requested from either provider until the visitor
+       accepts. Declining (now or later from "Cookie settings") revokes
+       consent and clears any _ga cookies;
      · analytics off: the site sets no cookies, so it says just
        that, with one button. Turning analytics on later asks those
        visitors again: that "Accept" wasn't consent to analytics.
@@ -30,6 +30,14 @@ type ConsentCopy = Settings["consent"];
 
 const STORAGE_KEY = "gg-consent";
 const OPEN_EVENT = "gg:consent-open";
+
+const sendOnlyWithConsent: BeforeSend = (event) => {
+  try {
+    return window.localStorage.getItem(STORAGE_KEY) === "granted" ? event : null;
+  } catch {
+    return null;
+  }
+};
 
 /** Analytics-off copy for settings saved before it existed (content/settings.json has its own). */
 const NOTICE_FALLBACK = {
@@ -100,12 +108,20 @@ export function ConsentSettingsButton({ label }: { label: string }) {
   );
 }
 
-export function CookieConsent({ gaId, copy }: { gaId: string | null; copy: ConsentCopy }) {
+export function CookieConsent({
+  gaId,
+  vercelAnalytics,
+  copy,
+}: {
+  gaId: string | null;
+  vercelAnalytics: boolean;
+  copy: ConsentCopy;
+}) {
   const stored = useSyncExternalStore<Snapshot>(subscribe, readChoice, () => "pending");
   const [reopened, setReopened] = useState(false);
   // Held back while the intro loader covers the page: it rises in once that has lifted.
   const covered = useIntroCovering();
-  const analytics = gaId !== null;
+  const analytics = gaId !== null || vercelAnalytics;
 
   useEffect(() => {
     const open = () => setReopened(true);
@@ -131,6 +147,7 @@ export function CookieConsent({ gaId, copy }: { gaId: string | null; copy: Conse
 
   return (
     <>
+      {vercelAnalytics && stored === "granted" && <VercelAnalytics beforeSend={sendOnlyWithConsent} />}
       {gaId && stored === "granted" && (
         <>
           <Script id="ga-init" strategy="afterInteractive">

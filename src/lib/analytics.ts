@@ -1,9 +1,8 @@
 /* ─────────────────────────────────────────────────────────────
-   Analytics configuration (Google Analytics 4).
+   Google Analytics 4 configuration.
    The measurement ID comes from Studio › Site settings › Analytics,
-   else NEXT_PUBLIC_GA_ID (e.g. "G-XXXXXXXXXX"). With neither, no
-   analytics code ships, and the cookie banner only notes that the
-   site uses no tracking cookies.
+   else NEXT_PUBLIC_GA_ID (e.g. "G-XXXXXXXXXX"). Vercel Analytics is
+   configured separately in the public site shell and deployment dashboard.
    The measurement ID is public by design; it is not a secret.
    ───────────────────────────────────────────────────────────── */
 

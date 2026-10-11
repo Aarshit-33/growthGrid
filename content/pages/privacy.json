@@ -25,7 +25,7 @@
       "items": [
         "**Enquiries.** When you use our contact form or email us, we receive the details you choose to share — typically your name, email address, company and a description of your project.",
         "**Technical data.** Our hosting provider automatically records standard server logs (such as IP address, browser type and pages requested) to keep the website secure and reliable.",
-        "**Usage analytics.** Only if you accept analytics cookies in our cookie banner, we use Google Analytics to measure how the site is used (for example which pages are visited and roughly where visitors come from). IP addresses are not stored by Google Analytics 4, and advertising features are switched off."
+        "**Usage analytics.** Only if you accept analytics in our cookie banner, we use Google Analytics to measure visits and, when the site is hosted on Vercel, Vercel Web Analytics for aggregated page-view and performance metrics such as referrers, device categories and Core Web Vitals. Vercel Analytics is cookieless. IP addresses are not stored by Google Analytics 4, and advertising features are switched off."
       ]
     },
     {
@@ -39,7 +39,7 @@
     },
     {
       "type": "paragraph",
-      "text": "The site works without any cookies. We only set analytics cookies (named _ga and _ga_*, lasting up to 13 months) after you choose **Accept analytics** in the cookie banner. Your choice is remembered in your browser's local storage so we don't ask again. You can change your mind at any time with the **Cookie settings** link in the footer; declining removes the analytics cookies."
+      "text": "The site works without analytics. Google Analytics cookies (named _ga and _ga_*, lasting up to 13 months) are only set after you choose **Accept analytics** in the cookie banner. Vercel Analytics, when available on Vercel-hosted pages, is cookieless and also runs only after you accept. Your choice is remembered in your browser's local storage so we don't ask again. You can change your mind at any time with the **Cookie settings** link in the footer; declining stops analytics and removes Google Analytics cookies."
     },
     {
       "type": "heading",

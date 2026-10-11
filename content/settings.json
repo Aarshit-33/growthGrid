@@ -100,12 +100,12 @@
   },
   "consent": {
     "title": "A quick word on cookies",
-    "message": "We'd like to use analytics cookies to understand which pages help people and improve the site. They're only set if you agree, and never used for advertising.",
+    "message": "We'd like to use analytics to understand which pages help people and improve the site. Google Analytics may use cookies; Vercel Analytics is cookieless. Neither is used for advertising.",
     "policyLabel": "Privacy policy",
     "accept": "Accept analytics",
     "decline": "No thanks",
     "settings": "Cookie settings",
-    "essentialMessage": "We don't use tracking or advertising cookies. Only a few essential settings are kept in your browser, like this choice, so the site works properly.",
+    "essentialMessage": "When you decline, we don't load Google or Vercel analytics. Only essential settings are kept in your browser, like this choice, so the site works properly.",
     "acknowledge": "Accept"
   }
 }
