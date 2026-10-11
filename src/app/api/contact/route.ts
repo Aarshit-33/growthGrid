@@ -16,8 +16,8 @@ import { leadInputSchema } from "@/lib/schemas/lead";
      500 { ok: false, error: "server_error" }
    Native form posts (no JavaScript) → 303 back to /contact with a
    #fragment the page reveals via :target.
-   Each enquiry is also emailed to LEAD_EMAIL_TO (lib/leads/email.ts)
-   once the response is sent, even when saving it failed.
+   Each enquiry is emailed to the site owners and any additional
+   LEAD_EMAIL_TO recipients (lib/leads/email.ts), even when saving failed.
    PII is never logged.
    ───────────────────────────────────────────────────────────── */
 
@@ -140,8 +140,10 @@ export async function POST(request: NextRequest) {
     await saveLead(lead);
   } catch (error) {
     console.error("[api/contact] could not store lead:", error instanceof Error ? error.name : "UnknownError");
-    // The email is then the only copy of the enquiry, so it still goes out (marked as not saved).
-    after(() => emailLead(lead, { saved: false }));
+    // Storage may be unavailable on a read-only host. Only report success if
+    // the email fallback was actually delivered; otherwise the visitor can retry.
+    const emailed = await emailLead(lead, { saved: false });
+    if (emailed) return form ? redirectTo(SENT_URL) : NextResponse.json({ ok: true });
     return form ? redirectTo(FAILED_URL) : NextResponse.json({ ok: false, error: "server_error" }, { status: 500 });
   }
 

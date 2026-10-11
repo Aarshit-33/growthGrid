@@ -11,22 +11,23 @@ import type { NewLead } from "@/lib/leads/store";
    hello@growthgrid.studio on Zoho or Google Workspace later, or a
    sending service such as Resend. Only the env changes:
 
-   LEAD_EMAIL_TO    Who gets the alerts (commas for more than one).
-                    Unset: no emails.
+   The site owners always receive alerts at hello@growthgrid.studio and
+   aarshitjolapara11@gmail.com. LEAD_EMAIL_TO adds optional recipients.
    SMTP_HOST        e.g. smtp.gmail.com
    SMTP_PORT        465 (SSL, the default) or 587 (STARTTLS).
    SMTP_USER        The mailbox it signs in as.
    SMTP_PASS        Its password; for Gmail, an App Password.
    LEAD_EMAIL_FROM  Optional sender; defaults to SMTP_USER.
 
-   The contact route calls this in after(), so the visitor never
-   waits for the mail server, and it never throws. Reply-To is the
-   visitor, so "Reply" in any mail app answers them. Log lines
-   never include the enquiry. Setup steps: .env.example.
+   The contact route normally calls this in after(); if storage fails,
+   it waits for delivery before confirming the submission. Reply-To is
+   the visitor, so "Reply" in any mail app answers them. Log lines never
+   include the enquiry. Setup steps: .env.example.
    ───────────────────────────────────────────────────────────── */
 
 const TIMEOUT_MS = 10_000;
 const RETRY_DELAY_MS = 2_000;
+const DEFAULT_RECIPIENTS = ["hello@growthgrid.studio", "aarshitjolapara11@gmail.com"];
 /** nodemailer's codes for network problems: worth one more try. */
 const NETWORK_CODES = new Set(["ECONNECTION", "ETIMEDOUT", "ESOCKET", "EDNS"]);
 
@@ -43,15 +44,15 @@ export interface LeadMailConfig {
 const emailAddress = z.email();
 
 /**
- * The env as a mail setup. `config` is null when alerts are off
- * (LEAD_EMAIL_TO unset) or the setup has a mistake, explained in `problem`.
+ * The env as a mail setup. `config` is null when SMTP isn't configured or
+ * the setup has a mistake, explained in `problem`.
  */
 export function leadMailConfig(env: NodeJS.ProcessEnv = process.env): { config: LeadMailConfig | null; problem?: string } {
-  const to = (env.LEAD_EMAIL_TO ?? "").split(/[\s,;]+/).filter(Boolean);
-  if (to.length === 0) return { config: null };
-  if (to.some((address) => !emailAddress.safeParse(address).success)) {
+  const additionalRecipients = (env.LEAD_EMAIL_TO ?? "").split(/[\s,;]+/).filter(Boolean);
+  if (additionalRecipients.some((address) => !emailAddress.safeParse(address).success)) {
     return { config: null, problem: "LEAD_EMAIL_TO has an address that isn't valid" };
   }
+  const to = [...new Set([...DEFAULT_RECIPIENTS, ...additionalRecipients])];
 
   const host = env.SMTP_HOST?.trim() ?? "";
   const user = env.SMTP_USER?.trim() ?? "";
@@ -82,7 +83,7 @@ export interface LeadMailContext {
   siteHost?: string;
   /** Studio › Leads, when the Studio is on. */
   studioUrl?: string;
-  /** False: saving failed, so this email is the only copy of the enquiry. */
+  /** False: saving failed, so this email is the only stored copy of the enquiry. */
   saved: boolean;
 }
 
@@ -97,7 +98,7 @@ const oneLine = (value: string) => value.replace(/\s+/g, " ").trim();
 const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
 
 const UNSAVED =
-  "This enquiry couldn't be saved to Studio › Leads and the visitor was shown an error, so this email is the only copy. Check MONGODB_URI and the server logs.";
+  "This enquiry couldn't be saved to Studio › Leads, so this email is the only copy. Check MONGODB_URI and the server logs.";
 
 export function buildLeadMail(lead: NewLead, context: LeadMailContext): LeadMail {
   const name = oneLine(lead.name);
@@ -188,6 +189,38 @@ ${company ? `<p style="margin:4px 0 0;font-size:15px;color:#5b6b78;">${e(company
   return { subject, text, html };
 }
 
+export function buildLeadConfirmationMail(lead: NewLead, siteName: string): LeadMail {
+  const firstName = oneLine(lead.name).split(" ")[0] || "there";
+  const subject = `Thanks for contacting ${siteName}`;
+  const text = [
+    `Hi ${firstName},`,
+    "",
+    `Thanks for reaching out to ${siteName}. We've received your message and will get back to you soon.`,
+    "",
+    "Best,",
+    `${siteName}`,
+  ].join("\n");
+  const e = escapeHtml;
+  const html = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${e(subject)}</title>
+</head>
+<body style="margin:0;padding:32px 12px;background:#eef2f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #dfe5ea;border-radius:14px;">
+<tr><td style="background:#04070a;padding:18px 28px;font-size:18px;font-weight:700;color:#f0f4f7;">${e(siteName)}</td></tr>
+<tr><td style="padding:28px;color:#0b1419;font-size:16px;line-height:1.6;">
+<h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;">Thanks for reaching out, ${e(firstName)}.</h1>
+<p style="margin:0;">We've received your message and will get back to you soon.</p>
+</td></tr>
+</table>
+</body>
+</html>`;
+  return { subject, text, html };
+}
+
 /* ── Sending ──────────────────────────────────────────────── */
 
 interface MailError {
@@ -215,15 +248,26 @@ function describe(error: unknown, config: LeadMailConfig): string {
   return `${detail}.`;
 }
 
+async function sendWithRetry(transport: ReturnType<typeof import("nodemailer")["createTransport"]>, message: SendMailOptions) {
+  try {
+    await transport.sendMail(message);
+  } catch (error) {
+    if (!isTemporary(error)) throw error;
+    await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+    await transport.sendMail(message);
+  }
+}
+
 /**
- * Emails the enquiry to LEAD_EMAIL_TO. Never throws: problems are logged,
- * without the enquiry. `saved: false` marks it as the only copy.
+ * Emails the enquiry to the studio and sends a receipt to the visitor.
+ * Never throws: problems are logged without the enquiry. `saved: false`
+ * marks the studio email as the only stored copy.
  */
-export async function emailLead(lead: NewLead, { saved = true }: { saved?: boolean } = {}): Promise<void> {
+export async function emailLead(lead: NewLead, { saved = true }: { saved?: boolean } = {}): Promise<boolean> {
   const { config, problem } = leadMailConfig();
   if (!config) {
     if (problem) console.warn(`[lead-email] Not sent: ${problem}. See .env.example.`);
-    return;
+    return false;
   }
 
   try {
@@ -259,16 +303,33 @@ export async function emailLead(lead: NewLead, { saved = true }: { saved?: boole
     };
 
     try {
-      await transport.sendMail(message);
-    } catch (error) {
-      if (!isTemporary(error)) throw error;
-      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
-      await transport.sendMail(message);
+      try {
+        await sendWithRetry(transport, message);
+      } catch (error) {
+        console.warn(`[lead-email] Not sent: ${describe(error, config)}`);
+        return false;
+      }
+
+      console.info(`[lead-email] Enquiry emailed to ${config.to.length === 1 ? "1 address" : `${config.to.length} addresses`}.`);
+      try {
+        const confirmation = buildLeadConfirmationMail(lead, siteName);
+        await sendWithRetry(transport, {
+          from: message.from,
+          to: lead.email,
+          subject: confirmation.subject,
+          text: confirmation.text,
+          html: confirmation.html,
+        });
+        console.info("[lead-email] Confirmation emailed to the submitter.");
+      } catch (error) {
+        console.warn(`[lead-email] Confirmation not sent: ${describe(error, config)}`);
+      }
+      return true;
     } finally {
       transport.close();
     }
-    console.info(`[lead-email] Enquiry emailed to ${config.to.length === 1 ? "1 address" : `${config.to.length} addresses`}.`);
   } catch (error) {
     console.warn(`[lead-email] Not sent: ${describe(error, config)}`);
+    return false;
   }
 }

@@ -92,7 +92,7 @@ The Mongoose models are in `src/lib/models`. Every document is still validated b
 
 Leads are stored in MongoDB when `MONGODB_URI` is set. Otherwise they're appended to `.data/leads.ndjson`, which is git-ignored and meant for local development only. Either way, they're read, triaged and exported in Studio › Leads.
 
-Each enquiry is also emailed to `LEAD_EMAIL_TO` over SMTP (Gmail with an App Password, Zoho, Google Workspace, Resend…), after the response is sent, so the form never waits for the mail server. Replying to the email answers the visitor directly. If an enquiry can't be saved, the email still goes out, marked "Not saved". Spam caught by the honeypot isn't emailed. Setup is in `.env.example`; the code is in `src/lib/leads/email.ts`.
+Each enquiry is emailed to `hello@growthgrid.studio` and `aarshitjolapara11@gmail.com` over SMTP (Gmail with an App Password, Zoho, Google Workspace, Resend…). `LEAD_EMAIL_TO` can add more recipients. The person who submitted the form also receives a confirmation that their message arrived. When the lead is saved, both emails are sent after the response so the form doesn't wait for the mail server. If saving fails (for example, on a read-only host), the route sends the emails before reporting success; if the studio notification fails, the visitor can retry. Emails use Reply-To to answer the visitor directly, and storage-fallback notifications are marked "Not saved". Spam caught by the honeypot isn't emailed. SMTP credentials are required; setup is in `.env.example`, and the code is in `src/lib/leads/email.ts`.
 
 ## Studio (admin)
 

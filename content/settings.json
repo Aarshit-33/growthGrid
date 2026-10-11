@@ -22,14 +22,14 @@
   "locale": "en_US",
   "contact": {
     "email": "hello@growthgrid.studio",
-    "phone": null,
+    "phone": "+918320481381",
     "bookingUrl": null,
     "responseTime": "We reply to every enquiry within one business day."
   },
   "location": {
     "label": "Remote-first studio · Working worldwide",
-    "city": null,
-    "country": null,
+    "city": "Ahmedabad",
+    "country": "India",
     "timezone": null
   },
   "availability": {
@@ -37,10 +37,10 @@
     "label": "Booking new projects for Q4 2026"
   },
   "socials": [
-    { "platform": "instagram", "label": "Instagram", "url": "https://www.instagram.com/growthgrid" },
-    { "platform": "facebook", "label": "Facebook", "url": "https://www.facebook.com/growthgrid" },
-    { "platform": "x", "label": "X", "url": "https://x.com/growthgrid" },
-    { "platform": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/company/growthgrid" }
+    { "platform": "instagram", "label": "Instagram", "url": "https://www.instagram.com/thegrowthgrid.studio" },
+    { "platform": "facebook", "label": "Facebook", "url": "https://www.facebook.com/profile.php?id=61595380525274" },
+    { "platform": "x", "label": "Threads", "url": "https://www.threads.com/@thegrowthgrid.studio" },
+    { "platform": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/in/aarshitjolapara" }
   ],
   "navigation": {
     "primary": [
