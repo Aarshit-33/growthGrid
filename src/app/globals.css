@@ -1181,6 +1181,87 @@ html.lenis body {
   cursor: none !important;
 }
 
+/* ── Business cards (components/cards) ───────────────────────
+   A card is two faces back to back in a 3D box: .biz-card holds
+   the perspective and the pointer tilt (--rx/--ry, set by JS on
+   fine pointers), .biz-card-turn does the flip. Faces carry the
+   artwork's own corners (--biz-radius, from the Studio). */
+
+.biz-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --glare-x: 50%;
+  --glare-y: 0%;
+  position: relative;
+  perspective: 1800px;
+  transform: perspective(1400px) rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.biz-card[data-tilting] {
+  transition-duration: 0.12s;
+}
+
+.biz-card-turn {
+  position: relative;
+  aspect-ratio: 1050 / 600;
+  transform-style: preserve-3d;
+  transition: transform 0.95s var(--ease-out-expo);
+}
+
+.biz-card[data-side="back"] .biz-card-turn {
+  transform: rotateY(180deg);
+}
+
+.biz-card-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--biz-radius, 4%);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.06) inset,
+    0 30px 60px -28px rgb(0 0 0 / 0.85),
+    0 14px 24px -18px rgb(0 0 0 / 0.6);
+}
+
+.biz-card-face > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.biz-card-face[data-face="back"] {
+  transform: rotateY(180deg);
+}
+
+/* Soft light that follows the pointer across the artwork. */
+.biz-card-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(60% 80% at var(--glare-x) var(--glare-y), rgb(255 255 255 / 0.16), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-expo);
+}
+
+.biz-card[data-tilting] .biz-card-face::after {
+  opacity: 1;
+}
+
+/* A soft emerald pool under the card, so it floats on the dark page. */
+.biz-card-glow {
+  position: absolute;
+  inset: 12% 8% -10%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(60 228 154 / 0.22), transparent);
+  filter: blur(28px);
+  pointer-events: none;
+}
+
 /* ── Accessibility & motion preferences ───────────────────── */
 
 @media (prefers-reduced-motion: reduce) {

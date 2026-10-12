@@ -16,6 +16,7 @@ import { ProjectModel } from "./project";
 import { ServiceModel } from "./service";
 
 export * from "./collections";
+export { HistoryEntryModel } from "./history";
 export { InsightModel } from "./insight";
 export { LeadModel, type LeadDocument } from "./lead";
 export { PageModel, pageModels } from "./page";

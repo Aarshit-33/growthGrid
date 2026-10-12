@@ -51,6 +51,55 @@ export const indexNowKeySchema = z
   .trim()
   .regex(/^[A-Za-z0-9-]{8,128}$/, "Use 8–128 letters, digits or dashes, e.g. a UUID");
 
+/**
+ * Copy of /llms.txt and /llms-full.txt (headings and inline labels, without
+ * Markdown: "##" and ":" are added). Labels the pages already have (service,
+ * case study and article page labels, contact details) are reused from there.
+ */
+export const llmsSchema = z.object({
+  /** Under the intro of /llms-full.txt; {url} = the address of /llms.txt. */
+  fullLede: z.string().min(1),
+  headings: z.object({
+    services: z.string().min(1),
+    caseStudies: z.string().min(1),
+    insights: z.string().min(1),
+    company: z.string().min(1),
+    optional: z.string().min(1),
+    /** {name} = the site's name. */
+    about: z.string().min(1),
+    principles: z.string().min(1),
+    /** Also the /llms.txt link to the process. */
+    process: z.string().min(1),
+    engagement: z.string().min(1),
+    aftercare: z.string().min(1),
+    faq: z.string().min(1),
+    contact: z.string().min(1),
+  }),
+  labels: z.object({
+    website: z.string().min(1),
+    phone: z.string().min(1),
+    location: z.string().min(1),
+    availability: z.string().min(1),
+    /** The link to /llms-full.txt, and the line after it. */
+    fullContent: z.string().min(1),
+    fullContentDescription: z.string().min(1),
+    feed: z.string().min(1),
+    /** Before the link to the process on /about. */
+    more: z.string().min(1),
+    /** After each process step. */
+    deliverables: z.string().min(1),
+    /** Before each page's address. */
+    url: z.string().min(1),
+    /** Over a service's own FAQs; {title} = the service's title. */
+    serviceQuestions: z.string().min(1),
+    outcome: z.string().min(1),
+    published: z.string().min(1),
+    tags: z.string().min(1),
+    /** Before the link to the contact page. */
+    startProject: z.string().min(1),
+  }),
+});
+
 /** Global, singleton site configuration (collection: `settings`). */
 export const settingsSchema = z.object({
   name: z.string().min(1),
@@ -118,6 +167,20 @@ export const settingsSchema = z.object({
     blockAiTraining: z.boolean().optional(),
     /** IndexNow (Bing, Yandex…): served at /indexnow-key.txt; `npm run indexnow` submits the sitemap after a deploy. */
     indexNowKey: indexNowKeySchema.optional(),
+    /** JSON-LD `areaServed` of the studio and every service, e.g. "Worldwide" or a country. */
+    areaServed: z.string().min(1),
+    /** JSON-LD: languages the studio answers enquiries in, e.g. ["English"]. */
+    availableLanguages: z.array(z.string().min(1)).min(1),
+    /** JSON-LD ContactPoint type, e.g. "sales" or "customer support". */
+    contactType: z.string().min(1),
+    /** JSON-LD name of the studio's list of services. */
+    offerCatalogName: z.string().min(1),
+    /** JSON-LD name of a service's list of deliverables; {title} = the service's title. */
+    deliverablesName: z.string().min(1),
+    /** Page metadata `category`, e.g. "technology". */
+    category: z.string().min(1),
+    /** Web app manifest categories (lowercase W3C names, e.g. "business", "productivity"). */
+    manifestCategories: z.array(z.string().min(1)).min(1),
   }),
   /** Google Analytics. Without an ID here, NEXT_PUBLIC_GA_ID (env) is used; with neither, no analytics code ships. */
   analytics: z
@@ -138,6 +201,26 @@ export const settingsSchema = z.object({
     backToTop: z.string().min(1),
     rights: z.string().min(1),
     localTime: z.string().min(1),
+    /** Screen-reader name of the logo link in the header and footer; {name} = the site's name. */
+    homeLinkLabel: z.string().min(1),
+    /** Screen-reader name of the header's main navigation. */
+    primaryNavLabel: z.string().min(1),
+    /** Screen-reader name of the footer's link columns. */
+    footerNavLabel: z.string().min(1),
+    /** Screen-reader name of the breadcrumb trail on inner pages. */
+    breadcrumbLabel: z.string().min(1),
+    /** Code blocks (articles, legal pages): the copy button's text. */
+    copyCode: z.string().min(1),
+    /** Code blocks: the button's text (and announcement) once copied. */
+    copiedCode: z.string().min(1),
+    /** Code blocks: the copy button's screen-reader name, e.g. "Copy code". */
+    copyCodeLabel: z.string().min(1),
+    /** Callout titles in articles and legal pages when a callout has no title of its own (also used in /llms-full.txt). */
+    callouts: z.object({
+      info: z.string().min(1),
+      tip: z.string().min(1),
+      warning: z.string().min(1),
+    }),
   }),
   /** Cookie banner copy, shown to every first-time visitor. With analytics available
    *  it asks for consent (message, accept, decline); otherwise it notes that only
@@ -151,11 +234,13 @@ export const settingsSchema = z.object({
     decline: z.string().min(1),
     /** Footer button that reopens the banner. */
     settings: z.string().min(1),
-    /** Analytics off: the banner's message. Optional (older settings): a built-in line then. */
-    essentialMessage: z.string().trim().min(1).optional(),
-    /** Analytics off: its only button, which closes it. Optional: "Accept" then. */
-    acknowledge: z.string().trim().min(1).optional(),
+    /** Analytics off: the banner's message. */
+    essentialMessage: z.string().trim().min(1),
+    /** Analytics off: its only button, which closes it. */
+    acknowledge: z.string().trim().min(1),
   }),
+  /** /llms.txt and /llms-full.txt: the site as Markdown for AI assistants. */
+  llms: llmsSchema,
 });
 
 export type Settings = z.infer<typeof settingsSchema>;

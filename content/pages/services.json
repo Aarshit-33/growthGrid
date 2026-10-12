@@ -46,6 +46,7 @@
     "heading": "Launch day is just *the beginning*",
     "lede": "We ensure long-term product success through seamless handovers, proactive maintenance, and ongoing technical support.",
     "warranty": {
+      "icon": "shield-check",
       "days": 30,
       "unit": "days",
       "label": "Bug-fix warranty",

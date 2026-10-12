@@ -19,6 +19,7 @@ import { COLLECTION_META, HOME_SECTION_META, PAGE_META } from "./meta";
 import { can, deniedMessage, type Permission } from "./roles";
 import { createSessionToken, SESSION_COOKIE, sessionCookieOptions } from "./session";
 import { AdminError, itemVersion, layoutVersion, PAGE_KEYS, pageVersion, readSnapshot, updateDoc, versionOf } from "./store";
+import { exportContent, runSync, type SyncReport } from "./sync";
 import type { ActionResult, FieldIssue, HistoryEntry, HistoryTarget, LeadRow, MediaItem, Path, PublicImage, SessionUser } from "./types";
 
 /* ─────────────────────────────────────────────────────────────
@@ -973,5 +974,40 @@ export async function exportLeadsAction(): Promise<ActionResult<{ filename: stri
   return runFiles("Couldn't export the enquiries", async () => ({
     filename: `enquiries-${new Date().toISOString().slice(0, 10)}.csv`,
     csv: leadsCsv(await listLeads()),
+  }));
+}
+
+/* ── Sync & backup (owner only) ───────────────────────────── */
+
+/** Owners only: Sync can create content, and the backup holds all of it. */
+async function authorizeOwner(): Promise<SessionUser | Refusal> {
+  const user = await authorize("settings");
+  if (refused(user)) return user;
+  return user.role === "owner" ? user : { ok: false, error: "Only an owner can sync or back up the content." };
+}
+
+/**
+ * Checks the content store, creates only what's missing (MongoDB) and
+ * refreshes the whole site. Never overwrites or deletes stored content.
+ */
+export async function syncContentAction(): Promise<ActionResult<SyncReport>> {
+  const user = await authorizeOwner();
+  if (refused(user)) return user;
+  return runFiles("Sync failed", async () => {
+    const report = await runSync(user);
+    // The live site shows the latest stored content, created or not.
+    revalidatePath("/", "layout");
+    if (report.created.length > 0) console.info(`[admin] ${user.name} synced: created ${report.created.join(", ")}`);
+    return report;
+  });
+}
+
+/** All content as one JSON file, in the shape of /content (the screen downloads it). */
+export async function backupContentAction(): Promise<ActionResult<{ filename: string; json: string }>> {
+  const user = await authorizeOwner();
+  if (refused(user)) return user;
+  return runFiles("Couldn't build the backup", async () => ({
+    filename: `content-backup-${new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19)}.json`,
+    json: `${JSON.stringify(await exportContent(), null, 2)}\n`,
   }));
 }

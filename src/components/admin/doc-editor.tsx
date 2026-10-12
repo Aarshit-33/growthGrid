@@ -27,10 +27,12 @@ import type { ActionResult, FieldIssue, FormContext, Path } from "@/lib/admin/ty
 import type { CollectionName } from "@/lib/content/registry";
 import type { PageKey } from "@/lib/schemas";
 import { cn, slugify } from "@/lib/utils";
-import { Banner, FailureBanner, type Failure } from "./banners";
+import { Banner, DraftBanner, FailureBanner, type Failure } from "./banners";
+import { draftKey, useLocalDraft } from "./drafts";
 import { flaggedSections, formSections, SchemaForm } from "./form/schema-form";
 import { fieldId, getIn, humanize, issueMap, keysOf, parsePathKey, pathKey, same, setIn, type Raw } from "./form/schema-utils";
-import { useConfirm, useModKey, useSaveShortcut, useUnsavedGuard } from "./hooks";
+import { useConfirm, useModKey, useSaveShortcut } from "./hooks";
+import { useGuardedNavigate, useLeaveGuard } from "./leave-guard";
 import { TimeAgo } from "./time-ago";
 import { toast } from "./toast";
 import { Badge, Btn, BtnLabel, BtnLink, Dot, Kbd, Panel, Switch } from "./ui";
@@ -38,7 +40,9 @@ import { Badge, Btn, BtnLabel, BtnLink, Dot, Kbd, Panel, Switch } from "./ui";
 /* ─────────────────────────────────────────────────────────────
    One editor for every document: site settings, a page, or an
    item of a collection. The form comes from the schema; this adds
-   saving, conflict handling, visibility and navigation.
+   saving, conflict handling, visibility and navigation, a local
+   draft of unsaved changes (drafts.ts) and the ask-before-leaving
+   guard (leave-guard.tsx).
    ───────────────────────────────────────────────────────────── */
 
 export type EditorTarget =
@@ -71,7 +75,20 @@ export interface DocEditorProps {
   allowed?: { delete: boolean; layout: boolean };
   /** This document's recorded changes (none for a new item). */
   history?: DocHistory | null;
+  /**
+   * Tells this screen's local draft apart from another screen editing the same
+   * document (Branding and Site settings both edit the settings, say).
+   */
+  draftScope?: string;
 }
+
+function draftDoc(target: EditorTarget, scope?: string) {
+  const doc =
+    target.kind === "settings" ? "settings" : target.kind === "page" ? `page:${target.key}` : `item:${target.name}:${target.id ?? "new"}`;
+  return scope ? `${doc}@${scope}` : doc;
+}
+
+const isRaw = (value: unknown): value is Raw => typeof value === "object" && value !== null && !Array.isArray(value);
 
 export interface DocHistory {
   /** History, filtered to this document. */
@@ -96,8 +113,10 @@ export function DocEditor({
   refreshOnSave = false,
   allowed = { delete: true, layout: true },
   history = null,
+  draftScope,
 }: DocEditorProps) {
   const router = useRouter();
+  const nav = useGuardedNavigate();
   const mod = useModKey();
   const [confirm, confirmDialog] = useConfirm();
   const item = target.kind === "item" ? target : null;
@@ -106,6 +125,7 @@ export function DocEditor({
   // The editor owns its copy once mounted: refreshed props (after a save
   // elsewhere, or a rename) never overwrite what's being edited.
   const [missing] = useState(initial === null);
+  const [opened] = useState<Raw>(() => initial ?? {});
   const [value, setValue] = useState<Raw>(() => initial ?? {});
   const [saved, setSaved] = useState<Raw>(() => initial ?? {});
   const [version, setVersion] = useState(initialVersion);
@@ -117,7 +137,15 @@ export function DocEditor({
   const [busy, setBusy] = useState<"delete" | "duplicate" | null>(null);
 
   const dirty = useMemo(() => !same(value, saved), [value, saved]);
-  useUnsavedGuard(dirty && !missing);
+
+  // Unsaved changes are copied to this browser; a copy left by an earlier visit is offered back.
+  const draft = useLocalDraft<Raw>({ key: draftKey(base, draftDoc(target, draftScope)), value, dirty, version, enabled: !missing });
+  const offered = draft.pending && isRaw(draft.pending.value) && !same(draft.pending.value, opened) ? draft.pending : null;
+  const { pending: found, clear: clearDraft } = draft;
+  useEffect(() => {
+    // Nothing to offer (it matches what's saved, or can't be read): drop it.
+    if (found && !offered) clearDraft();
+  }, [found, offered, clearDraft]);
 
   const issuesByPath = useMemo(() => issueMap(issues), [issues]);
   const sections = useMemo(() => formSections(form), [form]);
@@ -149,8 +177,9 @@ export function DocEditor({
 
   const itemHref = (id: string) => adminHref(base, `/collections/${item?.name}/${encodeURIComponent(id)}`);
 
-  const save = async (force = false) => {
-    if (saving || missing) return;
+  /** Resolves true once saved. */
+  const save = async (force = false): Promise<boolean> => {
+    if (saving || missing) return false;
     setSaving(true);
     const data = value;
     let result: ActionResult<{ version: string; id?: string }>;
@@ -171,7 +200,7 @@ export function DocEditor({
       setIssues(result.issues ?? []);
       if (!result.issues?.length && !result.conflict && !result.auth) toast.error(result.error, { body: result.errors });
       if (result.issues?.length) window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
+      return false;
     }
 
     setSaved(data);
@@ -179,6 +208,8 @@ export function DocEditor({
     setIssues([]);
     setFailure(null);
     setNotes(result.warnings);
+    draft.clear();
+    draft.settle();
     toast.success(isNew ? `${humanize(item?.meta.singular ?? "item")} created` : "Changes saved", {
       body: result.warnings.length
         ? `Saved with ${result.warnings.length} note${result.warnings.length === 1 ? "" : "s"}: see the top of the page.`
@@ -188,6 +219,7 @@ export function DocEditor({
     if (item && newId && (isNew || newId !== item.id)) router.replace(itemHref(newId));
     // The editor keeps its own copy, so refreshed props never overwrite what's being edited.
     else if (refreshOnSave) router.refresh();
+    return true;
   };
 
   // ⌘S / Ctrl+S saves (when there's something to save).
@@ -200,6 +232,26 @@ export function DocEditor({
     setIssues([]);
     setFailure(null);
     setFormKey((k) => k + 1);
+    draft.clear();
+  };
+
+  // Leaving with unsaved changes asks first: save, discard, or stay.
+  useLeaveGuard({ dirty: dirty && !missing, save: () => save(), discard });
+
+  const restoreDraft = () => {
+    if (!offered) return;
+    setValue(offered.value);
+    setIssues([]);
+    setFailure(null);
+    setFormKey((k) => k + 1);
+    draft.settle();
+    toast.info("Changes restored", { body: "They're not saved yet: review them, then Save." });
+  };
+
+  const dismissDraft = () => {
+    draft.settle();
+    // Edits made since opening have their own copy (written on the next autosave); keep it.
+    if (!dirty) draft.clear();
   };
 
   const remove = async () => {
@@ -227,6 +279,7 @@ export function DocEditor({
     if (!result.ok) return toast.error(result.error, { body: result.errors });
     toast.success(`${humanize(item.meta.singular)} moved to Deleted items`, { body: "Restore it any time from History › Deleted items." });
     setSaved(value); // nothing left to guard
+    draft.clear();
     router.replace(adminHref(base, `/collections/${item.name}`));
   };
 
@@ -235,7 +288,7 @@ export function DocEditor({
     if (dirty) {
       const ok = await confirm({
         title: "Duplicate the saved version?",
-        body: "The copy is made from what's saved. Your unsaved edits stay here.",
+        body: "The copy is made from what's saved, without your unsaved edits. Before it opens, you'll be asked whether to save or discard them.",
         confirmLabel: "Duplicate",
       });
       if (!ok) return;
@@ -245,7 +298,7 @@ export function DocEditor({
     setBusy(null);
     if (!result.ok) return toast.error(result.error, { body: result.errors });
     toast.success("Copy created", { body: "It starts hidden, so you can finish it before it goes live." });
-    router.push(itemHref(result.data.id));
+    nav.push(itemHref(result.data.id));
   };
 
   const setFlag = (flag: "published" | "home", on: boolean) =>
@@ -376,6 +429,7 @@ export function DocEditor({
       <div className="mt-8 grid gap-8 xl:grid-cols-[minmax(0,1fr)_17.5rem]">
         <div className="min-w-0 space-y-6">
           {intro}
+          {offered && <DraftBanner at={offered.at} stale={offered.version !== initialVersion} onRestore={restoreDraft} onDiscard={dismissDraft} />}
           {failure && (
             <FailureBanner
               failure={failure}
@@ -385,6 +439,12 @@ export function DocEditor({
               onRetry={() => save()}
               onForce={() => save(true)}
               onDismiss={() => setFailure(null)}
+              onReload={() =>
+                nav.leave(() => {
+                  draft.clear();
+                  window.location.reload();
+                })
+              }
             />
           )}
           {notes.length > 0 && !failure && (

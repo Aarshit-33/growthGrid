@@ -39,7 +39,7 @@
   "socials": [
     { "platform": "instagram", "label": "Instagram", "url": "https://www.instagram.com/thegrowthgrid.studio" },
     { "platform": "facebook", "label": "Facebook", "url": "https://www.facebook.com/profile.php?id=61595380525274" },
-    { "platform": "x", "label": "Threads", "url": "https://www.threads.com/@thegrowthgrid.studio" },
+    { "platform": "threads", "label": "Threads", "url": "https://www.threads.com/@thegrowthgrid.studio" },
     { "platform": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/in/aarshitjolapara" }
   ],
   "navigation": {
@@ -81,7 +81,14 @@
       "Next.js development agency",
       "SEO-friendly website development"
     ],
-    "twitterHandle": "@growthgrid"
+    "twitterHandle": "@growthgrid",
+    "areaServed": "Worldwide",
+    "availableLanguages": ["English"],
+    "contactType": "sales",
+    "offerCatalogName": "Digital product services",
+    "deliverablesName": "{title} deliverables",
+    "category": "technology",
+    "manifestCategories": ["business", "productivity", "design"]
   },
   "analytics": {
     "gaId": null
@@ -96,16 +103,58 @@
     "connectTitle": "Connect",
     "backToTop": "Back to top",
     "rights": "All rights reserved.",
-    "localTime": "Studio time"
+    "localTime": "Studio time",
+    "homeLinkLabel": "{name} — home",
+    "primaryNavLabel": "Primary",
+    "footerNavLabel": "Footer",
+    "breadcrumbLabel": "Breadcrumb",
+    "copyCode": "Copy",
+    "copiedCode": "Copied",
+    "copyCodeLabel": "Copy code",
+    "callouts": { "info": "Note", "tip": "Tip", "warning": "Warning" }
   },
   "consent": {
     "title": "A quick word on cookies",
-    "message": "We'd like to use analytics to understand which pages help people and improve the site. Google Analytics may use cookies; Vercel Analytics is cookieless. Neither is used for advertising.",
+    "message": "We'd like to use analytics to understand which pages help people and improve the site. Google Analytics may use cookies; Vercel Analytics and Speed Insights are cookieless. None of them is used for advertising. If you reject, none of them load and no analytics cookies are stored.",
     "policyLabel": "Privacy policy",
     "accept": "Accept analytics",
-    "decline": "No thanks",
+    "decline": "Reject",
     "settings": "Cookie settings",
-    "essentialMessage": "When you decline, we don't load Google or Vercel analytics. Only essential settings are kept in your browser, like this choice, so the site works properly.",
+    "essentialMessage": "We don't load Google Analytics, Vercel Analytics or Speed Insights here, and we don't set tracking cookies. Only essential settings are kept in your browser, like this choice, so the site works properly.",
     "acknowledge": "Accept"
+  },
+  "llms": {
+    "fullLede": "The site's content in one Markdown file, for AI assistants. The short index: {url}",
+    "headings": {
+      "services": "Services",
+      "caseStudies": "Case studies",
+      "insights": "Insights",
+      "company": "Company",
+      "optional": "Optional",
+      "about": "About {name}",
+      "principles": "What we stand for",
+      "process": "How a project runs",
+      "engagement": "Ways to work together",
+      "aftercare": "After launch",
+      "faq": "Frequently asked questions",
+      "contact": "Contact"
+    },
+    "labels": {
+      "website": "Website",
+      "phone": "Phone",
+      "location": "Location",
+      "availability": "Availability",
+      "fullContent": "Full content",
+      "fullContentDescription": "every service, case study, article and FAQ in one Markdown file",
+      "feed": "Insights RSS feed",
+      "more": "More",
+      "deliverables": "Deliverables",
+      "url": "URL",
+      "serviceQuestions": "Questions about {title}",
+      "outcome": "Outcome",
+      "published": "Published",
+      "tags": "Tags",
+      "startProject": "Start a project"
+    }
   }
 }

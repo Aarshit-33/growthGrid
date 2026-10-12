@@ -36,8 +36,18 @@ export function pad(n: number, width = 2): string {
   return String(n).padStart(width, "0");
 }
 
-/** Locale-aware date label for an ISO calendar date (UTC, no TZ drift). */
-export function formatDate(iso: string, locale = "en-US"): string {
+/** settings.locale ("en_US", Open Graph style) as a BCP 47 tag ("en-US") for Intl and `lang`. */
+export function localeTag(locale: string): string {
+  return locale.replaceAll("_", "-");
+}
+
+/** The language part of settings.locale ("en_US" → "en"), for `<html lang>` in emails. */
+export function localeLanguage(locale: string): string {
+  return localeTag(locale).split("-")[0];
+}
+
+/** Locale-aware date label for an ISO calendar date (UTC, no TZ drift). `locale`: a BCP 47 tag (see `localeTag`). */
+export function formatDate(iso: string, locale: string): string {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString(locale, {
     year: "numeric",
     month: "long",

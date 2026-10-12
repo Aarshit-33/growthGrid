@@ -10,7 +10,7 @@ import { brandForm } from "@/lib/admin/form-schema";
 import { editorHistory } from "@/lib/admin/history";
 import { BRAND_META } from "@/lib/admin/meta";
 import { can } from "@/lib/admin/roles";
-import { fileLabel, readSnapshot, versionOf } from "@/lib/admin/store";
+import { docLocation, readSnapshot, versionOf } from "@/lib/admin/store";
 
 export const metadata: Metadata = { title: BRAND_META.label };
 
@@ -33,7 +33,7 @@ export default async function BrandingPage() {
       target={target}
       title={BRAND_META.label}
       eyebrow="Site"
-      file={`content/${fileLabel(target)}`}
+      file={docLocation(target)}
       form={brandForm(snapshot)}
       initial={snapshot.settings as Raw}
       version={versionOf(snapshot.settings)}

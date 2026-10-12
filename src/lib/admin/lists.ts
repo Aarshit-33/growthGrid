@@ -3,7 +3,7 @@ import { HOME_INSIGHTS } from "@/lib/content/home-sections";
 import { collectionNames, collectionRegistry, type CollectionName } from "@/lib/content/registry";
 import type { ContentSnapshot } from "@/lib/content/validate";
 import type { HomeSectionId } from "@/lib/schemas";
-import { formatDate } from "@/lib/utils";
+import { formatDate, localeTag } from "@/lib/utils";
 import { COLLECTION_META, isOnHomepage, isPublished } from "./meta";
 import { aftercareStats } from "./overview";
 import type { ListRow } from "./types";
@@ -61,10 +61,11 @@ function scopeLabels(snapshot: ContentSnapshot, scopes: unknown): string[] {
   });
 }
 
-function subtitleOf(name: CollectionName, item: Raw): string | undefined {
+/** Dates read in the site's language (Site settings › Locale); the ISO date until one is set. */
+function subtitleOf(name: CollectionName, item: Raw, locale: string): string | undefined {
   const meta = COLLECTION_META[name];
   if (name === "stats") return `${text(item.prefix)}${text(item.value)}${text(item.suffix)}`;
-  if (name === "insights") return typeof item.publishedAt === "string" ? formatDate(item.publishedAt) : undefined;
+  if (name === "insights") return typeof item.publishedAt === "string" ? (locale ? formatDate(item.publishedAt, locale) : item.publishedAt) : undefined;
   if (name === "projects") return [text(item.category), text(item.year)].filter(Boolean).join(" · ") || undefined;
   if (name === "faqs" || !meta.subtitleField) return undefined;
   return text(at(item, meta.subtitleField)) || undefined;
@@ -79,7 +80,7 @@ function rowOf(snapshot: ContentSnapshot, name: CollectionName, item: Raw): List
   const row: ListRow = {
     id,
     title: itemTitle(name, item),
-    subtitle: subtitleOf(name, item),
+    subtitle: subtitleOf(name, item, localeTag(text((snapshot.settings as Raw | null)?.locale))),
     published: isPublished(item),
     home: isOnHomepage(meta.home, item),
   };

@@ -5,7 +5,7 @@ import { requireSession } from "@/lib/admin/auth";
 import { homeSectionItems } from "@/lib/admin/lists";
 import { homeSectionStatus } from "@/lib/admin/overview";
 import { can } from "@/lib/admin/roles";
-import { fileLabel, layoutVersion, readSnapshot } from "@/lib/admin/store";
+import { docLocation, layoutVersion, readSnapshot } from "@/lib/admin/store";
 import { NUMBERED_HOME_SECTIONS, PINNED_LAST_SECTION, resolveHomeSections } from "@/lib/content/home-sections";
 import type { HomeSectionConfig } from "@/lib/schemas";
 
@@ -39,7 +39,7 @@ export default async function HomepageLayoutPage() {
       items={homeSectionItems(snapshot)}
       headlines={{ hero: plain(copy("hero")?.headline), last: plain(copy(PINNED_LAST_SECTION)?.heading) }}
       version={layoutVersion(snapshot.pages.home)}
-      file={`content/${fileLabel({ kind: "page", key: "home" })}`}
+      file={docLocation({ kind: "page", key: "home" })}
     />
   );
 }

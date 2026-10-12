@@ -6,7 +6,7 @@ import { Avatar } from "@/components/admin/people";
 import { BtnLink, PageHeader } from "@/components/admin/ui";
 import { requireSession } from "@/lib/admin/auth";
 import { adminHref } from "@/lib/admin/config";
-import { deletedItems, HISTORY_LABEL, historyPeople, listHistory } from "@/lib/admin/history";
+import { deletedItems, historyLocation, historyPeople, listHistory } from "@/lib/admin/history";
 import { hasItem } from "@/lib/admin/lists";
 import { readSnapshot } from "@/lib/admin/store";
 import { cn } from "@/lib/utils";
@@ -137,7 +137,7 @@ export default async function HistoryPage({ searchParams }: Props) {
         )}
         <p className="text-[0.76rem] text-faint">
           {total} {total === 1 ? "change" : "changes"}
-          {doc || by !== undefined ? " match" : " in all"} · kept in <code className="font-mono text-[0.95em]">{HISTORY_LABEL}</code>
+          {doc || by !== undefined ? " match" : " in all"} · kept in <code className="font-mono text-[0.95em]">{historyLocation()}</code>
         </p>
       </div>
     </div>

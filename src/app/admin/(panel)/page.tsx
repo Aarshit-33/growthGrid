@@ -37,6 +37,7 @@ import type { LeadStatus } from "@/lib/admin/types";
 import { brandAssetUrl, resolveBrand } from "@/lib/brand";
 import { resolveHomeSections } from "@/lib/content/home-sections";
 import { validateContent } from "@/lib/content/validate";
+import { prepareMediaIndex } from "@/lib/media/gridfs";
 import type { HomeSectionConfig } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 
@@ -51,7 +52,13 @@ function leadsAtAGlance(): Promise<LeadsSummary | null> {
 export default async function OverviewPage() {
   const { config, user } = await requireSession();
   const canLeads = can(user.role, "leads");
-  const [snapshot, recent, leads] = await Promise.all([readSnapshot(), listHistory({ limit: 5 }), canLeads ? leadsAtAGlance() : null]);
+  // media: what's in the media database (CONTENT_SOURCE=mongo), for the image checks below.
+  const [snapshot, recent, leads, media] = await Promise.all([
+    readSnapshot(),
+    listHistory({ limit: 5 }),
+    canLeads ? leadsAtAGlance() : null,
+    prepareMediaIndex(),
+  ]);
   const href = (path: string) => adminHref(config.base, path);
   const canLayout = can(user.role, "layout");
   const canSettings = can(user.role, "settings");
@@ -59,7 +66,7 @@ export default async function OverviewPage() {
   const quickCards = 1 + Number(canLayout) + 2 * Number(canSettings);
 
   const stats = collectionStats(snapshot);
-  const report = validateContent({ content: snapshot });
+  const report = validateContent({ content: snapshot, media });
   const status = homeSectionStatus(snapshot);
   const layout = resolveHomeSections((snapshot.pages.home as { sections?: HomeSectionConfig[] } | undefined)?.sections);
   const showing = layout.filter((section) => section.enabled && !status[section.id].empty);

@@ -1,8 +1,11 @@
 import "server-only";
 import { readFile } from "node:fs/promises";
-import { join, resolve, sep } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 import { ImageResponse } from "next/og";
 import { BRAND_ASSETS, iconTileStyle, type BrandAssetName, type IconTileStyle } from "@/lib/brand";
+import { isDatabaseConfigured } from "@/lib/db/mongoose";
+import { readMediaBytes } from "@/lib/media/gridfs";
+import { isMediaInDatabase } from "@/lib/media/known";
 import type { Brand } from "@/lib/schemas/settings";
 import { sniffImage } from "@/lib/utils/image-type";
 
@@ -44,16 +47,31 @@ function readDefaultFile(name: BrandAssetName): Promise<Buffer> | null {
 /** Sizes inside the generated favicon.ico. */
 const ICO_SIZES = [16, 32, 48];
 
+/** Largest stored icon pulled from the media database to render from. */
+const MAX_STORED_ICON_BYTES = 8 * 1024 * 1024;
+
+/** A site path's bytes from the media database (CONTENT_SOURCE=mongo), or null. */
+async function readStored(path: string): Promise<Buffer | null> {
+  if (!isMediaInDatabase() || !isDatabaseConfigured()) return null;
+  try {
+    return await readMediaBytes(path, MAX_STORED_ICON_BYTES);
+  } catch (error) {
+    console.warn(`[brand] couldn't read ${path} from the media database:`, error);
+    return null;
+  }
+}
+
 /**
- * An image from /public as a data URI the renderer can embed (PNG, JPG, GIF
- * or SVG), or null: missing, outside /public, or a format it can't draw.
+ * An image from /public (or, with CONTENT_SOURCE=mongo, the media database) as
+ * a data URI the renderer can embed (PNG, JPG, GIF or SVG), or null: missing,
+ * outside /public, or a format it can't draw.
  */
 export async function embeddableImage(src: string): Promise<string | null> {
   // Brand URLs carry a ?v= fingerprint (src/lib/brand-files.ts): not part of the file name.
   const path = src.split(/[?#]/, 1)[0];
   const file = resolve(PUBLIC_DIR, `.${path.startsWith("/") ? path : `/${path}`}`);
   if (!file.startsWith(PUBLIC_DIR + sep)) return null;
-  const bytes = await readFile(file).catch(() => null);
+  const bytes = (await readFile(file).catch(() => null)) ?? (await readStored(`/${relative(PUBLIC_DIR, file).split(sep).join("/")}`));
   if (!bytes) return null;
   const kind = sniffImage(bytes);
   if (!kind || kind.ext === "webp" || kind.ext === "avif") return null;

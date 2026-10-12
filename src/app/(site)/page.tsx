@@ -37,6 +37,7 @@ import type { HomeSectionId } from "@/lib/schemas";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { webPageSchema } from "@/lib/seo/schema";
 import { SPEAKABLE } from "@/lib/seo/speakable";
+import { localeTag } from "@/lib/utils";
 
 /** Items switched off for the home page (admin → "On homepage") stay on their other pages. */
 const onHome = <T extends { home?: boolean }>(items: T[]) => items.filter((item) => item.home !== false);
@@ -147,6 +148,7 @@ export default async function HomePage() {
         intro={page.insights}
         insights={insights}
         minReadLabel={insightsPage.detail.minRead}
+        locale={localeTag(settings.locale)}
         index={index("insights")}
       />
     ),

@@ -8,7 +8,7 @@ import { collectionForm } from "@/lib/admin/form-schema";
 import { isCollectionName } from "@/lib/admin/lists";
 import { COLLECTION_META } from "@/lib/admin/meta";
 import { can } from "@/lib/admin/roles";
-import { fileLabel, readSnapshot } from "@/lib/admin/store";
+import { docLocation, readSnapshot } from "@/lib/admin/store";
 import { collectionRegistry } from "@/lib/content/registry";
 
 type Props = { params: Promise<{ name: string }> };
@@ -37,7 +37,7 @@ export default async function NewItemPage({ params }: Props) {
       title={`New ${meta.singular}`}
       eyebrow={meta.label}
       back={{ href: adminHref(config.base, `/collections/${name}`), label: meta.label }}
-      file={`content/${fileLabel({ kind: "collection", name })}`}
+      file={docLocation({ kind: "collection", name })}
       form={form}
       initial={initial}
       version={null}

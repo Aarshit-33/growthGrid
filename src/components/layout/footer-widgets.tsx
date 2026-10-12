@@ -2,10 +2,12 @@
 
 import { ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLocale } from "./locale-context";
 import { scrollToTarget } from "./smooth-scroll";
 
 /** Live clock for the studio's timezone (only rendered when configured). */
 export function StudioClock({ timezone, label }: { timezone: string; label: string }) {
+  const locale = useLocale();
   const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export function StudioClock({ timezone, label }: { timezone: string; label: stri
   }, []);
 
   const time = now
-    ? now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", timeZone: timezone })
+    ? now.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit", timeZone: timezone })
     : "--:--";
 
   return (

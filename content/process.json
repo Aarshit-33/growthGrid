@@ -30,7 +30,7 @@
     "slug": "build",
     "order": 4,
     "title": "Build",
-    "summary": "Utilizing cutting-edge technology and streamlined integrations, we create highly efficient and protected digital products that scale to meet your commercial needs. ",
+    "summary": "Utilizing cutting-edge technology and streamlined integrations, we create highly efficient and protected digital products that scale to meet your commercial needs.",
     "tags": ["Engineering", "APIs", "Infrastructure"],
     "duration": "Weeks 4–10",
     "deliverables": ["Two-week sprints", "Automated tests", "Staging environment"]

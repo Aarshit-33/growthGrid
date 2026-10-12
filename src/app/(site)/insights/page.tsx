@@ -9,6 +9,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { getInsights, getPage, getSettings, getTeamMember } from "@/lib/data";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { collectionPageSchema } from "@/lib/seo/schema";
+import { localeTag } from "@/lib/utils";
 import { headingText } from "@/lib/utils/text";
 
 const PATH = "/insights";
@@ -24,6 +25,7 @@ export default async function InsightsPage() {
   const featured = insights.find((insight) => insight.featured) ?? insights[0];
   const rest = insights.filter((insight) => insight !== featured);
   const featuredAuthor = featured ? await getTeamMember(featured.author) : undefined;
+  const locale = localeTag(settings.locale);
 
   // Topics in order of first appearance (insights are newest first).
   const topics = [...new Map(insights.map((insight) => [insight.category.key, insight.category.label]))].map(
@@ -45,6 +47,7 @@ export default async function InsightsPage() {
                 author={featuredAuthor}
                 featuredLabel={page.featuredLabel}
                 minReadLabel={page.detail.minRead}
+                locale={locale}
               />
             ),
           },
@@ -55,7 +58,7 @@ export default async function InsightsPage() {
       topic: insight.category.key,
       node: (
         <div data-reveal="" style={{ "--reveal-delay": `${(i % 3) * 90}ms` } as CSSProperties}>
-          <InsightCard insight={insight} minReadLabel={page.detail.minRead} headingLevel={2} />
+          <InsightCard insight={insight} minReadLabel={page.detail.minRead} locale={locale} headingLevel={2} />
         </div>
       ),
     })),
@@ -79,7 +82,7 @@ export default async function InsightsPage() {
               topics={[{ key: ALL, label: page.filters.all }, ...topics]}
               counts={counts}
               results={page.filters.results}
-              locale={settings.locale.replace("_", "-")}
+              locale={locale}
             />
           )}
         </PageHero>

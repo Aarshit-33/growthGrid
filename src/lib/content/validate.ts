@@ -2,10 +2,12 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
 import { svgTwin } from "@/lib/brand";
+import { isMediaInDatabase, knownMedia } from "@/lib/media/known";
 import {
   pageSchemas,
   settingsSchema,
   type Block,
+  type CardsPage,
   type Faq,
   type ImageAsset,
   type Insight,
@@ -45,8 +47,20 @@ export interface ContentSnapshot {
 interface Options {
   /** Project root (defaults to cwd). Used to resolve /public assets. */
   root?: string;
-  /** Verify that every referenced image exists in /public. */
+  /**
+   * Verify that every referenced image exists: in /public or, with
+   * CONTENT_SOURCE=mongo, in the media database. See `media`.
+   */
   checkAssets?: boolean;
+  /**
+   * CONTENT_SOURCE=mongo: the live paths in the media database, freshly listed
+   * (prepareMediaIndex() in src/lib/media/gridfs.ts). An image in neither
+   * /public nor this list is an error. Without it, an image this server hasn't
+   * seen in the database is only a warning (another server may have it).
+   */
+  media?: ReadonlySet<string>;
+  /** Replaces the existence checks above (true: the image exists). */
+  assetExists?: (src: string) => boolean;
   /** Content to check. Defaults to the JSON bundled from /content; the admin passes an edited copy before saving. */
   content?: ContentSnapshot;
 }
@@ -79,6 +93,16 @@ function collectLinks(value: unknown, out: string[] = []): string[] {
 
 function blockImages(body: Block[]): ImageAsset[] {
   return body.flatMap((b) => (b.type === "image" ? [b.image] : []));
+}
+
+/** WCAG relative luminance of a #rrggbb colour. */
+function luminance(hex: string): number {
+  const value = Number.parseInt(hex.slice(1), 16);
+  const [r, g, b] = [(value >> 16) & 255, (value >> 8) & 255, value & 255].map((c) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
 export function validateContent(options: Options = {}): ValidationReport {
@@ -213,6 +237,7 @@ export function validateContent(options: Options = {}): ValidationReport {
     "/contact",
     "/privacy",
     "/terms",
+    "/cards",
     // Machine-readable files (route handlers), linkable from content such as the footer.
     FEED_PATH,
     LLMS_PATH,
@@ -220,6 +245,7 @@ export function validateContent(options: Options = {}): ValidationReport {
     ...[...serviceSlugs].map((s) => `/services/${s}`),
     ...[...projectSlugs].map((s) => `/work/${s}`),
     ...insights.map((i) => `/insights/${i.slug}`),
+    ...team.map((m) => `/cards/${m.slug}`),
   ]);
   // Hidden items keep their routes here (so hiding one never blocks a save),
   // but a link to one would 404 on the site: flag it.
@@ -227,6 +253,7 @@ export function validateContent(options: Options = {}): ValidationReport {
     ...services.filter((s) => s.published === false).map((s) => `/services/${s.slug}`),
     ...projects.filter((p) => p.published === false).map((p) => `/work/${p.slug}`),
     ...insights.filter((i) => i.published === false).map((i) => `/insights/${i.slug}`),
+    ...team.filter((m) => m.published === false || m.card?.enabled === false).map((m) => `/cards/${m.slug}`),
   ]);
 
   const linkSources: [string, unknown][] = [
@@ -243,10 +270,40 @@ export function validateContent(options: Options = {}): ValidationReport {
     }
   }
 
-  /* ── 4. Referenced images exist in /public ────────────── */
+  /* ── 3b. Business cards: a QR code phones can read ──────── */
+
+  const cards = pages.cards as CardsPage | undefined;
+  if (cards) {
+    const { qrInk, qrPanel } = cards.design.front;
+    const ink = luminance(qrInk);
+    const panel = luminance(qrPanel);
+    const ratio = (Math.max(ink, panel) + 0.05) / (Math.min(ink, panel) + 0.05);
+    if (ink > panel) {
+      warnings.push("pages/cards.json › design.front: the QR code is lighter than its tile; many phones can't read a reversed code");
+    } else if (ratio < 4) {
+      warnings.push(`pages/cards.json › design.front: the QR code and its tile are too close in colour (contrast ${ratio.toFixed(1)}:1); phones read 4:1 or more reliably`);
+    }
+  }
+
+  /* ── 4. Referenced images exist (/public or the media database) ── */
 
   if (checkAssets) {
-    const exists = (src: string) => existsSync(join(root, "public", src));
+    const inDatabase = isMediaInDatabase();
+    const where = inDatabase ? " or in the media library" : "";
+    const lookup = (src: string): "yes" | "no" | "unknown" => {
+      if (options.assetExists) return options.assetExists(src) ? "yes" : "no";
+      if (existsSync(join(root, "public", src))) return "yes";
+      if (!inDatabase) return "no";
+      if (options.media) return options.media.has(src) ? "yes" : "no";
+      return knownMedia(src) ? "yes" : "unknown";
+    };
+    /** The worst answer among a path and its stand-ins ("yes" if any exists). */
+    const find = (srcs: string[]) => {
+      const answers = srcs.map(lookup);
+      return answers.includes("yes") ? "yes" : answers.includes("unknown") ? "unknown" : "no";
+    };
+    const unconfirmed = (label: string, src: string) =>
+      warnings.push(`${label}: couldn't confirm ${src} exists (not in /public, and the media library wasn't checked)`);
     const images: [string, ImageAsset][] = [
       ...projects.flatMap((p) =>
         [p.cover, ...p.gallery].map((img) => [`projects.json › ${p.slug}`, img] as [string, ImageAsset]),
@@ -259,9 +316,10 @@ export function validateContent(options: Options = {}): ValidationReport {
       ...team.flatMap((m) => (m.avatar ? [[`team.json › ${m.slug}`, m.avatar] as [string, ImageAsset]] : [])),
     ];
     for (const [label, img] of images) {
-      if (img.src.startsWith("/") && !exists(img.src)) {
-        errors.push(`${label}: image not found at public${img.src}`);
-      }
+      if (!img.src.startsWith("/")) continue;
+      const found = find([img.src]);
+      if (found === "no") errors.push(`${label}: image not found at public${img.src}${where}`);
+      else if (found === "unknown") unconfirmed(label, img.src);
     }
     // On the site an SVG with the same name takes over from a brand image
     // (src/lib/brand-files.ts), so either file will do.
@@ -274,9 +332,9 @@ export function validateContent(options: Options = {}): ValidationReport {
     for (const [label, img] of brandImages) {
       if (!img?.src.startsWith("/")) continue;
       const twin = svgTwin(img.src);
-      if (!exists(img.src) && !(twin && exists(twin))) {
-        errors.push(`${label}: image not found at public${img.src}${twin ? ` (or public${twin})` : ""}`);
-      }
+      const found = find(twin ? [img.src, twin] : [img.src]);
+      if (found === "no") errors.push(`${label}: image not found at public${img.src}${twin ? ` (or public${twin})` : ""}${where}`);
+      else if (found === "unknown") unconfirmed(label, img.src);
     }
   }
 

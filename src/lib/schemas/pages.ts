@@ -2,6 +2,7 @@ import { z } from "zod";
 import { blockSchema } from "./blocks";
 import {
   ctaBlockSchema,
+  hexColorSchema,
   iconNameSchema,
   isoDateSchema,
   linkSchema,
@@ -55,6 +56,8 @@ const carePlanSchema = z.object({
 
 const aftercareSchema = sectionIntroSchema.extend({
   warranty: z.object({
+    /** Icon beside the warranty's label. */
+    icon: iconNameSchema,
     days: z.number().int().min(1).max(365),
     /** Unit beside the big number, e.g. "days". */
     unit: z.string().min(1),
@@ -152,8 +155,8 @@ export const homePageSchema = z.object({
   work: sectionIntroSchema.extend({
     cta: linkSchema,
     /** Accessible labels for the deck's arrow buttons. */
-    prevLabel: z.string().min(1).default("Previous project"),
-    nextLabel: z.string().min(1).default("Next project"),
+    prevLabel: z.string().min(1),
+    nextLabel: z.string().min(1),
   }),
   principles: sectionIntroSchema,
   technology: sectionIntroSchema.extend({ hint: z.string().min(1) }),
@@ -166,14 +169,17 @@ export const homePageSchema = z.object({
     /** Slide position, e.g. "{index} of {total}". */
     slideLabel: z.string().min(1),
     projectLabel: z.string().min(1),
+    /** What screen readers call the carousel and each slide, e.g. "carousel" and "slide". */
+    carouselLabel: z.string().min(1),
+    slideRoleLabel: z.string().min(1),
   }),
   insights: sectionIntroSchema.extend({
     cta: linkSchema,
     /** Link on the open insight card, e.g. "Read article". */
-    readLabel: z.string().min(1).default("Read article"),
+    readLabel: z.string().min(1),
     /** Accessible labels for the accordion's arrow buttons. */
-    prevLabel: z.string().min(1).default("Previous insight"),
-    nextLabel: z.string().min(1).default("Next insight"),
+    prevLabel: z.string().min(1),
+    nextLabel: z.string().min(1),
   }),
   faq: sectionIntroSchema,
   cta: ctaBlockSchema,
@@ -305,6 +311,11 @@ export const insightsPageSchema = z.object({
     writtenBy: z.string().min(1),
     updated: z.string().min(1),
     contents: z.string().min(1),
+    /** Platform names in the share buttons' labels (Share on X…). */
+    shareOn: z.object({
+      x: z.string().min(1),
+      linkedin: z.string().min(1),
+    }),
   }),
 });
 
@@ -335,7 +346,7 @@ export const contactPageSchema = z.object({
     honeypotLabel: z.string().min(1),
     resetLabel: z.string().min(1),
     /** Pre-written (editable) message when a care plan's quote link opens the form; {plan} = plan name. */
-    planMessage: z.string().min(1).default("Hi! I'd like a quote for the {plan} care plan."),
+    planMessage: z.string().min(1),
     /** Validation copy, keyed by field + failure (mapped from Zod issue codes). */
     errors: z.object({
       nameMin: z.string().min(1),
@@ -363,6 +374,51 @@ export const contactPageSchema = z.object({
       .min(1),
   }),
   faq: sectionIntroSchema,
+  /** The emails each enquiry sends. Placeholders: {name}, {firstName}, {company}, {site} (the site's name), {host} (its domain). */
+  emails: z.object({
+    /** To the studio (the owners and LEAD_EMAIL_TO). */
+    alert: z.object({
+      /** Sender name, unless LEAD_EMAIL_FROM sets one. */
+      senderName: z.string().min(1),
+      subject: z.string().min(1),
+      /** Subject when the visitor gave a company. */
+      subjectWithCompany: z.string().min(1),
+      /** Badge in the email's header. */
+      badge: z.string().min(1),
+      /** First line of the plain-text version. */
+      heading: z.string().min(1),
+      nameLabel: z.string().min(1),
+      companyLabel: z.string().min(1),
+      emailLabel: z.string().min(1),
+      servicesLabel: z.string().min(1),
+      timelineLabel: z.string().min(1),
+      /** The page the enquiry was sent from. */
+      pageLabel: z.string().min(1),
+      messageLabel: z.string().min(1),
+      replyLabel: z.string().min(1),
+      /** Subject of the reply the "Reply" button starts. */
+      replySubject: z.string().min(1),
+      /** Link to Studio › Leads (when the Studio is on): its label in the text version, and the button. */
+      leadsLabel: z.string().min(1),
+      openLeadsLabel: z.string().min(1),
+      footer: z.string().min(1),
+      /** When saving failed and the email is the only copy: subject prefix, warning title and text. */
+      notSavedPrefix: z.string().min(1),
+      notSavedTitle: z.string().min(1),
+      notSaved: z.string().min(1),
+    }),
+    /** Receipt to the visitor. */
+    confirmation: z.object({
+      subject: z.string().min(1),
+      /** Plain-text version: greeting, body and sign-off (the site's name follows). */
+      greeting: z.string().min(1),
+      body: z.string().min(1),
+      signOff: z.string().min(1),
+      /** HTML version: heading and message. */
+      heading: z.string().min(1),
+      message: z.string().min(1),
+    }),
+  }),
 });
 
 export const legalPageSchema = z.object({
@@ -376,6 +432,111 @@ export const legalPageSchema = z.object({
   /** Table of contents label, e.g. "On this page". */
   contentsLabel: z.string().min(1),
   body: z.array(blockSchema).min(1),
+});
+
+/* ── Business cards ── /cards and /cards/<slug>. The copy is edited in
+   Pages › Business cards; `design` (colours, QR code, rows) has its own
+   Studio screen with a live preview. Defaults: content/pages/cards.json. */
+
+export const CARD_ROWS = ["phone", "name", "role", "email", "website"] as const;
+export const cardRowSchema = z.enum(CARD_ROWS);
+export type CardRow = z.infer<typeof cardRowSchema>;
+
+/** What the QR code on the front opens. */
+export const cardQrTargetSchema = z.enum(["card", "contact", "website"]);
+export type CardQrTarget = z.infer<typeof cardQrTargetSchema>;
+
+export const cardDesignSchema = z.object({
+  /** The dark side: the logo and the QR code. */
+  front: z.object({
+    background: hexColorSchema,
+    /** The symbol and the accent half of the wordmark ("Grid"). */
+    logo: hexColorSchema,
+    /** The first half of the wordmark ("growth"). */
+    wordmark: hexColorSchema,
+    /** The tile behind the QR code. */
+    qrPanel: hexColorSchema,
+    /** The QR code's modules: keep it much darker than the tile, or phones can't read it. */
+    qrInk: hexColorSchema,
+    qr: cardQrTargetSchema,
+  }),
+  /** The light side: the logo and the contact rows. */
+  back: z.object({
+    background: hexColorSchema,
+    logo: hexColorSchema,
+    wordmark: hexColorSchema,
+    /** Contact rows, top to bottom (each at most once). */
+    rows: z
+      .array(cardRowSchema)
+      .min(1)
+      .max(5)
+      .refine((rows) => new Set(rows).size === rows.length, "Each row can be listed once"),
+    pill: hexColorSchema,
+    pillInk: hexColorSchema,
+    /** The row drawn in the highlight colours. */
+    highlight: cardRowSchema,
+    highlightPill: hexColorSchema,
+    highlightInk: hexColorSchema,
+    /** The tab on the left edge. */
+    sideTab: z.boolean(),
+  }),
+  shape: z.object({
+    /** Card corners on screen, in px at the card's 1050 px width (downloads stay square for print). */
+    corners: z.number().int().min(0).max(60),
+    /** Roundness of the QR tile, the side tab and the rows, in px (rows max out as full pills). */
+    radius: z.number().int().min(0).max(40),
+  }),
+});
+export type CardDesign = z.infer<typeof cardDesignSchema>;
+
+export const cardsPageSchema = z.object({
+  key: z.literal("cards"),
+  seo: seoSchema,
+  hero: pageHeroSchema,
+  /** Breadcrumb label for /cards. */
+  breadcrumb: z.string().min(1),
+  /** Each person's page (/cards/<slug>). {name}, {role} and {site} are filled in. */
+  member: z.object({
+    eyebrow: z.string().min(1),
+    seoTitle: z.string().min(1),
+    seoDescription: z.string().min(1),
+    /** Text that travels with a shared link. */
+    shareText: z.string().min(1),
+  }),
+  labels: z.object({
+    front: z.string().min(1),
+    back: z.string().min(1),
+    /** Under the card, e.g. "Tap the card to flip it". */
+    flipHint: z.string().min(1),
+    /** The flip button's screen-reader name. */
+    flip: z.string().min(1),
+    /** Link from the list to a person's card. */
+    open: z.string().min(1),
+    /** Link from a card back to the list. */
+    all: z.string().min(1),
+    saveContact: z.string().min(1),
+    share: z.string().min(1),
+    copyLink: z.string().min(1),
+    copied: z.string().min(1),
+    whatsapp: z.string().min(1),
+    email: z.string().min(1),
+    download: z.string().min(1),
+    /** Under the download buttons, e.g. "PNG for screens, SVG for print". */
+    downloadHint: z.string().min(1),
+    /** The print-ready PDF button (optional; a default is used without it). */
+    print: z.string().min(1).optional(),
+    preparing: z.string().min(1),
+    /** Heading over the tap-to-call list. */
+    details: z.string().min(1),
+    phone: z.string().min(1),
+    emailLabel: z.string().min(1),
+    website: z.string().min(1),
+    /** Card artwork alt text: {name} and {side} are filled in. */
+    cardAlt: z.string().min(1),
+    /** The list page when nobody has a card. */
+    empty: z.string().min(1),
+  }),
+  design: cardDesignSchema,
 });
 
 export const notFoundPageSchema = z.object({
@@ -399,6 +560,7 @@ export const pageSchemas = {
   privacy: legalPageSchema,
   terms: legalPageSchema,
   "not-found": notFoundPageSchema,
+  cards: cardsPageSchema,
 } as const;
 
 export type PageKey = keyof typeof pageSchemas;
@@ -412,3 +574,4 @@ export type InsightsPage = z.infer<typeof insightsPageSchema>;
 export type ContactPage = z.infer<typeof contactPageSchema>;
 export type LegalPage = z.infer<typeof legalPageSchema>;
 export type NotFoundPage = z.infer<typeof notFoundPageSchema>;
+export type CardsPage = z.infer<typeof cardsPageSchema>;

@@ -8,12 +8,14 @@ import { ButtonLink } from "@/components/ui/button";
 import { SocialIcon } from "@/components/ui/social-icon";
 import { Availability } from "@/components/ui/tag";
 import type { Brand, Link as NavLink, Settings } from "@/lib/schemas";
-import { cn, pad } from "@/lib/utils";
+import { cn, interpolate, pad } from "@/lib/utils";
 import { Logo } from "./logo";
 import { getLenis } from "./smooth-scroll";
 import { useReducedMotionSafe } from "@/hooks/use-media-query";
 
 interface SiteHeaderProps {
+  /** Site settings › Name: {name} in the logo link's screen-reader name. */
+  name: string;
   wordmark: string;
   /** Studio › Branding › Logo (the default: the grid mark beside the wordmark). */
   logo: Brand["logo"];
@@ -33,7 +35,7 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function SiteHeader({ wordmark, logo, primary, cta, email, socials, availability, ui }: SiteHeaderProps) {
+export function SiteHeader({ name, wordmark, logo, primary, cta, email, socials, availability, ui }: SiteHeaderProps) {
   const pathname = usePathname();
   // The menu remembers the path it was opened on, so navigating closes it
   // without a state-syncing effect.
@@ -119,11 +121,11 @@ export function SiteHeader({ wordmark, logo, primary, cta, email, socials, avail
         )}
       />
       <div className="container-x relative flex h-[var(--header-h)] items-center justify-between gap-6">
-        <Link href="/" aria-label={`${wordmark} — home`} className="relative z-10 -m-2 rounded-full p-2">
+        <Link href="/" aria-label={interpolate(ui.homeLinkLabel, { name })} className="relative z-10 -m-2 rounded-full p-2">
           <Logo wordmark={wordmark} logo={logo} className="[&_img]:max-h-[calc(var(--header-h)-1.5rem)]" />
         </Link>
 
-        <nav aria-label="Primary" className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
+        <nav aria-label={ui.primaryNavLabel} className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
           <ul
             className="flex items-center gap-1 rounded-full border border-line bg-white/[0.025] p-1 backdrop-blur-md"
             onMouseLeave={() => setHovered(null)}
@@ -227,7 +229,7 @@ function MobileMenu({
   ui,
   activeHref,
   onNavigate,
-}: Omit<SiteHeaderProps, "wordmark" | "logo"> & { activeHref: string | null; onNavigate: () => void }) {
+}: Omit<SiteHeaderProps, "name" | "wordmark" | "logo"> & { activeHref: string | null; onNavigate: () => void }) {
   const reduce = useReducedMotionSafe();
   const firstLink = useRef<HTMLAnchorElement>(null);
 

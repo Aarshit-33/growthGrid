@@ -2,11 +2,12 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import { appendFile, mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { isDatabaseConfigured } from "@/lib/db/uri";
 import type { LeadInput } from "@/lib/schemas/lead";
 
 /* ─────────────────────────────────────────────────────────────
    Lead persistence.
-   • MONGODB_URI set → `leads` collection via LeadModel.
+   • MongoDB configured (lib/db/uri.ts) → `leads` collection via LeadModel.
    • Otherwise      → one JSON object per line in .data/leads.ndjson
      (git-ignored), so the form works locally with zero setup.
    Mongoose is imported lazily so the file fallback never loads it.
@@ -35,7 +36,7 @@ export function withLeadsLock<T>(task: () => Promise<T>): Promise<T> {
 }
 
 export async function saveLead(lead: NewLead): Promise<void> {
-  if (process.env.MONGODB_URI) {
+  if (isDatabaseConfigured()) {
     const [{ connectToDatabase }, { LeadModel }] = await Promise.all([
       import("@/lib/db/mongoose"),
       import("@/lib/models/lead"),

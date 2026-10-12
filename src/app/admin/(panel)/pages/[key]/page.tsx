@@ -11,7 +11,7 @@ import { pageForm } from "@/lib/admin/form-schema";
 import { editorHistory } from "@/lib/admin/history";
 import { AFTERCARE_META, PAGE_META } from "@/lib/admin/meta";
 import { can } from "@/lib/admin/roles";
-import { fileLabel, PAGE_KEYS, pageVersion, readSnapshot } from "@/lib/admin/store";
+import { docLocation, PAGE_KEYS, pageVersion, readSnapshot } from "@/lib/admin/store";
 import type { PageKey } from "@/lib/schemas";
 
 type Props = { params: Promise<{ key: string }> };
@@ -41,7 +41,7 @@ export default async function PageCopyPage({ params }: Props) {
       target={{ kind: "page", key }}
       title={meta.label}
       eyebrow="Page"
-      file={`content/${fileLabel({ kind: "page", key })}`}
+      file={docLocation({ kind: "page", key })}
       form={pageForm(snapshot, key)}
       initial={data}
       version={pageVersion(data)}

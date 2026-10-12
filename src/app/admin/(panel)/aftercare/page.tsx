@@ -10,7 +10,7 @@ import { aftercareForm } from "@/lib/admin/form-schema";
 import { editorHistory } from "@/lib/admin/history";
 import { AFTERCARE_META } from "@/lib/admin/meta";
 import { can } from "@/lib/admin/roles";
-import { fileLabel, pageVersion, readSnapshot } from "@/lib/admin/store";
+import { docLocation, pageVersion, readSnapshot } from "@/lib/admin/store";
 
 export const metadata: Metadata = { title: AFTERCARE_META.label };
 
@@ -32,7 +32,7 @@ export default async function AftercarePage() {
       target={target}
       title={AFTERCARE_META.label}
       eyebrow="Homepage · Service pages"
-      file={`content/${fileLabel(target)}`}
+      file={docLocation(target)}
       form={aftercareForm(snapshot)}
       initial={data}
       version={pageVersion(data)}

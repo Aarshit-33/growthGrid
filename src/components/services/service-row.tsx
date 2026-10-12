@@ -63,10 +63,10 @@ export function ServiceRow({
       <p className="max-w-xl text-dim lg:col-span-4">{service.summary}</p>
 
       {lead && (
-        <dl className="lg:col-span-2">
+        <dl className="min-w-0 lg:col-span-2">
           <div className="flex flex-col-reverse">
             <dt className="mt-2 text-xs leading-snug text-muted">{lead.label}</dt>
-            <dd className="font-display text-[1.75rem] font-medium leading-none tracking-[-0.04em] text-ink">
+            <dd className="break-words font-display text-[1.75rem] font-medium leading-none tracking-[-0.04em] text-ink">
               <OutcomeValue value={lead.value} />
             </dd>
           </div>

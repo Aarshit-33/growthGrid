@@ -115,7 +115,7 @@
     "id": "growthgrid-approach",
     "order": 17,
     "question": "How does growthGrid approach digital product development?",
-    "answer": "We follow a structured process covering discovery, product strategy, UX/UI design, development, testing, launch, and post-launch support to create reliable products built for long-term growth. ",
+    "answer": "We follow a structured process covering discovery, product strategy, UX/UI design, development, testing, launch, and post-launch support to create reliable products built for long-term growth.",
     "scopes": ["service:digital-products"]
   },
   {

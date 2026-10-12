@@ -1,16 +1,18 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { CircleAlert, LogIn, RotateCcw, TriangleAlert, X, type LucideIcon } from "lucide-react";
+import { ArchiveRestore, CircleAlert, LogIn, RotateCcw, TriangleAlert, Undo2, X, type LucideIcon } from "lucide-react";
 import { adminHref } from "@/lib/admin/config";
 import type { ActionResult, FieldIssue, Path } from "@/lib/admin/types";
 import { cn } from "@/lib/utils";
 import { humanize } from "./form/schema-utils";
+import { TimeAgo } from "./time-ago";
 import { Btn, BtnLink } from "./ui";
 
 /* ─────────────────────────────────────────────────────────────
    Inline banners for the editors: a failed save (with field
-   problems), content changed elsewhere, or a session that ended.
+   problems), content changed elsewhere, a session that ended,
+   or unsaved changes kept in this browser from an earlier visit.
    ───────────────────────────────────────────────────────────── */
 
 export type Failure = Extract<ActionResult, { ok: false }>;
@@ -71,6 +73,7 @@ export function FailureBanner({
   onRetry,
   onForce,
   onDismiss,
+  onReload = () => window.location.reload(),
 }: {
   failure: Failure;
   issues?: FieldIssue[];
@@ -80,6 +83,8 @@ export function FailureBanner({
   onRetry: () => void;
   onForce: () => void;
   onDismiss: () => void;
+  /** "Load the latest (lose my edits)": reload, dropping the edits (and their local draft). */
+  onReload?: () => void;
 }) {
   if (failure.auth) {
     return (
@@ -112,7 +117,7 @@ export function FailureBanner({
         onDismiss={onDismiss}
         actions={
           <>
-            <Btn size="sm" icon={RotateCcw} onClick={() => window.location.reload()}>
+            <Btn size="sm" icon={RotateCcw} onClick={onReload}>
               Load the latest (lose my edits)
             </Btn>
             <Btn size="sm" variant="danger" onClick={onForce}>
@@ -155,6 +160,50 @@ export function FailureBanner({
           ))}
         </ul>
       )}
+    </Banner>
+  );
+}
+
+/**
+ * Unsaved changes kept in this browser (drafts.ts) from an earlier visit:
+ * put them back in the form, or throw them away. Restoring never saves.
+ */
+export function DraftBanner({
+  at,
+  stale,
+  onRestore,
+  onDiscard,
+}: {
+  /** When the copy was taken (ISO). */
+  at: string;
+  /** The document has been saved since the copy was taken. */
+  stale: boolean;
+  onRestore: () => void;
+  onDiscard: () => void;
+}) {
+  return (
+    <Banner
+      tone={stale ? "warn" : "info"}
+      icon={stale ? TriangleAlert : ArchiveRestore}
+      title={
+        <>
+          Unsaved changes from <TimeAgo at={at} /> are kept in this browser
+        </>
+      }
+      actions={
+        <>
+          <Btn size="sm" variant="primary" icon={ArchiveRestore} onClick={onRestore}>
+            Restore my changes
+          </Btn>
+          <Btn size="sm" variant="ghost" icon={Undo2} onClick={onDiscard}>
+            Discard them
+          </Btn>
+        </>
+      }
+    >
+      {stale
+        ? "This has been saved since then (in another tab or by someone else). Restoring puts your older edits back over the newer version, so review them before you save."
+        : "Restore them to keep going where you left off. Nothing is saved until you press Save."}
     </Banner>
   );
 }

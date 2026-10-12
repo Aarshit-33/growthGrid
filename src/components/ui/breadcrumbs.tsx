@@ -18,7 +18,7 @@ export async function Breadcrumbs({ items, className }: { items: Crumb[]; classN
   const settings = await getSettings();
   return (
     <>
-      <nav aria-label="Breadcrumb" className={cn("load-fade", className)}>
+      <nav aria-label={settings.ui.breadcrumbLabel} className={cn("load-fade", className)}>
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-muted">
           {items.map((item, i) => {
             const last = i === items.length - 1;

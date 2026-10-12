@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import { OutcomeValue } from "@/components/services/outcome-value";
 import { ArrowSwap } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Tag } from "@/components/ui/tag";
@@ -50,12 +51,12 @@ export function ProjectCard({
           className="absolute inset-0 bg-[linear-gradient(to_top,rgb(4_7_10/0.85),rgb(4_7_10/0.1)_55%,transparent)]"
         />
         <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3 sm:inset-x-6 sm:bottom-6">
-          <dl className="flex gap-6">
+          <dl className="flex min-w-0 gap-6">
             {project.results.slice(0, 2).map((m) => (
-              <div key={m.label} className="flex flex-col-reverse">
+              <div key={m.label} className="flex min-w-0 flex-col-reverse">
                 <dt className="mt-1.5 max-w-[9.5rem] text-xs leading-snug text-dim">{m.label}</dt>
-                <dd className="font-display text-2xl font-medium leading-none tracking-[-0.04em] text-ink sm:text-[2rem]">
-                  {m.value}
+                <dd className="break-words font-display text-2xl font-medium leading-none tracking-[-0.04em] text-ink sm:text-[2rem]">
+                  <OutcomeValue value={m.value} count={false} />
                 </dd>
               </div>
             ))}
@@ -86,6 +87,7 @@ export function ProjectCard({
 export function InsightCard({
   insight,
   minReadLabel,
+  locale,
   headingLevel = 3,
   className,
   sizes = "(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 88vw",
@@ -94,6 +96,8 @@ export function InsightCard({
   insight: InsightWithMeta;
   /** e.g. "min read" */
   minReadLabel: string;
+  /** BCP 47 tag for the date (localeTag(settings.locale)). */
+  locale: string;
   headingLevel?: 2 | 3;
   className?: string;
   sizes?: string;
@@ -118,7 +122,7 @@ export function InsightCard({
         </div>
       </div>
       <p className="mt-5 flex items-center gap-3 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">
-        <time dateTime={insight.publishedAt}>{formatDate(insight.publishedAt)}</time>
+        <time dateTime={insight.publishedAt}>{formatDate(insight.publishedAt, locale)}</time>
         <span aria-hidden="true" className="size-1 rounded-full bg-faint" />
         <span>
           {insight.readingTime} {minReadLabel}

@@ -10,7 +10,7 @@ import { ogImageMetadata, renderOgImage } from "./og";
    cards from the item they render.
    ───────────────────────────────────────────────────────────── */
 
-type HeroPageKey = "home" | "about" | "services" | "work" | "insights" | "contact";
+type HeroPageKey = "home" | "about" | "services" | "work" | "insights" | "contact" | "cards";
 
 /** For `generateImageMetadata`: alt text = the plain-text headline. */
 export async function heroOgMetadata(key: HeroPageKey) {

@@ -5,9 +5,24 @@ import { extname, join, relative, resolve, sep } from "node:path";
 import { svgTwin } from "@/lib/brand";
 import { collectionNames, collectionRegistry } from "@/lib/content/registry";
 import type { ContentSnapshot } from "@/lib/content/validate";
+import {
+  findMediaFile,
+  listMediaFiles,
+  listTrashedMedia,
+  MediaConflictError,
+  mediaFolders,
+  mediaPathTaken,
+  putMediaFile,
+  restoreMediaFile,
+  trashMediaFile,
+  type MediaFile,
+} from "@/lib/media/gridfs";
+import { isMediaInDatabase } from "@/lib/media/known";
 import type { PageKey } from "@/lib/schemas";
 import { slugify } from "@/lib/utils";
+import { imageSize } from "@/lib/utils/image-size";
 import { sniffImage } from "@/lib/utils/image-type";
+import { getSession } from "./auth";
 import { itemTitle } from "./lists";
 import { AFTERCARE_META, COLLECTION_META, PAGE_META } from "./meta";
 import { AdminError } from "./store";
@@ -26,6 +41,18 @@ import type { ImageUse, MediaItem, PublicImage } from "./types";
    • Only files under public/images can be deleted, and only when
      no content uses them. Deleting moves the file to
      .data/deleted-media, so it can always be put back by hand.
+
+   With CONTENT_SOURCE=mongo (a read-only host such as Vercel) the
+   files live in MongoDB GridFS instead (src/lib/media/gridfs.ts),
+   under the same paths, and the site serves them at the same URLs
+   (src/app/media/[...path]/route.ts):
+   • The library is /public (what ships with the deployment) plus
+     every file in the database; a /public file wins a tie.
+   • Uploads go to the database. A path is never reused, even by
+     a file in the trash, so a URL always means the same bytes.
+   • Deleting moves the database copy to its trash (restore with
+     `npm run media -- restore <path>`), and a /public copy to
+     .data/deleted-media where the disk is writable.
    ───────────────────────────────────────────────────────────── */
 
 /** Formats the site's image pipeline can serve. */
@@ -55,7 +82,27 @@ function compare(a: PublicImage, b: PublicImage): number {
   );
 }
 
+/** A database file as the picker lists it. */
+const fromMediaFile = ({ metadata, length, uploadDate }: MediaFile): PublicImage => ({
+  src: metadata.path,
+  folder: metadata.folder,
+  name: metadata.name,
+  bytes: length,
+  modified: uploadDate.getTime(),
+});
+
+/** Every image: /public, plus the media database with CONTENT_SOURCE=mongo. */
 export async function listPublicImages(root = process.cwd()): Promise<PublicImage[]> {
+  const shipped = await listShippedImages(root);
+  if (!isMediaInDatabase()) return shipped.sort(compare).slice(0, MAX_IMAGES);
+  // A /public file is what the site serves at that path, so it wins a tie.
+  const seen = new Set(shipped.map((image) => image.src));
+  const stored = (await listMediaFiles()).filter((file) => !seen.has(file.metadata.path)).map(fromMediaFile);
+  return [...shipped, ...stored].sort(compare).slice(0, MAX_IMAGES);
+}
+
+/** Every image file in /public. */
+async function listShippedImages(root: string): Promise<PublicImage[]> {
   const base = publicDir(root);
   let entries;
   try {
@@ -85,10 +132,7 @@ export async function listPublicImages(root = process.cwd()): Promise<PublicImag
     }),
   );
 
-  return found
-    .filter((image): image is PublicImage => image !== null)
-    .sort(compare)
-    .slice(0, MAX_IMAGES);
+  return found.filter((image): image is PublicImage => image !== null);
 }
 
 /** Folders an upload can go to: public/images and every folder inside it (plus the uploads folder). */
@@ -99,6 +143,8 @@ export async function uploadFolders(root = process.cwd()): Promise<string[]> {
     .filter((entry) => entry.isDirectory())
     .map((entry) => relative(publicDir(root), join(entry.parentPath, entry.name)).split(sep).join("/"))
     .filter((folder) => !folder.split("/").some((part) => part.startsWith(".")));
+  // Folders that exist only in the media database count too.
+  if (isMediaInDatabase()) folders.push(...(await mediaFolders()).filter(isContentFolder));
   return [...new Set([UPLOAD_FOLDER, CONTENT_FOLDER, ...folders])].sort((a, b) =>
     a === UPLOAD_FOLDER ? -1 : b === UPLOAD_FOLDER ? 1 : a.localeCompare(b),
   );
@@ -130,8 +176,23 @@ async function exists(path: string) {
   );
 }
 
-/** Saves an uploaded image into /public and returns it as the picker lists it. */
-export async function saveUpload(file: File, folder = UPLOAD_FOLDER): Promise<PublicImage> {
+const isContentFolder = (folder: string) => folder === CONTENT_FOLDER || folder.startsWith(`${CONTENT_FOLDER}/`);
+
+/** Who's signed in, for the database's uploadedBy / deletedBy (null outside a request). */
+async function signedInName(): Promise<string | null> {
+  try {
+    const session = await getSession();
+    return session ? session.user.email || session.user.name : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Saves an uploaded image and returns it as the picker lists it: into /public,
+ * or into the media database with CONTENT_SOURCE=mongo.
+ */
+export async function saveUpload(file: File, folder = UPLOAD_FOLDER, uploadedBy?: string): Promise<PublicImage> {
   if (file.size === 0) throw new AdminError("That file is empty.");
   if (file.size > MAX_UPLOAD_BYTES) {
     throw new AdminError(`That file is ${(file.size / 1024 / 1024).toFixed(1)} MB. The limit is ${MAX_UPLOAD_BYTES / 1024 / 1024} MB: export a smaller version.`);
@@ -146,6 +207,8 @@ export async function saveUpload(file: File, folder = UPLOAD_FOLDER): Promise<Pu
       throw new AdminError("This SVG contains scripts or embedded content, which the site doesn't allow. Export it again as a plain SVG (or a PNG).");
     }
   }
+
+  if (isMediaInDatabase()) return saveToDatabase(target, file.name, bytes, kind, uploadedBy ?? (await signedInName()));
 
   const dir = join(publicDir(), ...target.split("/"));
   // Only the uploads folder is created on demand; others must exist.
@@ -171,6 +234,44 @@ export async function saveUpload(file: File, folder = UPLOAD_FOLDER): Promise<Pu
   }
   const info = await stat(destination);
   return { src: `/${target}/${name}`, folder: target, name, bytes: info.size, modified: Math.round(info.mtimeMs) };
+}
+
+/** The database side of saveUpload: same naming rules, and a name is free only if neither /public nor the database (trash included) has it. */
+async function saveToDatabase(
+  target: string,
+  originalName: string,
+  bytes: Uint8Array,
+  kind: NonNullable<ReturnType<typeof sniffImage>>,
+  uploadedBy: string | null,
+): Promise<PublicImage> {
+  const dir = join(publicDir(), ...target.split("/"));
+  if (target !== UPLOAD_FOLDER && !(await exists(dir)) && !(await mediaFolders()).includes(target)) {
+    throw new AdminError(`The folder public/${target} doesn't exist.`);
+  }
+  const stem = slugify(originalName.replace(/\.[^.]*$/, "")).slice(0, 60) || "image";
+  const size = imageSize(bytes);
+  for (let n = 1; n < 1000; n++) {
+    const name = n === 1 ? `${stem}.${kind.ext}` : `${stem}-${n}.${kind.ext}`;
+    const path = `/${target}/${name}`;
+    if ((await exists(join(dir, name))) || (await mediaPathTaken(path))) continue;
+    try {
+      const saved = await putMediaFile({
+        path,
+        bytes,
+        contentType: kind.mime,
+        width: size?.width ?? null,
+        height: size?.height ?? null,
+        uploadedBy,
+        source: "studio",
+      });
+      return fromMediaFile(saved);
+    } catch (error) {
+      // Another upload took this name a moment ago: try the next one.
+      if (error instanceof MediaConflictError) continue;
+      throw error;
+    }
+  }
+  throw new AdminError("Couldn't find a free file name for this upload. Rename the file and try again.");
 }
 
 /* ── Usage ────────────────────────────────────────────────── */
@@ -279,18 +380,24 @@ function deletablePath(src: string): string {
  * (named with the time and its old path), so it can be put back by hand.
  * Returns where it went.
  */
-export async function deletePublicImage(src: string, snapshot: ContentSnapshot): Promise<string> {
+export async function deletePublicImage(src: string, snapshot: ContentSnapshot, deletedBy?: string): Promise<string> {
   const file = deletablePath(src);
   const used = imageUsage(snapshot).get(src);
   if (used?.length) {
     throw new AdminError(`This image is still used by ${used.map((use) => use.label).join(", ")}. Pick another image there first.`);
   }
+  if (isMediaInDatabase()) return deleteFromDatabase(src, file, deletedBy ?? (await signedInName()));
   if (!(await exists(file))) throw new AdminError("That image no longer exists. It may have been moved or deleted already.", { conflict: true });
+  return parkPublicFile(src, file);
+}
 
-  await mkdir(DELETED_DIR, { recursive: true });
+/** Moves a /public file to .data/deleted-media; returns where it went. */
+async function parkPublicFile(src: string, file: string): Promise<string> {
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
   const parked = join(DELETED_DIR, `${stamp}__${src.replace(/^\/+/, "").replace(/\//g, "__")}`);
   try {
+    // Inside the try: on a read-only disk (Vercel) the mkdir is what fails first.
+    await mkdir(DELETED_DIR, { recursive: true });
     await rename(file, parked);
   } catch (error) {
     const code = (error as NodeJS.ErrnoException).code;
@@ -298,4 +405,67 @@ export async function deletePublicImage(src: string, snapshot: ContentSnapshot):
     throw error;
   }
   return relative(process.cwd(), parked);
+}
+
+/* ── Media database: delete, trash, restore ───────────────── */
+
+const trashLabel = (src: string) => `the media trash in MongoDB (restore with: npm run media -- restore ${src})`;
+
+/**
+ * The database side of deletePublicImage. A /public copy goes first (to
+ * .data/deleted-media), so a read-only deployment refuses before anything
+ * changes: that file ships with the site's code and stays on the site.
+ */
+async function deleteFromDatabase(src: string, file: string, deletedBy: string | null): Promise<string> {
+  const shipped = await exists(file);
+  const stored = await findMediaFile(src);
+  if (!shipped && !stored) throw new AdminError("That image no longer exists. It may have been moved or deleted already.", { conflict: true });
+
+  let parked: string | null = null;
+  if (shipped) {
+    try {
+      parked = await parkPublicFile(src, file);
+    } catch (error) {
+      if (error instanceof AdminError) {
+        throw new AdminError(
+          `This image ships with the site's code (public${src}), so this server can't take it off the site. Remove it from the repository and redeploy${stored ? " (its database copy was kept)" : ""}.`,
+        );
+      }
+      throw error;
+    }
+  }
+  if (stored) await trashMediaFile(src, deletedBy);
+  if (parked && stored) return `${parked} and ${trashLabel(src)}`;
+  return parked ?? trashLabel(src);
+}
+
+/** An image in the media database's trash. */
+export interface DeletedImage extends PublicImage {
+  deletedAt: number | null;
+  deletedBy: string | null;
+}
+
+/** The media database's trash, most recently deleted first (empty in JSON mode). */
+export async function listDeletedImages(): Promise<DeletedImage[]> {
+  if (!isMediaInDatabase()) return [];
+  return (await listTrashedMedia()).map((file) => ({
+    ...fromMediaFile(file),
+    deletedAt: file.metadata.deletedAt ? new Date(file.metadata.deletedAt).getTime() : null,
+    deletedBy: file.metadata.deletedBy ?? null,
+  }));
+}
+
+/** Puts the most recently deleted copy of `src` back on the site (media database only). */
+export async function restoreDeletedImage(src: string): Promise<PublicImage> {
+  if (!isMediaInDatabase()) {
+    throw new AdminError("Deleted images are kept in .data/deleted-media: move the file back into /public by hand.");
+  }
+  try {
+    const restored = await restoreMediaFile({ path: src });
+    if (!restored) throw new AdminError("That image isn't in the trash.", { conflict: true });
+    return fromMediaFile(restored);
+  } catch (error) {
+    if (error instanceof MediaConflictError) throw new AdminError(`Another image is at ${src} now. Delete that one first.`, { conflict: true });
+    throw error;
+  }
 }

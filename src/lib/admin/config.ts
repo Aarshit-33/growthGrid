@@ -46,6 +46,7 @@ export const RESERVED_SEGMENTS = new Set([
   "work",
   "privacy",
   "terms",
+  "cards",
   "opengraph-image",
   "sitemap.xml",
   "robots.txt",

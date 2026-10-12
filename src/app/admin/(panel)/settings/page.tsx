@@ -6,7 +6,7 @@ import { requireSession } from "@/lib/admin/auth";
 import { settingsForm } from "@/lib/admin/form-schema";
 import { editorHistory } from "@/lib/admin/history";
 import { can } from "@/lib/admin/roles";
-import { fileLabel, readSnapshot, versionOf } from "@/lib/admin/store";
+import { docLocation, readSnapshot, versionOf } from "@/lib/admin/store";
 
 export const metadata: Metadata = { title: "Site settings" };
 
@@ -21,7 +21,7 @@ export default async function SettingsPage() {
       target={{ kind: "settings" }}
       title="Site settings"
       eyebrow="Site"
-      file={`content/${fileLabel({ kind: "settings" })}`}
+      file={docLocation({ kind: "settings" })}
       form={settingsForm(snapshot)}
       initial={snapshot.settings as Raw}
       version={versionOf(snapshot.settings)}

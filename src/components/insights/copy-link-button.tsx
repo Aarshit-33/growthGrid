@@ -2,28 +2,8 @@
 
 import { Check, Link2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { copyText } from "@/lib/clipboard";
 import { cn } from "@/lib/utils";
-
-/** Fallback for browsers/contexts without the async Clipboard API. */
-function legacyCopy(text: string) {
-  const previous = document.activeElement as HTMLElement | null;
-  const field = document.createElement("textarea");
-  field.value = text;
-  field.setAttribute("readonly", "");
-  field.style.position = "fixed";
-  field.style.opacity = "0";
-  document.body.appendChild(field);
-  field.select();
-  let ok = false;
-  try {
-    ok = document.execCommand("copy");
-  } catch {
-    ok = false;
-  }
-  field.remove();
-  previous?.focus({ preventScroll: true });
-  return ok;
-}
 
 /** Copies the canonical article URL; confirmation is announced politely. */
 export function CopyLinkButton({
@@ -43,14 +23,7 @@ export function CopyLinkButton({
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   async function copy() {
-    let ok = false;
-    try {
-      await navigator.clipboard.writeText(url);
-      ok = true;
-    } catch {
-      ok = legacyCopy(url);
-    }
-    if (!ok) return;
+    if (!(await copyText(url))) return;
     setCopied(true);
     window.clearTimeout(timer.current);
     timer.current = window.setTimeout(() => setCopied(false), 2400);

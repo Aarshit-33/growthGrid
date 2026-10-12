@@ -37,7 +37,7 @@
       { "title": "Define the Direction", "description": "We define user needs, core requirements, and measurable goals to shape a focused product strategy." },
       { "title": "Prototype Before You Build", "description": "We design interactive prototypes, refine user journeys, and validate key features before development begins." },
       { "title": "Ship in Increments", "description": "We build through agile sprints, delivering functional software and refining features through continuous feedback." },
-      { "title": "Measure and Iterate ", "description": "We integrate analytics from day one to track performance, understand user behaviour, and drive data-informed improvements." }
+      { "title": "Measure and Iterate", "description": "We integrate analytics from day one to track performance, understand user behaviour, and drive data-informed improvements." }
     ],
     "technologies": ["nextjs", "react", "typescript", "nodejs", "postgresql", "aws"],
     "relatedProjects": ["unified-patient-workflow", "realtime-operations-hub"],
@@ -89,7 +89,7 @@
     ],
     "approach": [
       { "title": "Find the gaps", "description": "We analyse performance, search data, and competitors to identify opportunities for improvement." },
-      { "title": "Plan before you design", "description": "We define site architecture, user journeys, and content before crafting the visual experience.\n" },
+      { "title": "Plan before you design", "description": "We define site architecture, user journeys, and content before crafting the visual experience." },
       { "title": "Make every second count", "description": "We leverage optimized media, lightweight code, and modern rendering for fast, responsive performance." },
       { "title": "Launch and optimize", "description": "We streamline redirects, monitor performance, and optimize conversions for sustained results." }
     ],
@@ -139,7 +139,7 @@
       { "title": "AI Assistants", "description": "Build intelligent chat and voice assistants powered by your policies, products, and business data." },
       { "title": "Workflow Automation", "description": "Automate multi-step processes with intelligent workflows that handle routine tasks and flag exceptions." },
       { "title": "Document Intelligence", "description": "Extract, classify, and validate information from PDFs, emails, and forms with AI-powered processing." },
-      { "title": "AI-Powered Product ", "description": "Integrate AI-driven search, summarization, and recommendations directly into your digital products." }
+      { "title": "AI-Powered Product", "description": "Integrate AI-driven search, summarization, and recommendations directly into your digital products." }
     ],
     "approach": [
       { "title": "Find the right task", "description": "We identify repetitive work, measure its impact, and prioritize the tasks with the greatest potential for automation." },

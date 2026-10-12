@@ -4,7 +4,7 @@
     "title": "Software Development & AI Solutions Company | growthGrid",
     "description": "Build smarter with growthGrid. We develop custom software, AI, SaaS, web apps and automation solutions for startups and growing businesses.",
     "keywords": [
-      "Digital product service  ",
+      "Digital product service",
       "software development company",
       "custom software development",
       "AI development company",
@@ -31,7 +31,7 @@
     { "id": "cta", "enabled": true }
   ],
   "hero": {
-    "eyebrow": "Digital Experience Studio for Growing Brands ",
+    "eyebrow": "Digital Experience Studio for Growing Brands",
     "headline": "We create digital experiences that *help brands grow*",
     "lede": "growthGrid is a digital studio creating websites, applications, and brand identities through strategy, design, and development for growth-oriented businesses",
     "primaryCta": { "label": "Start a project", "href": "/contact" },
@@ -83,12 +83,12 @@
   },
   "services": {
     "eyebrow": "What we build",
-    "heading": "We build results, not just *digital products* ",
+    "heading": "We build results, not just *digital products*",
     "lede": "Tools don't grow businesses, results do. growthGrid starts with your goal, then picks the tech that gets there fastest.",
     "cta": { "label": "Explore all services", "href": "/services" }
   },
   "process": {
-    "eyebrow": "OUR PROCESS ",
+    "eyebrow": "OUR PROCESS",
     "heading": "This isn't just a process.\n*It's a system.*",
     "lede": "Six stages are interconnected, and there is a question behind each action you take: can it benefit your business? That's the growthGrid way."
   },
@@ -130,7 +130,9 @@
     "pauseLabel": "Pause testimonials",
     "playLabel": "Play testimonials",
     "slideLabel": "{index} of {total}",
-    "projectLabel": "Read the case study"
+    "projectLabel": "Read the case study",
+    "carouselLabel": "carousel",
+    "slideRoleLabel": "slide"
   },
   "insights": {
     "eyebrow": "Insights",

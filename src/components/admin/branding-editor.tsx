@@ -18,7 +18,7 @@ import { isRecord, type Raw } from "./form/schema-utils";
    ───────────────────────────────────────────────────────────── */
 
 export function BrandingEditor(props: Omit<DocEditorProps, "preview">) {
-  return <DocEditor {...props} refreshOnSave preview={(value) => <BrandPreview value={value} />} />;
+  return <DocEditor {...props} refreshOnSave draftScope="branding" preview={(value) => <BrandPreview value={value} />} />;
 }
 
 /** The built-in icons (public/icons), shown while no custom icon is set. */

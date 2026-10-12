@@ -22,14 +22,16 @@ import {
 import { BrandMark } from "@/components/layout/logo";
 import { logoutAction } from "@/lib/admin/actions";
 import { adminHref } from "@/lib/admin/config";
-import { AFTERCARE_META, COLLECTION_META, COLLECTION_ORDER, PAGE_META, PAGE_ORDER } from "@/lib/admin/meta";
+import { AFTERCARE_META, CARDS_META, COLLECTION_META, COLLECTION_ORDER, PAGE_META, PAGE_ORDER } from "@/lib/admin/meta";
 import { can } from "@/lib/admin/roles";
 import type { SessionUser } from "@/lib/admin/types";
 import type { BrandMarkImage } from "@/lib/brand";
 import type { CollectionName } from "@/lib/content/registry";
 import { cn } from "@/lib/utils";
-import { AFTERCARE_ICON, COLLECTION_ICONS, pageIcon } from "./icons";
+import { AFTERCARE_ICON, CARDS_ICON, COLLECTION_ICONS, pageIcon } from "./icons";
+import { LeaveGuardProvider } from "./leave-guard";
 import { Avatar, RoleBadge } from "./people";
+import { SyncButton } from "./sync-panel";
 
 /* ─────────────────────────────────────────────────────────────
    The studio frame: a glass sidebar (a drawer on small screens)
@@ -51,8 +53,10 @@ interface ShellProps {
   counts: Record<CollectionName, ShellCounts>;
   /** Enquiries still marked new (the Leads badge). */
   newLeads: number;
-  /** The live site reads MongoDB, not the files the studio edits. */
+  /** Content lives in MongoDB (CONTENT_SOURCE=mongo): Sync works on the database. */
   mongo: boolean;
+  /** Something about the content store the owner should act on (shown above every screen). */
+  notice?: string | null;
   /** Who's signed in: the menu only offers what their role can use. */
   user: SessionUser;
   children: ReactNode;
@@ -128,6 +132,7 @@ function Sidebar({
   mark,
   counts,
   newLeads,
+  mongo,
   user,
   segments,
   onNavigate,
@@ -137,6 +142,7 @@ function Sidebar({
   mark: BrandMarkImage | null;
   counts: Record<CollectionName, ShellCounts>;
   newLeads: number;
+  mongo: boolean;
   user: SessionUser;
   segments: string[];
   onNavigate?: () => void;
@@ -154,6 +160,10 @@ function Sidebar({
       // What follows every project (warranty, handover, care plans) sits with the services.
       ...(name === "services"
         ? [item({ path: AFTERCARE_META.path, label: AFTERCARE_META.label, icon: AFTERCARE_ICON }, `/${first}` === AFTERCARE_META.path)]
+        : []),
+      // Everyone's business card is drawn from the team.
+      ...(name === "team"
+        ? [item({ path: CARDS_META.path, label: CARDS_META.label, icon: CARDS_ICON }, `/${first}` === CARDS_META.path)]
         : []),
     ]);
 
@@ -203,6 +213,7 @@ function Sidebar({
             <p className="mt-0.5 text-[0.72rem] text-faint wrap-anywhere">{user.email || "Studio password"}</p>
           </div>
         </div>
+        {user.role === "owner" && <SyncButton mongo={mongo} className={navItemClasses(false)} />}
         <a href="/" target="_blank" rel="noopener noreferrer" className={navItemClasses(false)}>
           <Globe className="size-4 shrink-0 text-faint group-hover/nav:text-dim" aria-hidden="true" />
           View site
@@ -230,12 +241,13 @@ function screenLabel(segments: string[]): string {
   if (first === "media") return "Media library";
   if (first === "history") return second === "deleted" ? "Deleted items" : "History";
   if (`/${first}` === AFTERCARE_META.path) return AFTERCARE_META.label;
+  if (`/${first}` === CARDS_META.path) return CARDS_META.label;
   if (first === "pages" && second && second in PAGE_META) return PAGE_META[second as keyof typeof PAGE_META].label;
   if (first === "collections" && second && second in COLLECTION_META) return COLLECTION_META[second as CollectionName].label;
   return "Studio";
 }
 
-export function AdminShell({ base, siteName, mark, counts, newLeads, mongo, user, children }: ShellProps) {
+export function AdminShell({ base, siteName, mark, counts, newLeads, mongo, notice, user, children }: ShellProps) {
   // Route groups like "(panel)" can appear in the list: skip them.
   const segments = useSelectedLayoutSegments().filter((segment) => !segment.startsWith("("));
   const [open, setOpen] = useState(false);
@@ -249,9 +261,10 @@ export function AdminShell({ base, siteName, mark, counts, newLeads, mongo, user
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const sidebar = { base, siteName, mark, counts, newLeads, user, segments };
+  const sidebar = { base, siteName, mark, counts, newLeads, mongo, user, segments };
 
   return (
+    <LeaveGuardProvider>
     <div className="relative isolate min-h-svh">
       {/* Ambient backdrop: brand grid at the top, a soft emerald light. */}
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
@@ -308,19 +321,16 @@ export function AdminShell({ base, siteName, mark, counts, newLeads, mongo, user
 
       <main className="relative pt-14 [--admin-px:1.25rem] sm:[--admin-px:2rem] lg:pl-[17rem] lg:pt-0 xl:[--admin-px:3rem]">
         <div className="mx-auto w-full max-w-[82rem] px-[var(--admin-px)] pb-20 pt-6 lg:pt-8">
-          {mongo && (
+          {notice && (
             <p className="mb-6 flex items-start gap-3 rounded-2xl border border-warn/35 bg-warn/[0.06] px-4 py-3 text-[0.84rem] leading-relaxed text-dim">
               <Database className="mt-0.5 size-4 shrink-0 text-warn" aria-hidden="true" />
-              <span>
-                The live site reads from MongoDB (<code className="font-mono text-[0.8em]">CONTENT_SOURCE=mongo</code>). The studio edits the
-                files in <code className="font-mono text-[0.8em]">/content</code>: run <code className="font-mono text-[0.8em]">npm run seed</code>{" "}
-                to publish changes to the database.
-              </span>
+              <span>{notice}</span>
             </p>
           )}
           {children}
         </div>
       </main>
     </div>
+    </LeaveGuardProvider>
   );
 }

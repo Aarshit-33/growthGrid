@@ -15,12 +15,15 @@ export function FeaturedInsight({
   author,
   featuredLabel,
   minReadLabel,
+  locale,
   className,
 }: {
   insight: InsightWithMeta;
   author?: TeamMember;
   featuredLabel: string;
   minReadLabel: string;
+  /** BCP 47 tag for the date (localeTag(settings.locale)). */
+  locale: string;
   className?: string;
 }) {
   return (
@@ -62,7 +65,7 @@ export function FeaturedInsight({
         </div>
 
         <p className="mt-8 flex flex-wrap items-center gap-3 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted lg:mt-10">
-          <time dateTime={insight.publishedAt}>{formatDate(insight.publishedAt)}</time>
+          <time dateTime={insight.publishedAt}>{formatDate(insight.publishedAt, locale)}</time>
           <span aria-hidden="true" className="size-1 rounded-full bg-faint" />
           <span>
             {insight.readingTime} {minReadLabel}

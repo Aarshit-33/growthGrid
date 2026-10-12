@@ -24,6 +24,7 @@ import technologies from "@content/technologies.json";
 import testimonials from "@content/testimonials.json";
 
 import aboutPage from "@content/pages/about.json";
+import cardsPage from "@content/pages/cards.json";
 import contactPage from "@content/pages/contact.json";
 import homePage from "@content/pages/home.json";
 import insightsPage from "@content/pages/insights.json";
@@ -63,4 +64,5 @@ export const rawPages: Record<PageKey, unknown> = {
   privacy: privacyPage,
   terms: termsPage,
   "not-found": notFoundPage,
+  cards: cardsPage,
 };

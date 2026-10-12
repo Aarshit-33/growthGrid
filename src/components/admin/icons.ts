@@ -7,6 +7,7 @@ import {
   Cpu,
   FileText,
   House,
+  IdCard,
   Layers,
   LifeBuoy,
   MessageSquareQuote,
@@ -35,7 +36,10 @@ export const COLLECTION_ICONS: Record<CollectionName, LucideIcon> = {
   technologies: Cpu,
 };
 
-export const pageIcon = (key: PageKey): LucideIcon => (key === "home" ? House : FileText);
+export const pageIcon = (key: PageKey): LucideIcon => (key === "home" ? House : key === "cards" ? IdCard : FileText);
 
 /** The After launch screen (warranty, handover, care plans). */
 export const AFTERCARE_ICON: LucideIcon = LifeBuoy;
+
+/** The Business cards screen (the shared card design). */
+export const CARDS_ICON: LucideIcon = IdCard;

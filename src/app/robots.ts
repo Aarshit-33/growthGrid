@@ -21,6 +21,5 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
   return {
     rules,
     sitemap: absoluteUrl("/sitemap.xml", settings.url),
-    host: settings.url,
   };
 }

@@ -4,8 +4,9 @@ import { useCallback, useEffect, useEffectEvent, useRef, useState, useSyncExtern
 import { Btn } from "./ui";
 
 /* ─────────────────────────────────────────────────────────────
-   Editor helpers: a leave-without-saving guard, the save shortcut
-   and a promise-based confirm dialog (`if (await confirm({...})) …`).
+   Editor helpers: the save shortcut and a promise-based confirm
+   dialog (`if (await confirm({...})) …`). Asking before leaving
+   with unsaved changes lives in leave-guard.tsx.
    ───────────────────────────────────────────────────────────── */
 
 const noSubscribe = () => () => {};
@@ -32,40 +33,6 @@ export function useSaveShortcut(onSave: () => void) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-}
-
-/** Warn before losing unsaved edits: closing or reloading the tab, and clicking an in-app link. */
-export function useUnsavedGuard(dirty: boolean, message = "You have unsaved changes. Leave without saving?") {
-  useEffect(() => {
-    if (!dirty) return;
-
-    const onBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      // Older browsers need returnValue set to show the prompt.
-      event.returnValue = "";
-    };
-
-    // Capture phase on document: runs before Next's <Link> handler (React listens on the root).
-    const onClick = (event: MouseEvent) => {
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const anchor = (event.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
-      if (!anchor || anchor.target === "_blank" || anchor.hasAttribute("download")) return;
-      const url = new URL(anchor.href, window.location.href);
-      if (url.origin !== window.location.origin) return;
-      if (url.pathname === window.location.pathname && url.search === window.location.search) return;
-      if (!window.confirm(message)) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    };
-
-    window.addEventListener("beforeunload", onBeforeUnload);
-    document.addEventListener("click", onClick, true);
-    return () => {
-      window.removeEventListener("beforeunload", onBeforeUnload);
-      document.removeEventListener("click", onClick, true);
-    };
-  }, [dirty, message]);
 }
 
 export interface ConfirmOptions {

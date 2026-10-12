@@ -4,7 +4,7 @@ import { DocumentLayout } from "@/components/legal/document-layout";
 import { PageHero } from "@/components/sections/page-hero";
 import { getPage, getSettings } from "@/lib/data";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { formatDate } from "@/lib/utils";
+import { formatDate, localeTag } from "@/lib/utils";
 
 type LegalKey = "privacy" | "terms";
 
@@ -35,14 +35,14 @@ export async function LegalDocument({ pageKey }: { pageKey: LegalKey }) {
         <p className="label-mono">
           {page.updatedLabel}{" "}
           <time dateTime={page.updatedAt} className="text-dim">
-            {formatDate(page.updatedAt)}
+            {formatDate(page.updatedAt, localeTag(settings.locale))}
           </time>
         </p>
       </PageHero>
 
       <DocumentLayout toc={toc} tocLabel={page.contentsLabel} className="pb-[var(--section-y)]">
         <div className="max-w-[68ch] border-t border-line pt-10 md:pt-12">
-          <Blocks blocks={page.body} />
+          <Blocks blocks={page.body} labels={settings.ui} />
         </div>
       </DocumentLayout>
     </article>

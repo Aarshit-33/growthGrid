@@ -2,6 +2,8 @@ import "server-only";
 import { randomBytes } from "node:crypto";
 import { appendFile, mkdir, open, stat } from "node:fs/promises";
 import { join } from "node:path";
+import { usesMongoContent } from "@/lib/db/uri";
+import { HISTORY_COLLECTION } from "@/lib/models/names";
 import { adminHref } from "./config";
 import { changedPaths, sameValue, summarizeChanges } from "./diff";
 import type { HistoryAction, HistoryEntry, HistorySummary, HistoryTarget, SessionUser } from "./types";
@@ -10,20 +12,24 @@ import type { HistoryAction, HistoryEntry, HistorySummary, HistoryTarget, Sessio
    Studio history: every change made in the Studio, who made it,
    and the thing it changed as it was before and after. One JSON
    line per change in .data/studio-history.ndjson (git-ignored,
-   outside /content).
+   outside /content), or with CONTENT_SOURCE=mongo one document
+   per change in the studio_history collection (history-mongo.ts).
 
    Append-only by design: nothing in the Studio edits or deletes
    an entry, and there is no clean-up. Revoking a change adds a
    new entry. A deleted item lives on in the entry that deleted
    it, which is how Deleted items can restore it at any time.
-
-   Moving to a database later means re-implementing this module.
    ───────────────────────────────────────────────────────────── */
 
 const HISTORY_DIR = join(process.cwd(), ".data");
 const HISTORY_FILE = join(HISTORY_DIR, "studio-history.ndjson");
-/** Where it lives, for messages and the screens. */
+/** Where the file lives, for messages and the screens. */
 export const HISTORY_LABEL = ".data/studio-history.ndjson";
+
+/** Where History is kept with the current content source. */
+export function historyLocation(): string {
+  return usesMongoContent() ? `MongoDB: ${HISTORY_COLLECTION}` : HISTORY_LABEL;
+}
 
 /** What an action knows about its change. The store adds who, when and which file. */
 export interface HistoryDraft {
@@ -63,7 +69,11 @@ export function createEntry(draft: HistoryDraft, user: SessionUser, file: string
   };
 }
 
-/** Adds one entry at the end of the file. The only write this module does. */
+/**
+ * Adds one entry at the end of the file (CONTENT_SOURCE=json). The only write
+ * this module does; in Mongo mode the content backend inserts the entry in
+ * the same transaction as the change (history-mongo.ts).
+ */
 export async function appendHistory(entry: HistoryEntry): Promise<void> {
   await mkdir(HISTORY_DIR, { recursive: true });
   await appendFile(HISTORY_FILE, `${JSON.stringify(entry)}\n`, "utf8");
@@ -88,8 +98,14 @@ const isEntry = (value: unknown): value is HistoryEntry =>
   !!(value as HistoryEntry).target &&
   !!(value as HistoryEntry).user;
 
-/** Every entry, oldest first. Only the lines added since the last read are parsed. */
+/** Every entry, oldest first, from wherever History is kept. */
 async function readAll(): Promise<HistoryEntry[]> {
+  if (usesMongoContent()) return (await import("./history-mongo")).readMongoHistory();
+  return readHistoryFile();
+}
+
+/** Every entry in the file, oldest first. Only the lines added since the last read are parsed. */
+async function readHistoryFile(): Promise<HistoryEntry[]> {
   let size: number;
   try {
     size = (await stat(HISTORY_FILE)).size;

@@ -21,6 +21,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { aboutSchema } from "@/lib/seo/schema";
 import { cn, initials, interpolate, pad } from "@/lib/utils";
 import { headingText } from "@/lib/utils/text";
+import Link from "next/link";
+import { IdCard } from "lucide-react";
+import { cardPath, hasCard } from "@/lib/cards/person";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [settings, page] = await Promise.all([getSettings(), getPage("about")]);
@@ -31,6 +34,40 @@ export async function generateMetadata(): Promise<Metadata> {
 const TINTS = ["#3ce49a", "#6cc7ff", "#b794f4", "#ffbf5a", "#4fd1c5", "#8b9cf7"];
 const tintFor = (i: number) => TINTS[i % TINTS.length];
 
+/**
+ * Row sizes for the team grid on wide screens: rows of three, finishing
+ * with rows of two so no card is ever left alone (9 → 3·3·3, 8 → 3·3·2,
+ * 7 → 3·2·2, 5 → 3·2, 4 → 2·2).
+ */
+function teamRows(count: number): number[] {
+  if (count <= 3) return [count];
+  const rows: number[] = Array(Math.floor(count / 3)).fill(3);
+  const rest = count % 3;
+  if (rest === 2) rows.push(2);
+  if (rest === 1) rows.splice(-1, 1, 2, 2);
+  return rows;
+}
+
+/**
+ * Grid placement per card on a 12-column grid (cards span 6 on tablets,
+ * 4 on desktop). Shorter rows are centred by starting their first card
+ * further in; on tablets (two per row) an odd last card is centred too.
+ */
+function teamPlacement(count: number): string[] {
+  const placement = Array.from({ length: count }, () => "");
+  let start = 0;
+  for (const size of teamRows(count)) {
+    if (size === 2) placement[start] = "xl:col-start-3";
+    if (size === 1) placement[start] = "xl:col-start-5";
+    start += size;
+  }
+  if (count % 2 === 1) {
+    const last = count - 1;
+    placement[last] = cn("sm:col-start-4", placement[last] || "xl:col-start-auto");
+  }
+  return placement;
+}
+
 /** Portrait, or a monogram on a tinted blueprint when there's no photo. */
 function Portrait({ member, index }: { member: TeamMember; index: number }) {
   return (
@@ -40,7 +77,7 @@ function Portrait({ member, index }: { member: TeamMember; index: number }) {
           src={member.avatar.src}
           alt={member.avatar.alt}
           fill
-          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 92vw"
+          sizes="(min-width: 1280px) 30vw, (min-width: 640px) 45vw, 92vw"
           className="object-cover grayscale transition-[filter,scale] duration-700 ease-out-expo group-hover/member:scale-[1.03] group-hover/member:grayscale-0"
         />
       ) : (
@@ -67,7 +104,7 @@ function Portrait({ member, index }: { member: TeamMember; index: number }) {
 }
 
 export default async function AboutPage() {
-  const [settings, page, stats, principles, process, team, faqs] = await Promise.all([
+  const [settings, page, stats, principles, process, team, faqs, cardsPage] = await Promise.all([
     getSettings(),
     getPage("about"),
     getStats(),
@@ -75,10 +112,12 @@ export default async function AboutPage() {
     getProcess(),
     getTeam(),
     getFaqs("about"),
+    getPage("cards"),
   ]);
 
   const platformLabel = (platform: SocialPlatform) =>
     settings.socials.find((s) => s.platform === platform)?.label ?? platform;
+  const placement = teamPlacement(team.length);
 
   return (
     <>
@@ -313,14 +352,17 @@ export default async function AboutPage() {
       <section id="team" aria-labelledby="team-heading" className="section-y relative border-t border-line">
         <div className="container-x">
           <SectionHeading intro={page.team} index="06" id="team-heading" />
-          <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:mt-20 xl:grid-cols-4">
+          <ul className="mt-14 grid gap-4 sm:grid-cols-12 lg:mt-20">
             {team.map((member, i) => (
               <li
                 key={member.slug}
                 id={member.slug}
                 data-reveal=""
                 style={{ "--reveal-delay": `${i * 80}ms`, "--tint": tintFor(i) } as CSSProperties}
-                className="card card-hover group/member relative flex scroll-mt-28 flex-col overflow-hidden p-4 sm:p-5"
+                className={cn(
+                  "card card-hover group/member relative flex scroll-mt-28 flex-col overflow-hidden p-4 sm:col-span-6 sm:p-5 xl:col-span-4",
+                  placement[i],
+                )}
               >
                 <Portrait member={member} index={i} />
                 <div className="flex flex-1 flex-col px-2 pb-2 pt-6">
@@ -334,25 +376,37 @@ export default async function AboutPage() {
                       </li>
                     ))}
                   </ul>
-                  {member.socials.length > 0 && (
-                    <ul className="mt-auto flex gap-2 pt-6">
-                      {member.socials.map((social) => (
-                        <li key={social.url}>
-                          <a
-                            href={social.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={interpolate(page.team.socialLabel, {
-                              name: member.name,
-                              platform: platformLabel(social.platform),
-                            })}
-                            className="grid size-10 place-items-center rounded-full border border-line-strong text-dim transition-colors duration-300 hover:border-[var(--tint)] hover:text-ink"
-                          >
-                            <SocialIcon platform={social.platform} size={16} />
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                  {(member.socials.length > 0 || hasCard(member)) && (
+                    <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6">
+                      <ul className="flex gap-2">
+                        {member.socials.map((social) => (
+                          <li key={social.url}>
+                            <a
+                              href={social.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={interpolate(page.team.socialLabel, {
+                                name: member.name,
+                                platform: platformLabel(social.platform),
+                              })}
+                              className="grid size-10 place-items-center rounded-full border border-line-strong text-dim transition-colors duration-300 hover:border-[var(--tint)] hover:text-ink"
+                            >
+                              <SocialIcon platform={social.platform} size={16} />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                      {hasCard(member) && (
+                        <Link
+                          href={cardPath(member.slug)}
+                          aria-label={`${cardsPage.member.eyebrow}: ${member.name}`}
+                          className="group/cardlink inline-flex h-10 items-center gap-2 rounded-full border border-line-strong px-4 text-[0.86rem] font-medium text-dim transition-[border-color,color,background-color] duration-300 hover:border-[var(--tint)] hover:bg-white/[0.03] hover:text-ink"
+                        >
+                          <IdCard className="size-4 text-[var(--tint)] transition-transform duration-300 group-hover/cardlink:scale-110" aria-hidden="true" />
+                          {cardsPage.member.eyebrow}
+                        </Link>
+                      )}
+                    </div>
                   )}
                 </div>
               </li>

@@ -1,12 +1,14 @@
 import type { Model, Schema } from "mongoose";
 import type { ZodType } from "zod";
-import { HOME_SECTION_IDS, pageSchemas, type PageKey } from "@/lib/schemas";
+import { CARD_ROWS, HOME_SECTION_IDS, pageSchemas, type PageKey } from "@/lib/schemas";
 import {
   defineSchema,
   attachBlockTypes,
   blockArray,
+  bool,
   ctaBlockSchema,
   defineModel,
+  hexColor,
   icon,
   intro,
   isoDate,
@@ -83,7 +85,7 @@ const homePage = () =>
     services: required(intro({ cta: required(linkSchema) })),
     process: required(intro()),
     aftercare: required(intro()),
-    work: required(intro({ cta: required(linkSchema), prevLabel: opt, nextLabel: opt })),
+    work: required(intro({ cta: required(linkSchema), prevLabel: req, nextLabel: req })),
     principles: required(intro()),
     technology: required(intro({ hint: req })),
     audiences: required(intro()),
@@ -95,9 +97,11 @@ const homePage = () =>
         playLabel: req,
         slideLabel: req,
         projectLabel: req,
+        carouselLabel: req,
+        slideRoleLabel: req,
       }),
     ),
-    insights: required(intro({ cta: required(linkSchema), readLabel: opt, prevLabel: opt, nextLabel: opt })),
+    insights: required(intro({ cta: required(linkSchema), readLabel: req, prevLabel: req, nextLabel: req })),
     faq: required(intro()),
     cta: required(ctaBlockSchema),
   });
@@ -145,6 +149,7 @@ const aftercare = () =>
   intro({
     warranty: required(
       sub({
+        icon,
         days: { type: Number, required: true, min: 1, max: 365 },
         unit: req,
         label: req,
@@ -243,17 +248,18 @@ const insightsPage = () =>
     featuredLabel: req,
     cta: required(ctaBlockSchema),
     detail: required(
-      requiredStrings(
-        "takeaway",
-        "share",
-        "copyLink",
-        "copied",
-        "related",
-        "minRead",
-        "writtenBy",
-        "updated",
-        "contents",
-      ),
+      sub({
+        takeaway: req,
+        share: req,
+        copyLink: req,
+        copied: req,
+        related: req,
+        minRead: req,
+        writtenBy: req,
+        updated: req,
+        contents: req,
+        shareOn: required(requiredStrings("x", "linkedin")),
+      }),
     ),
   });
 
@@ -264,7 +270,9 @@ const contactPage = () =>
     seo: required(seoSchema),
     hero: required(pageHero()),
     form: required(
-      sub({
+      // `errors` (validation messages) is a reserved *document* path in Mongoose; safe on this nested subdocument.
+      defineSchema(
+        {
         nameLabel: req,
         namePlaceholder: req,
         emailLabel: req,
@@ -286,7 +294,7 @@ const contactPage = () =>
         optionalLabel: req,
         honeypotLabel: req,
         resetLabel: req,
-        planMessage: opt,
+        planMessage: req,
         errors: required(
           requiredStrings(
             "nameMin",
@@ -300,11 +308,42 @@ const contactPage = () =>
             "rateLimited",
           ),
         ),
-      }),
+        },
+        { _id: false, id: false, suppressReservedKeysWarning: true },
+      ),
     ),
     details: required(requiredStrings("heading", "emailLabel", "responseLabel", "locationLabel", "bookingLabel")),
     steps: required(sub({ heading: req, items: { type: [titleDescriptionSchema], default: [] } })),
     faq: required(intro()),
+    emails: required(
+      sub({
+        alert: required(
+          requiredStrings(
+            "senderName",
+            "subject",
+            "subjectWithCompany",
+            "badge",
+            "heading",
+            "nameLabel",
+            "companyLabel",
+            "emailLabel",
+            "servicesLabel",
+            "timelineLabel",
+            "pageLabel",
+            "messageLabel",
+            "replyLabel",
+            "replySubject",
+            "leadsLabel",
+            "openLeadsLabel",
+            "footer",
+            "notSavedPrefix",
+            "notSavedTitle",
+            "notSaved",
+          ),
+        ),
+        confirmation: required(requiredStrings("subject", "greeting", "body", "signOff", "heading", "message")),
+      }),
+    ),
   });
 
 /* ── legal (privacy, terms) ───────────────────────────────── */
@@ -334,6 +373,83 @@ const notFoundPage = () =>
     links: { type: [linkSchema], default: [] },
   });
 
+/* ── cards ────────────────────────────────────────────────────────── */
+
+const cardRow = { type: String, required: true, enum: CARD_ROWS };
+
+/** An embedded schema plus optional fields. */
+function withOptional(schema: Schema, fields: Parameters<Schema["add"]>[0]): Schema {
+  schema.add(fields);
+  return schema;
+}
+
+const cardsPage = () =>
+  defineSchema({
+    seo: required(seoSchema),
+    hero: required(pageHero()),
+    breadcrumb: req,
+    member: required(requiredStrings("eyebrow", "seoTitle", "seoDescription", "shareText")),
+    labels: required(
+      withOptional(requiredStrings(
+        "front",
+        "back",
+        "flipHint",
+        "flip",
+        "open",
+        "all",
+        "saveContact",
+        "share",
+        "copyLink",
+        "copied",
+        "whatsapp",
+        "email",
+        "download",
+        "downloadHint",
+        "preparing",
+        "details",
+        "phone",
+        "emailLabel",
+        "website",
+        "cardAlt",
+        "empty",
+      ), { print: opt }),
+    ),
+    design: required(
+      sub({
+        front: required(
+          sub({
+            background: hexColor,
+            logo: hexColor,
+            wordmark: hexColor,
+            qrPanel: hexColor,
+            qrInk: hexColor,
+            qr: { type: String, required: true, enum: ["card", "contact", "website"] },
+          }),
+        ),
+        back: required(
+          sub({
+            background: hexColor,
+            logo: hexColor,
+            wordmark: hexColor,
+            rows: { type: [cardRow], default: undefined },
+            pill: hexColor,
+            pillInk: hexColor,
+            highlight: cardRow,
+            highlightPill: hexColor,
+            highlightInk: hexColor,
+            sideTab: bool,
+          }),
+        ),
+        shape: required(
+          sub({
+            corners: { type: Number, required: true, min: 0, max: 60 },
+            radius: { type: Number, required: true, min: 0, max: 40 },
+          }),
+        ),
+      }),
+    ),
+  });
+
 /* ── Base model + discriminators ──────────────────────────── */
 
 const pageBaseSchema = defineSchema(
@@ -358,6 +474,7 @@ const pageDefinitions: Record<PageKey, { model: string; build: () => Schema }> =
   privacy: { model: "PrivacyPage", build: legalPage },
   terms: { model: "TermsPage", build: legalPage },
   "not-found": { model: "NotFoundPage", build: notFoundPage },
+  cards: { model: "CardsPage", build: cardsPage },
 };
 
 function registerPageModel(key: PageKey): Model<unknown> {

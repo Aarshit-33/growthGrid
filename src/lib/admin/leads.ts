@@ -1,6 +1,7 @@
 import "server-only";
 import { createHash } from "node:crypto";
 import { readFile, rename, unlink, writeFile } from "node:fs/promises";
+import { isDatabaseConfigured } from "@/lib/db/uri";
 import { LEADS_FILE, withLeadsLock } from "@/lib/leads/store";
 import { leadStatusSchema } from "@/lib/schemas/lead";
 import { AdminError } from "./store";
@@ -29,7 +30,7 @@ const isRecord = (value: unknown): value is Raw => !!value && typeof value === "
 const text = (value: unknown, max: number) => (typeof value === "string" ? value.trim().slice(0, max) : "");
 const iso = (value: unknown) => (value instanceof Date ? value.toISOString() : typeof value === "string" ? value : "");
 
-const inMongo = () => !!process.env.MONGODB_URI;
+const inMongo = () => isDatabaseConfigured();
 
 const notFound = () => new AdminError("This enquiry no longer exists. It may have been deleted in another tab.", { conflict: true });
 

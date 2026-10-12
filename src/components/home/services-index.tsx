@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
 import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import { OutcomeValue } from "@/components/services/outcome-value";
 import { journey } from "@/components/three/store";
 import { ArrowSwap } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
@@ -207,8 +208,8 @@ export function ServicesIndex({ services, viewLabel }: { services: Service[]; vi
                     <p className="mt-5 text-[0.95rem] leading-relaxed text-dim">{current.summary}</p>
                     {current.outcomes[0] && (
                       <p className="mt-5 flex items-baseline gap-3 border-t border-line pt-4">
-                        <span className="font-display text-3xl font-medium tracking-[-0.04em] text-ink">
-                          {current.outcomes[0].value}
+                        <span className="shrink-0 font-display text-3xl font-medium tracking-[-0.04em] text-ink">
+                          <OutcomeValue value={current.outcomes[0].value} count={false} />
                         </span>
                         <span className="text-xs leading-snug text-muted">{current.outcomes[0].label}</span>
                       </p>

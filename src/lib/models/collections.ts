@@ -38,6 +38,8 @@ import {
   socialPlatform,
   strings,
   sub,
+  opt,
+  optionalBool,
   validateWithZod,
 } from "./_shared";
 
@@ -52,6 +54,7 @@ const withIdField = { timestamps: true, id: false } as const;
 const testimonialMongooseSchema = defineSchema(
   {
     id: identifier,
+    order,
     published,
     quote: req,
     author: req,
@@ -83,6 +86,8 @@ const teamMemberMongooseSchema = defineSchema(
     focus: strings,
     avatar: { type: imageSchema, default: null },
     socials: { type: [sub({ platform: socialPlatform, url: req })], default: [] },
+    /** Business card overrides; missing: the studio's contact details. */
+    card: { type: sub({ enabled: optionalBool, name: opt, phone: opt, email: opt, website: opt }), default: undefined },
   },
   timestamps,
 );

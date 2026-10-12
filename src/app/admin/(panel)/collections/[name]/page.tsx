@@ -4,7 +4,7 @@ import { CollectionList } from "@/components/admin/collection-list";
 import { requireSession } from "@/lib/admin/auth";
 import { isCollectionName, listRows } from "@/lib/admin/lists";
 import { COLLECTION_META } from "@/lib/admin/meta";
-import { fileLabel, readSnapshot } from "@/lib/admin/store";
+import { docLocation, readSnapshot } from "@/lib/admin/store";
 
 type Props = { params: Promise<{ name: string }> };
 
@@ -27,7 +27,7 @@ export default async function CollectionPage({ params }: Props) {
       name={name}
       meta={COLLECTION_META[name]}
       rows={listRows(snapshot, name)}
-      file={`content/${fileLabel({ kind: "collection", name })}`}
+      file={docLocation({ kind: "collection", name })}
     />
   );
 }

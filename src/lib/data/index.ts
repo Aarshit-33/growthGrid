@@ -3,6 +3,7 @@ import { cache } from "react";
 import { z, type ZodType } from "zod";
 import { withBrandFiles } from "@/lib/brand-files";
 import type { CollectionName } from "@/lib/content/registry";
+import { usesMongoContent } from "@/lib/db/uri";
 import {
   audienceSchema,
   faqSchema,
@@ -27,7 +28,7 @@ import {
 } from "@/lib/schemas";
 import { readingTime } from "@/lib/utils/reading-time";
 import { typeset } from "@/lib/utils/text";
-import type { ContentSource } from "./source";
+import type { ContentSource, SavedAt } from "./source";
 
 /* ─────────────────────────────────────────────────────────────
    Content repository — the ONLY module pages and components use
@@ -44,7 +45,7 @@ import type { ContentSource } from "./source";
    ───────────────────────────────────────────────────────────── */
 
 const getSource = cache(async (): Promise<ContentSource> => {
-  if (process.env.CONTENT_SOURCE === "mongo") {
+  if (usesMongoContent()) {
     return (await import("./mongo-source")).mongoSource;
   }
   return (await import("./json-source")).jsonSource;
@@ -84,10 +85,24 @@ export const getSettings = cache(async (): Promise<Settings> => {
 
 export const getPage = cache(async <K extends PageKey>(key: K): Promise<PageContent<K>> => {
   const source = await getSource();
-  const raw = await source.getPage(key);
+  let raw = await source.getPage(key);
+  let label: string = source.name;
+  // A page added in a release but not yet in the database (Studio › Sync
+  // creates it): show the bundled copy instead of failing the whole page.
+  if (!raw && source.name !== "json") {
+    raw = await (await import("./json-source")).jsonSource.getPage(key);
+    label = `${source.name}, bundled fallback`;
+    if (raw) console.warn(`[content] page "${key}" isn't in ${source.name} yet; using content/pages/${key}.json. Run Studio › Sync content to add it.`);
+  }
   if (!raw) throw new Error(`Missing page content for "${key}" (${source.name})`);
   const schema = pageSchemas[key] as unknown as ZodType<PageContent<K>>;
-  return parse(schema, raw, `page "${key}" (${source.name})`);
+  return parse(schema, raw, `page "${key}" (${label})`);
+});
+
+/** When pages and services were last saved, where the store records it (MongoDB); empty for JSON. */
+export const getSavedAt = cache(async (): Promise<SavedAt> => {
+  const source = await getSource();
+  return (await source.getSavedAt?.()) ?? { pages: {}, services: {} };
 });
 
 /* ── Services ─────────────────────────────────────────────── */
@@ -133,7 +148,7 @@ export const getTestimonials = cache(async () => {
   const [testimonials, projects] = await Promise.all([load("testimonials", testimonialSchema), getProjects()]);
   // A quote only links to its case study while that case study is live.
   const live = new Set(projects.map((project) => project.slug));
-  return testimonials.map((t) => (t.project && !live.has(t.project) ? { ...t, project: null } : t));
+  return byOrder(testimonials).map((t) => (t.project && !live.has(t.project) ? { ...t, project: null } : t));
 });
 
 export const getTestimonialById = cache(async (id: string) =>

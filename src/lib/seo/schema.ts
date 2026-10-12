@@ -1,6 +1,6 @@
 import { resolveBrand } from "@/lib/brand";
 import type { Faq, InsightWithMeta, Project, Service, Settings, TeamMember } from "@/lib/schemas";
-import { absoluteUrl } from "@/lib/utils";
+import { absoluteUrl, interpolate } from "@/lib/utils";
 import { plainText } from "@/lib/utils/text";
 import { PAGE_SPEAKABLE, SPEAKABLE, speakableSpec } from "./speakable";
 
@@ -48,15 +48,15 @@ export function organizationSchema(settings: Settings, knowsAbout: string[] = []
     slogan: settings.tagline,
     email: settings.contact.email,
     ...(settings.contact.phone ? { telephone: settings.contact.phone } : {}),
-    areaServed: settings.location.country ?? "Worldwide",
+    areaServed: settings.seo.areaServed,
     ...(knowsAbout.length ? { knowsAbout } : {}),
     sameAs: settings.socials.map((s) => s.url),
     contactPoint: {
       "@type": "ContactPoint",
-      contactType: "sales",
+      contactType: settings.seo.contactType,
       email: settings.contact.email,
       url: absoluteUrl("/contact", settings.url),
-      availableLanguage: ["English"],
+      availableLanguage: settings.seo.availableLanguages,
     },
   };
 }
@@ -91,13 +91,13 @@ export function professionalServiceSchema(settings: Settings, services: Service[
     description: settings.description,
     email: settings.contact.email,
     parentOrganization: { "@id": orgId(settings) },
-    areaServed: settings.location.country ?? "Worldwide",
+    areaServed: settings.seo.areaServed,
     ...(settings.location.city
       ? { address: { "@type": "PostalAddress", addressLocality: settings.location.city, addressCountry: settings.location.country } }
       : {}),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Digital product services",
+      name: settings.seo.offerCatalogName,
       itemListElement: services.map((s) => ({
         "@type": "Offer",
         itemOffered: { "@type": "Service", name: s.title, url: absoluteUrl(`/services/${s.slug}`, settings.url) },
@@ -117,11 +117,11 @@ export function serviceSchema(service: Service, settings: Settings) {
     description: service.summary,
     url,
     provider: { "@id": orgId(settings) },
-    areaServed: "Worldwide",
+    areaServed: settings.seo.areaServed,
     keywords: service.keywords.join(", "),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: `${service.title} deliverables`,
+      name: interpolate(settings.seo.deliverablesName, { title: service.title }),
       itemListElement: service.deliverables.map((d) => ({
         "@type": "Offer",
         itemOffered: { "@type": "Service", name: d },
@@ -331,10 +331,10 @@ export function contactSchema(
     speakable: speakableSpec(PAGE_SPEAKABLE),
     mainEntity: {
       "@type": "ContactPoint",
-      contactType: "sales",
+      contactType: settings.seo.contactType,
       email: settings.contact.email,
       ...(settings.contact.phone ? { telephone: settings.contact.phone } : {}),
-      availableLanguage: ["English"],
+      availableLanguage: settings.seo.availableLanguages,
     },
   };
 }

@@ -1,6 +1,7 @@
 [
   {
     "id": "clinic-operations-director",
+    "order": 1,
     "published": false,
     "quote": "growthGrid didn't just build what we asked for. They spent time with our reception and clinical teams and found problems we didn't know we had. Our staff got hours of their week back.",
     "author": "Operations Director",
@@ -11,6 +12,7 @@
   },
   {
     "id": "dtc-head-of-operations",
+    "order": 2,
     "published": false,
     "quote": "For the first time, everyone looks at the same numbers. Our morning meeting went from forty minutes of reconciling spreadsheets to ten minutes of actual decisions.",
     "author": "Head of Operations",
@@ -21,6 +23,7 @@
   },
   {
     "id": "subscription-cx-lead",
+    "order": 3,
     "published": false,
     "quote": "We were skeptical about AI in support. growthGrid started with our real tickets, measured everything and kept our team in control. Response times dropped from hours to minutes.",
     "author": "Customer Experience Lead",
@@ -31,6 +34,7 @@
   },
   {
     "id": "saas-vp-marketing",
+    "order": 4,
     "published": false,
     "quote": "Our website finally works as hard as our sales team. It's fast, it ranks, and we launch new landing pages ourselves in an afternoon.",
     "author": "VP of Marketing",
@@ -41,6 +45,7 @@
   },
   {
     "id": "manufacturing-cto",
+    "order": 5,
     "published": false,
     "quote": "They modernized a system everyone was afraid to touch — incrementally, with zero downtime. Our team ships every week now instead of every quarter.",
     "author": "Chief Technology Officer",

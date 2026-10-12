@@ -91,11 +91,9 @@ export const socialPlatformSchema = z.enum([
   "linkedin",
   "github",
   "x",
-  "dribbble",
+  "threads",
   "instagram",
   "facebook",
-  "behance",
-  "youtube",
 ]);
 export type SocialPlatform = z.infer<typeof socialPlatformSchema>;
 

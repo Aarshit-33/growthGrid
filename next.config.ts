@@ -43,9 +43,17 @@ const nextConfig: NextConfig = {
     return [{ source: "/(.*)", headers: isProd ? [...securityHeaders, hsts] : securityHeaders }];
   },
   /* Browsers ask for /favicon.ico on their own: serve the Branding icon
-     (src/app/brand/[asset]/route.ts) there too. */
+     (src/app/brand/[asset]/route.ts) there too.
+     Images uploaded in the Studio with CONTENT_SOURCE=mongo live in MongoDB
+     (GridFS), not /public. As a fallback, /images/* only reaches their
+     route (src/app/media/[...path]/route.ts) when no /public file answered,
+     so shipped files win and content keeps plain "/images/…" paths. */
   async rewrites() {
-    return [{ source: "/favicon.ico", destination: "/brand/favicon.ico" }];
+    return {
+      beforeFiles: [],
+      afterFiles: [{ source: "/favicon.ico", destination: "/brand/favicon.ico" }],
+      fallback: [{ source: "/images/:path*", destination: "/media/images/:path*" }],
+    };
   },
   async redirects() {
     if (!isProd) return [];

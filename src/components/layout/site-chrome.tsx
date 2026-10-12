@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
-import { BrandMarkProvider } from "@/components/layout/brand-context";
+import { BrandMarkProvider, BrandNameProvider } from "@/components/layout/brand-context";
 import { CookieConsent } from "@/components/layout/cookie-consent";
 import { Cursor } from "@/components/layout/cursor";
 import { InteractionGuard } from "@/components/layout/interaction-guard";
 import { IntroLoader } from "@/components/layout/intro-loader";
+import { LocaleProvider } from "@/components/layout/locale-context";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SmoothScroll } from "@/components/layout/smooth-scroll";
@@ -15,6 +16,7 @@ import { gaIdOf } from "@/lib/analytics";
 import { brandMark, resolveBrand } from "@/lib/brand";
 import { getServices, getSettings, getTechnologies } from "@/lib/data";
 import { organizationSchema, professionalServiceSchema, websiteSchema } from "@/lib/seo/schema";
+import { localeTag } from "@/lib/utils";
 
 /** Without JS, reveal-on-scroll content must still be visible. */
 const NO_JS_CSS =
@@ -37,48 +39,51 @@ export async function SiteChrome({ children }: { children: ReactNode }) {
   ];
 
   return (
-    <>
-      {/* First in <body>: its gate script decides on the intro before anything paints. */}
-      <IntroLoader mark={brandMark(brand)} lockup={brand.logo.stacked} wordmark={settings.wordmark} />
-      <Starfield />
-      <noscript>
-        <style>{NO_JS_CSS}</style>
-      </noscript>
-      <a href="#main" className="skip-link">
-        {settings.ui.skipToContent}
-      </a>
+    <LocaleProvider locale={localeTag(settings.locale)}>
+      <BrandNameProvider name={settings.name}>
+        {/* First in <body>: its gate script decides on the intro before anything paints. */}
+        <IntroLoader mark={brandMark(brand)} lockup={brand.logo.stacked} wordmark={settings.wordmark} />
+        <Starfield />
+        <noscript>
+          <style>{NO_JS_CSS}</style>
+        </noscript>
+        <a href="#main" className="skip-link">
+          {settings.ui.skipToContent}
+        </a>
 
-      <SiteHeader
-        wordmark={settings.wordmark}
-        logo={brand.logo}
-        primary={settings.navigation.primary}
-        cta={settings.navigation.cta}
-        email={settings.contact.email}
-        socials={settings.socials}
-        availability={settings.availability}
-        ui={settings.ui}
-      />
-      <main id="main" tabIndex={-1} className="outline-none">
-        <BrandMarkProvider mark={brandMark(brand)}>{children}</BrandMarkProvider>
-      </main>
-      <SiteFooter />
+        <SiteHeader
+          name={settings.name}
+          wordmark={settings.wordmark}
+          logo={brand.logo}
+          primary={settings.navigation.primary}
+          cta={settings.navigation.cta}
+          email={settings.contact.email}
+          socials={settings.socials}
+          availability={settings.availability}
+          ui={settings.ui}
+        />
+        <main id="main" tabIndex={-1} className="outline-none">
+          <BrandMarkProvider mark={brandMark(brand)}>{children}</BrandMarkProvider>
+        </main>
+        <SiteFooter />
 
-      <SmoothScroll />
-      <GfxProbe />
-      <RevealObserver />
-      <Cursor />
-      <InteractionGuard />
-      <div className="grain" aria-hidden="true" />
-      {/* Ask before loading either analytics provider; Vercel Analytics is available only on Vercel. */}
-      <CookieConsent gaId={gaId} vercelAnalytics={vercelAnalytics} copy={settings.consent} />
+        <SmoothScroll />
+        <GfxProbe />
+        <RevealObserver />
+        <Cursor />
+        <InteractionGuard />
+        <div className="grain" aria-hidden="true" />
+        {/* Ask before loading either analytics provider; Vercel Analytics is available only on Vercel. */}
+        <CookieConsent gaId={gaId} vercelAnalytics={vercelAnalytics} copy={settings.consent} />
 
-      <JsonLd
-        data={[
-          organizationSchema(settings, knowsAbout),
-          websiteSchema(settings),
-          professionalServiceSchema(settings, services),
-        ]}
-      />
-    </>
+        <JsonLd
+          data={[
+            organizationSchema(settings, knowsAbout),
+            websiteSchema(settings),
+            professionalServiceSchema(settings, services),
+          ]}
+        />
+      </BrandNameProvider>
+    </LocaleProvider>
   );
 }

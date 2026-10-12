@@ -50,7 +50,7 @@ export function TestimonialCarousel({
   return (
     <div
       role="region"
-      aria-roledescription="carousel"
+      aria-roledescription={labels.carouselLabel}
       aria-labelledby="testimonials-heading"
       onPointerEnter={(e) => e.pointerType === "mouse" && setHold(true)}
       onPointerLeave={() => setHold(false)}
@@ -75,7 +75,7 @@ export function TestimonialCarousel({
             <figure
               key={t.id}
               role="group"
-              aria-roledescription="slide"
+              aria-roledescription={labels.slideRoleLabel}
               aria-label={fill(labels.slideLabel, i + 1, total)}
               inert={!current}
               className={cn(

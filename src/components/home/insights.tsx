@@ -13,11 +13,14 @@ export function InsightsSection({
   intro,
   insights,
   minReadLabel,
+  locale,
   index,
 }: {
   intro: HomePage["insights"];
   insights: InsightWithMeta[];
   minReadLabel: string;
+  /** BCP 47 tag for the dates (localeTag(settings.locale)). */
+  locale: string;
   index?: string;
 }) {
   if (insights.length === 0) return null;
@@ -30,7 +33,7 @@ export function InsightsSection({
     icon: insight.category.icon ?? "compass",
     cover: insight.cover,
     publishedAt: insight.publishedAt,
-    date: formatDate(insight.publishedAt),
+    date: formatDate(insight.publishedAt, locale),
     readingTime: insight.readingTime,
   }));
   return (

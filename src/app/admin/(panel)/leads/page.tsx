@@ -4,6 +4,7 @@ import { NoAccess } from "@/components/admin/no-access";
 import { requireSession } from "@/lib/admin/auth";
 import { listLeads } from "@/lib/admin/leads";
 import { can } from "@/lib/admin/roles";
+import { isDatabaseConfigured } from "@/lib/db/uri";
 import { readSnapshot } from "@/lib/admin/store";
 import type { LeadRow } from "@/lib/admin/types";
 
@@ -22,7 +23,7 @@ export default async function LeadsPage({ searchParams }: Props) {
   if (!can(user.role, "leads")) {
     return <NoAccess base={config.base} role={user.role} permission="leads" screen="Leads" />;
   }
-  const store = process.env.MONGODB_URI ? "mongo" : "file";
+  const store = isDatabaseConfigured() ? "mongo" : "file";
   const { open } = await searchParams;
 
   let initial: LeadRow[] = [];

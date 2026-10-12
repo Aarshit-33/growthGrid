@@ -9,7 +9,7 @@ import { editorHistory } from "@/lib/admin/history";
 import { isCollectionName } from "@/lib/admin/lists";
 import { COLLECTION_META } from "@/lib/admin/meta";
 import { can } from "@/lib/admin/roles";
-import { fileLabel, itemVersion, readSnapshot } from "@/lib/admin/store";
+import { docLocation, itemVersion, readSnapshot } from "@/lib/admin/store";
 import { collectionRegistry, type CollectionName } from "@/lib/content/registry";
 import type { ContentSnapshot } from "@/lib/content/validate";
 
@@ -52,7 +52,7 @@ export default async function EditItemPage({ params }: Props) {
       title={meta.singular}
       eyebrow={meta.label}
       back={{ href: adminHref(config.base, `/collections/${name}`), label: meta.label }}
-      file={`content/${fileLabel({ kind: "collection", name })}`}
+      file={docLocation({ kind: "collection", name })}
       form={collectionForm(snapshot, name)}
       initial={item}
       version={item ? itemVersion(item) : null}

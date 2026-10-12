@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   ArrowUpRight,
   Check,
@@ -27,10 +27,12 @@ import { AFTERCARE_META, COLLECTION_META, HOME_SECTION_META } from "@/lib/admin/
 import type { ActionResult, HomeSectionStatus } from "@/lib/admin/types";
 import type { HomeSectionConfig, HomeSectionId } from "@/lib/schemas";
 import { cn, pad } from "@/lib/utils";
-import { FailureBanner, type Failure } from "./banners";
-import { useModKey, useSaveShortcut, useUnsavedGuard } from "./hooks";
+import { DraftBanner, FailureBanner, type Failure } from "./banners";
+import { draftKey, useLocalDraft } from "./drafts";
+import { useModKey, useSaveShortcut } from "./hooks";
 import { AFTERCARE_ICON, COLLECTION_ICONS } from "./icons";
 import { useSortable } from "./sortable";
+import { useGuardedNavigate, useLeaveGuard } from "./leave-guard";
 import { toast } from "./toast";
 import { Badge, Btn, BtnLink, Dot, Kbd, Panel, Switch } from "./ui";
 
@@ -67,6 +69,20 @@ const sameLayout = (a: readonly Section[], b: readonly Section[]) =>
   a.length === b.length && a.every((section, i) => section.id === b[i].id && section.enabled === b[i].enabled);
 
 const OFFLINE: Failure = { ok: false, error: "Couldn't reach the server. Is `npm run dev` still running?" };
+
+/** A stored draft fits only if it has exactly today's sections, the pinned one last. */
+function fitsLayout(draft: unknown, current: readonly Section[], pinnedLast: HomeSectionId): draft is Section[] {
+  if (!Array.isArray(draft) || draft.length !== current.length) return false;
+  const ids = new Set(current.map((section) => section.id));
+  const seen = new Set<string>();
+  for (const entry of draft as unknown[]) {
+    if (typeof entry !== "object" || entry === null) return false;
+    const { id, enabled } = entry as Partial<Section>;
+    if (typeof id !== "string" || typeof enabled !== "boolean" || !ids.has(id) || seen.has(id)) return false;
+    seen.add(id);
+  }
+  return (draft as Section[])[draft.length - 1]?.id === pinnedLast;
+}
 
 const SECTION_ICONS: Partial<Record<HomeSectionId, LucideIcon>> = { aftercare: AFTERCARE_ICON, cta: MountainSnow };
 
@@ -275,7 +291,16 @@ export function HomeLayoutEditor({
 
   const dirty = !sameLayout(layout, saved);
   const isDefault = sameLayout(layout, defaults);
-  useUnsavedGuard(dirty);
+  const nav = useGuardedNavigate();
+
+  // Unsaved changes are copied to this browser; a copy left by an earlier visit is offered back.
+  const draft = useLocalDraft<Section[]>({ key: draftKey(base, "homepage"), value: layout, dirty, version });
+  const offered = draft.pending && fitsLayout(draft.pending.value, sections, pinnedLast) && !sameLayout(draft.pending.value, sections) ? draft.pending : null;
+  const { pending: found, clear: clearDraft } = draft;
+  useEffect(() => {
+    // Nothing to offer (it matches what's saved, or no longer fits the sections): drop it.
+    if (found && !offered) clearDraft();
+  }, [found, offered, clearDraft]);
 
   const href = (path: string) => adminHref(base, path);
   const labelOf = (id: HomeSectionId) => HOME_SECTION_META[id].label;
@@ -318,8 +343,9 @@ export function HomeLayoutEditor({
   const toggle = (id: HomeSectionId, enabled: boolean) =>
     setLayout((previous) => previous.map((section) => (section.id === id ? { ...section, enabled } : section)));
 
-  const save = async (force = false) => {
-    if (saving) return;
+  /** Resolves true once saved. */
+  const save = async (force = false): Promise<boolean> => {
+    if (saving) return false;
     setSaving(true);
     const next = layout;
     let result: ActionResult<{ version: string }>;
@@ -333,13 +359,16 @@ export function HomeLayoutEditor({
     if (!result.ok) {
       setFailure(result);
       if (!result.conflict && !result.auth) toast.error(result.error, { body: result.errors });
-      return;
+      return false;
     }
     setSaved(next);
     setVersion(result.data.version);
     setFailure(null);
+    draft.clear();
+    draft.settle();
     if (result.warnings.length) toast.warn("Layout saved, with notes", { body: result.warnings });
     else toast.success("Homepage layout saved", { body: `${showing.length + 1} sections showing. Written to ${file}.` });
+    return true;
   };
 
   useSaveShortcut(() => {
@@ -349,6 +378,24 @@ export function HomeLayoutEditor({
   const discard = () => {
     setLayout(saved);
     setFailure(null);
+    draft.clear();
+  };
+
+  // Leaving with unsaved changes asks first: save, discard, or stay.
+  useLeaveGuard({ dirty, save: () => save(), discard });
+
+  const restoreDraft = () => {
+    if (!offered) return;
+    setLayout(offered.value);
+    setFailure(null);
+    draft.settle();
+    toast.info("Layout restored", { body: "It's not saved yet: review it, then Save layout." });
+  };
+
+  const dismissDraft = () => {
+    draft.settle();
+    // Edits made since opening have their own copy (written on the next autosave); keep it.
+    if (!dirty) draft.clear();
   };
 
   /** Second line of a row: what the section shows right now. */
@@ -487,8 +534,22 @@ export function HomeLayoutEditor({
             </div>
           </div>
 
+          {offered && <DraftBanner at={offered.at} stale={offered.version !== initialVersion} onRestore={restoreDraft} onDiscard={dismissDraft} />}
+
           {failure && (
-            <FailureBanner failure={failure} base={base} onRetry={() => save()} onForce={() => save(true)} onDismiss={() => setFailure(null)} />
+            <FailureBanner
+              failure={failure}
+              base={base}
+              onRetry={() => save()}
+              onForce={() => save(true)}
+              onDismiss={() => setFailure(null)}
+              onReload={() =>
+                nav.leave(() => {
+                  draft.clear();
+                  window.location.reload();
+                })
+              }
+            />
           )}
 
           <p id="home-sort-help" className="sr-only">

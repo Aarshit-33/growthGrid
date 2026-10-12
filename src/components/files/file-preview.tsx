@@ -202,6 +202,9 @@ export function FilePreview(props: PreviewProps) {
       onClose={onClose}
       // A click on the backdrop lands on the <dialog> itself.
       onClick={(event) => event.target === ref.current && onClose()}
+      // Native scrolling inside (code/text preview, details panel); smooth
+      // scroll would otherwise take the wheel for the locked page behind.
+      data-lenis-prevent=""
       className="m-0 h-dvh max-h-none w-screen max-w-none overflow-hidden border-0 bg-transparent p-0 text-ink backdrop:bg-bg/80 backdrop:backdrop-blur-md md:m-auto md:h-[min(54rem,calc(100dvh-3rem))] md:w-[min(80rem,calc(100vw-3rem))]"
     >
       {file && <PreviewBody {...props} file={file} />}

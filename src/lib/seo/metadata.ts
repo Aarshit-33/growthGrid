@@ -61,7 +61,6 @@ export function buildMetadata({
   return {
     title: absolute ? { absolute: seo.title } : seo.title,
     description: seo.description,
-    keywords: seo.keywords ?? settings.seo.keywords,
     alternates: {
       canonical: url,
       // Feed readers and AI tools discover the articles' RSS feed from any page. Set here,

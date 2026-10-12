@@ -1,137 +1,57 @@
 import "server-only";
-import { createHash, randomUUID } from "node:crypto";
-import { readFile, rename, unlink, writeFile } from "node:fs/promises";
-import { join } from "node:path";
-import { collectionNames, collectionRegistry, type CollectionName } from "@/lib/content/registry";
+import { createHash } from "node:crypto";
+import type { CollectionName } from "@/lib/content/registry";
 import { validateContent, type ContentSnapshot } from "@/lib/content/validate";
-import { pageSchemas, type PageKey } from "@/lib/schemas";
+import { usesMongoContent } from "@/lib/db/uri";
+import { mongoLocation } from "@/lib/models/names";
+import { contentBackend, type DocTarget } from "./backend";
+import { fileLabel, pick, place } from "./backend/shared";
 import { sameValue } from "./diff";
-import { appendHistory, createEntry, HISTORY_LABEL, type HistoryDraft } from "./history";
-import { formatJson } from "./json-format";
-import type { FieldIssue, HistoryEntry, SessionUser } from "./types";
+import { AdminError } from "./errors";
+import { createEntry, type HistoryDraft } from "./history";
+import type { HistoryEntry, SessionUser } from "./types";
+
+export { AdminError } from "./errors";
+export { fileLabel, PAGE_KEYS } from "./backend/shared";
+export type { DocTarget } from "./backend";
 
 /* ─────────────────────────────────────────────────────────────
-   Admin content store: the JSON files in /content.
+   Admin content store. Where content lives is the backend's job
+   (./backend, chosen by CONTENT_SOURCE):
+   • json  — the files in /content, History in .data/
+   • mongo — MongoDB, History in the studio_history collection
 
-   • Reads go to disk on every request, so the admin always shows
-     what the files hold right now. (The public site uses the copy
-     bundled by Next; in `npm run dev` it hot-reloads on save.)
+   Either way:
+   • Reads load everything fresh on every request, so the admin
+     always shows what's stored right now.
    • Every write first validates the whole site with the change
      applied (the same checks as `npm run validate:content`), so
-     the admin can't save content that would break a page or the
-     build.
-   • Writes are serialised and atomic (temp file + rename), and
-     keep each file's hand-formatted layout (see json-format.ts).
-   • Every write is recorded in History (history.ts) inside the
-     same lock, with who made it and the before/after. If that
-     record can't be written, the file is put back: no change is
-     ever saved without its history entry.
+     the admin can't save content that would break a page.
+   • Writes are serialised (across server instances with Mongo),
+     and every write is recorded in History in the same step: no
+     change is ever saved without its history entry.
 
-   Moving to a database later means re-implementing this module;
-   the server actions only use what it exports.
+   The server actions only use what this module exports.
    ───────────────────────────────────────────────────────────── */
 
-export const PAGE_KEYS = Object.keys(pageSchemas) as PageKey[];
-
-export type DocTarget =
-  | { kind: "settings" }
-  | { kind: "page"; key: PageKey }
-  | { kind: "collection"; name: CollectionName };
-
-/** A problem to show in the admin as is. */
-export class AdminError extends Error {
-  constructor(
-    message: string,
-    readonly details: { errors?: string[]; conflict?: boolean; issues?: FieldIssue[] } = {},
-  ) {
-    super(message);
-    this.name = "AdminError";
-  }
-}
-
-const CONTENT_DIR = join(process.cwd(), "content");
-
-/** Path inside /content, e.g. "pages/home.json". */
-export function fileLabel(target: DocTarget): string {
-  switch (target.kind) {
-    case "settings":
-      return "settings.json";
-    case "page":
-      return `pages/${target.key}.json`;
-    case "collection":
-      return collectionRegistry[target.name].file;
-  }
-}
-
-const filePath = (target: DocTarget) => join(CONTENT_DIR, fileLabel(target));
-
-interface Loaded {
-  data: unknown;
-  text: string;
-}
-
-async function load(target: DocTarget): Promise<Loaded> {
-  const label = `content/${fileLabel(target)}`;
-  let text: string;
-  try {
-    text = await readFile(filePath(target), "utf8");
-  } catch (error) {
-    throw new AdminError(`Couldn't read ${label}: ${(error as Error).message}`);
-  }
-  try {
-    return { data: JSON.parse(text), text };
-  } catch (error) {
-    throw new AdminError(`${label} isn't valid JSON (${(error as Error).message}). Fix it in your editor, then reload.`);
-  }
+/** Where a document is kept with the current content source ("content/pages/home.json", "MongoDB: pages/home"). */
+export function docLocation(target: DocTarget): string {
+  return usesMongoContent() ? mongoLocation(target) : `content/${fileLabel(target)}`;
 }
 
 export async function readDoc(target: DocTarget): Promise<unknown> {
-  return (await load(target)).data;
+  return pick(await readSnapshot(), target);
 }
 
 export async function readCollection(name: CollectionName): Promise<Record<string, unknown>[]> {
   const data = await readDoc({ kind: "collection", name });
-  if (!Array.isArray(data)) throw new AdminError(`content/${collectionRegistry[name].file} should hold a JSON list.`);
+  if (!Array.isArray(data)) throw new AdminError(`${docLocation({ kind: "collection", name })} should hold a list.`);
   return data as Record<string, unknown>[];
 }
 
-const allTargets = (): DocTarget[] => [
-  { kind: "settings" },
-  ...PAGE_KEYS.map((key) => ({ kind: "page", key }) as const),
-  ...collectionNames.map((name) => ({ kind: "collection", name }) as const),
-];
-
-async function loadAll() {
-  const targets = allTargets();
-  const loaded = await Promise.all(targets.map(load));
-  const texts = new Map<string, string>();
-  const snapshot: ContentSnapshot = {
-    settings: undefined,
-    pages: {} as Record<PageKey, unknown>,
-    collections: {} as Record<CollectionName, unknown[]>,
-  };
-  targets.forEach((target, i) => {
-    texts.set(fileLabel(target), loaded[i].text);
-    write(snapshot, target, loaded[i].data);
-  });
-  return { snapshot, texts };
-}
-
-/** Every content document, straight from disk. */
+/** Every content document, as stored right now. */
 export async function readSnapshot(): Promise<ContentSnapshot> {
-  return (await loadAll()).snapshot;
-}
-
-function read(snapshot: ContentSnapshot, target: DocTarget): unknown {
-  if (target.kind === "settings") return snapshot.settings;
-  if (target.kind === "page") return snapshot.pages[target.key];
-  return snapshot.collections[target.name];
-}
-
-function write(snapshot: ContentSnapshot, target: DocTarget, value: unknown) {
-  if (target.kind === "settings") snapshot.settings = value;
-  else if (target.kind === "page") snapshot.pages[target.key] = value;
-  else snapshot.collections[target.name] = value as unknown[];
+  return (await (await contentBackend()).load()).snapshot;
 }
 
 /** Short fingerprint of a JSON value, for "changed since you opened it" checks. */
@@ -156,31 +76,6 @@ export const pageVersion = (doc: unknown) => versionOf(without(doc, "sections"))
 /** The homepage layout. */
 export const layoutVersion = (doc: unknown) =>
   versionOf(doc && typeof doc === "object" ? ((doc as Record<string, unknown>).sections ?? null) : null);
-
-/* One write at a time (per server process; kept on globalThis across dev reloads). */
-const lock = globalThis as typeof globalThis & { __ggAdminWrites?: Promise<unknown> };
-function exclusive<T>(task: () => Promise<T>): Promise<T> {
-  const run = (lock.__ggAdminWrites ?? Promise.resolve()).then(task, task);
-  lock.__ggAdminWrites = run.catch(() => undefined);
-  return run;
-}
-
-async function writeAtomic(file: string, text: string) {
-  const temp = `${file}.${randomUUID().slice(0, 8)}.tmp`;
-  try {
-    await writeFile(temp, text, "utf8");
-    await rename(temp, file);
-  } catch (error) {
-    await unlink(temp).catch(() => undefined);
-    const code = (error as NodeJS.ErrnoException).code;
-    if (code === "EROFS" || code === "EACCES" || code === "EPERM") {
-      throw new AdminError(
-        "This server can't write the content files (read-only file system). Run the admin locally with `npm run dev`, or connect a database.",
-      );
-    }
-    throw error;
-  }
-}
 
 const added = (next: string[], before: string[]) => {
   const seen = new Set(before);
@@ -208,14 +103,21 @@ export interface Audit<T> {
  * AdminError). If the change would add validation errors anywhere on the
  * site, nothing is written and the errors are returned to the editor.
  */
-export function updateDoc<T>(
+export async function updateDoc<T>(
   target: DocTarget,
   change: (current: T) => T | Promise<T>,
   audit: Audit<T>,
 ): Promise<SaveOutcome<T>> {
-  return exclusive(async () => {
-    const { snapshot, texts } = await loadAll();
-    const current = read(snapshot, target) as T;
+  const backend = await contentBackend();
+  return backend.exclusive(async () => {
+    const loaded = await backend.load();
+    const { snapshot } = loaded;
+    const current = pick(snapshot, target) as T;
+    if (current === undefined) {
+      throw new AdminError(
+        `${backend.location(target)} doesn't exist yet. Use Sync in the sidebar to create the missing content, then try again.`,
+      );
+    }
     const next = await change(structuredClone(current));
     // Nothing changed: nothing to write or record.
     if (sameValue(current, next)) return { value: next, warnings: [], entry: null };
@@ -225,7 +127,7 @@ export function updateDoc<T>(
       pages: { ...snapshot.pages },
       collections: { ...snapshot.collections },
     };
-    write(candidate, target, next);
+    place(candidate, target, next);
 
     const before = validateContent({ content: snapshot });
     const after = validateContent({ content: candidate });
@@ -234,27 +136,13 @@ export function updateDoc<T>(
       throw new AdminError("This change would break the site, so it wasn't saved.", { errors });
     }
 
-    const label = fileLabel(target);
-    const entry = createEntry(audit.record(current, next), audit.user, `content/${label}`);
-    const original = texts.get(label);
-    await writeAtomic(filePath(target), formatJson(next, original));
-    if (entry) {
-      try {
-        await appendHistory(entry);
-      } catch (error) {
-        // Never a change without its history: put the file back as it was.
-        if (original !== undefined) await writeAtomic(filePath(target), original).catch(() => undefined);
-        console.error("[admin] Couldn't write to the history:", error);
-        throw new AdminError(
-          `This change couldn't be recorded in History (${HISTORY_LABEL}), so it wasn't saved. Check that the .data folder is writable.`,
-        );
-      }
-    }
+    const entry = createEntry(audit.record(current, next), audit.user, backend.location(target));
+    await loaded.commit(target, next, entry);
     return { value: next, warnings: added(after.warnings, before.warnings), entry };
   });
 }
 
-/** Site-wide validation of what's on disk now (for the dashboard's health panel). */
+/** Site-wide validation of what's stored now (for the dashboard's health panel). */
 export async function checkContent() {
   return validateContent({ content: await readSnapshot() });
 }

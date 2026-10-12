@@ -45,7 +45,7 @@ function WarrantyCard({
         className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-em/[0.14] blur-3xl"
       />
       <p className="label-mono relative flex items-center gap-2 text-em">
-        <Icon name="shield-check" className="size-4" />
+        <Icon name={warranty.icon} className="size-4" />
         {warranty.label}
       </p>
 

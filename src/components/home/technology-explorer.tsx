@@ -219,7 +219,7 @@ export function TechnologyExplorer({ categories, hint }: { categories: Technolog
       </div>
 
       <div className="lg:col-span-5">
-        <div aria-live="polite" className="card card-hover edge-glow min-h-[9.5rem] overflow-hidden p-6 sm:p-7">
+        <div aria-live="polite" className="card card-hover edge-glow min-h-[13rem] overflow-hidden p-6 sm:p-7">
           {current ? (
             <div key={active} className="load-fade">
               <p className="flex items-center gap-2 label-mono" style={{ color: current.category.color }}>
@@ -236,7 +236,7 @@ export function TechnologyExplorer({ categories, hint }: { categories: Technolog
                 )}
                 {current.name}
               </p>
-              <p className="mt-2 text-dim">{current.description}</p>
+              <p className="mt-2 min-h-[3lh] text-dim">{current.description}</p>
             </div>
           ) : category ? (
             <div key={category.key} className="load-fade">
@@ -245,7 +245,7 @@ export function TechnologyExplorer({ categories, hint }: { categories: Technolog
                 {pad(category.technologies.length)}
               </p>
               <p className="text-h3 mt-3 text-ink">{category.name}</p>
-              <p className="mt-2 text-dim">{category.description}</p>
+              <p className="mt-2 min-h-[3lh] text-dim">{category.description}</p>
             </div>
           ) : (
             <div className="flex h-full flex-col justify-between gap-6">

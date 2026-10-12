@@ -18,11 +18,13 @@ import type { InsightWithMeta } from "@/lib/schemas";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { articleSchema } from "@/lib/seo/schema";
 import { SPEAKABLE } from "@/lib/seo/speakable";
-import { absoluteUrl, formatDate } from "@/lib/utils";
+import { absoluteUrl, formatDate, localeTag } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const dynamicParams = false;
+/* Slugs not known at build time render on demand (a article added in the
+   Studio goes live without a redeploy); unknown ones still 404 via notFound(). */
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const insights = await getInsights();
@@ -73,12 +75,13 @@ export default async function InsightPage({ params }: Props) {
   const url = absoluteUrl(path, settings.url);
   const authorHref = author ? `/about#${author.slug}` : undefined;
   const related = relatedTo(insight, all);
+  const locale = localeTag(settings.locale);
   const toc = extractToc(insight.body)
     .filter((entry) => entry.level === 2)
     .map((entry) => ({ id: entry.id, label: entry.text }));
 
-  const platformLabel = (platform: ShareTarget["platform"]) =>
-    settings.socials.find((social) => social.platform === platform)?.label ?? platform;
+  // The platform's name: Insights page › Detail › Share on.
+  const platformLabel = (platform: ShareTarget["platform"]) => detail.shareOn[platform];
   const share = {
     label: detail.share,
     copyLabel: detail.copyLink,
@@ -108,14 +111,14 @@ export default async function InsightPage({ params }: Props) {
             {author && <AuthorByline author={author} href={authorHref} />}
             {author && <span aria-hidden="true" className="hidden h-9 w-px bg-line-strong sm:block" />}
             <p className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">
-              <time dateTime={insight.publishedAt}>{formatDate(insight.publishedAt)}</time>
+              <time dateTime={insight.publishedAt}>{formatDate(insight.publishedAt, locale)}</time>
               {insight.updatedAt && (
                 <>
                   <Dot />
                   <span>
                     {detail.updated}{" "}
                     <time dateTime={insight.updatedAt} className="text-dim">
-                      {formatDate(insight.updatedAt)}
+                      {formatDate(insight.updatedAt, locale)}
                     </time>
                   </span>
                 </>
@@ -153,7 +156,7 @@ export default async function InsightPage({ params }: Props) {
         >
           <div className="max-w-[68ch]">
             <div id="article-body">
-              <Blocks blocks={insight.body} />
+              <Blocks blocks={insight.body} labels={settings.ui} />
 
               <aside
                 aria-labelledby="takeaway-label"
@@ -214,7 +217,7 @@ export default async function InsightPage({ params }: Props) {
             <ul className="mt-12 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
               {related.map((item, i) => (
                 <li key={item.slug} data-reveal="" style={{ "--reveal-delay": `${i * 90}ms` } as CSSProperties}>
-                  <InsightCard insight={item} minReadLabel={detail.minRead} />
+                  <InsightCard insight={item} minReadLabel={detail.minRead} locale={locale} />
                 </li>
               ))}
             </ul>

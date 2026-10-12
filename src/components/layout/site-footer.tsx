@@ -5,6 +5,7 @@ import { Availability } from "@/components/ui/tag";
 import { resolveBrand } from "@/lib/brand";
 import { getServices, getSettings } from "@/lib/data";
 import type { SocialPlatform } from "@/lib/schemas";
+import { interpolate } from "@/lib/utils";
 import { ConsentSettingsButton } from "./cookie-consent";
 import { BackToTop, StudioClock } from "./footer-widgets";
 import { Logo } from "./logo";
@@ -61,7 +62,7 @@ export async function SiteFooter() {
       <div className="container-x relative pb-10 pt-20 md:pt-28">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
-            <Link href="/" aria-label={`${settings.name} — home`} className="inline-flex">
+            <Link href="/" aria-label={interpolate(ui.homeLinkLabel, { name: settings.name })} className="inline-flex">
               <Logo wordmark={settings.wordmark} logo={resolveBrand(settings).logo} />
             </Link>
             <p className="text-h3 mt-8 max-w-md text-ink">{settings.tagline}</p>
@@ -77,7 +78,7 @@ export async function SiteFooter() {
             </div>
           </div>
 
-          <nav aria-label="Footer" className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:col-span-7 lg:justify-items-end">
+          <nav aria-label={ui.footerNavLabel} className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:col-span-7 lg:justify-items-end">
             <FooterColumn
               title={ui.servicesTitle}
               links={services.map((s) => ({ label: s.title, href: `/services/${s.slug}` }))}

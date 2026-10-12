@@ -30,7 +30,9 @@ import { byline, cn, initials, pad } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const dynamicParams = false;
+/* Slugs not known at build time render on demand (a case study added in the
+   Studio goes live without a redeploy); unknown ones still 404 via notFound(). */
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -221,7 +223,7 @@ export default async function CaseStudyPage({ params }: Props) {
               <div
                 key={metric.label}
                 className={cn(
-                  "flex flex-col-reverse gap-5 bg-bg p-7 sm:p-9 lg:p-10",
+                  "flex min-w-0 flex-col-reverse gap-5 bg-bg p-7 sm:p-9 lg:p-10",
                   results.length === 3 && i === 2 && "sm:col-span-2 lg:col-span-1",
                 )}
                 style={{ "--reveal-delay": `${i * 90}ms` } as CSSProperties}
@@ -230,7 +232,7 @@ export default async function CaseStudyPage({ params }: Props) {
                   {metric.label}
                 </dt>
                 <dd
-                  className="font-display text-[clamp(3rem,2rem+3.4vw,5.5rem)] font-medium leading-[0.9] tracking-[-0.06em] text-ink"
+                  className="break-words font-display text-[clamp(3rem,2rem+3.4vw,5.5rem)] font-medium leading-[0.9] tracking-[-0.06em] text-ink"
                   data-reveal=""
                 >
                   <OutcomeValue value={metric.value} />

@@ -1,4 +1,4 @@
-import type { Block } from "@/lib/schemas";
+import type { Block, Settings } from "@/lib/schemas";
 import { absoluteUrl } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────
@@ -21,8 +21,6 @@ export const linkText = (text: string) => text.replace(/[[\]]/g, "\\$&");
 export const linkItem = (label: string, url: string, note?: string) =>
   `- [${linkText(label)}](${url})${note ? `: ${note}` : ""}`;
 
-const CALLOUT_TITLE = { info: "Note", tip: "Tip", warning: "Warning" } as const;
-
 const quoted = (text: string) =>
   text
     .split("\n")
@@ -32,8 +30,9 @@ const quoted = (text: string) =>
 /**
  * Article blocks as Markdown. `depth` shifts headings down so the article
  * nests under the file's own headings (an h2 with depth 2 becomes ####).
+ * `callouts`: Site settings › UI › Callouts, for callouts without a title.
  */
-export function blocksToMarkdown(blocks: Block[], base: string, depth = 0): string {
+export function blocksToMarkdown(blocks: Block[], base: string, callouts: Settings["ui"]["callouts"], depth = 0): string {
   const md = (text: string) => inlineMarkdown(text, base);
   return blocks
     .map((block) => {
@@ -49,7 +48,7 @@ export function blocksToMarkdown(blocks: Block[], base: string, depth = 0): stri
         case "quote":
           return quoted(block.cite ? `${md(block.text)}\n\n— ${md(block.cite)}` : md(block.text));
         case "callout":
-          return quoted(`**${block.title ?? CALLOUT_TITLE[block.tone]}:** ${md(block.text)}`);
+          return quoted(`**${block.title ?? callouts[block.tone]}:** ${md(block.text)}`);
         case "code": {
           const fence = block.code.includes("```") ? "~~~~" : "```";
           const code = [`${fence}${block.language}`, block.code, fence].join("\n");

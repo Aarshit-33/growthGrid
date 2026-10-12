@@ -94,7 +94,9 @@ const list = (label: string, items: string[], ordered = false) =>
   items.length ? ["", `**${label}**`, "", ...items.map((item, i) => `${ordered ? `${i + 1}.` : "-"} ${item}`)] : [];
 
 /** Name, summary and contact facts: the top of both files. */
-function intro({ settings: s }: Content): string[] {
+function intro({ settings: s, pages }: Content): string[] {
+  const L = s.llms.labels;
+  const details = pages.contact.details;
   return [
     `# ${s.name}`,
     "",
@@ -102,13 +104,13 @@ function intro({ settings: s }: Content): string[] {
     "",
     s.tagline,
     "",
-    `- Website: ${absoluteUrl("/", s.url)}`,
-    `- Email: ${s.contact.email}`,
-    ...(s.contact.phone ? [`- Phone: ${s.contact.phone}`] : []),
-    ...(s.contact.bookingUrl ? [`- Book a call: ${s.contact.bookingUrl}`] : []),
-    `- Response time: ${s.contact.responseTime}`,
-    `- Location: ${s.location.label}`,
-    `- Availability: ${s.availability.label}`,
+    `- ${L.website}: ${absoluteUrl("/", s.url)}`,
+    `- ${details.emailLabel}: ${s.contact.email}`,
+    ...(s.contact.phone ? [`- ${L.phone}: ${s.contact.phone}`] : []),
+    ...(s.contact.bookingUrl ? [`- ${details.bookingLabel}: ${s.contact.bookingUrl}`] : []),
+    `- ${details.responseLabel}: ${s.contact.responseTime}`,
+    `- ${L.location}: ${s.location.label}`,
+    `- ${L.availability}: ${s.availability.label}`,
   ];
 }
 
@@ -118,35 +120,36 @@ export async function llmsTxt(): Promise<string> {
   const c = await loadContent();
   const url = (path: string) => absoluteUrl(path, c.settings.url);
   const { pages } = c;
+  const { headings: H, labels: L } = c.settings.llms;
   const page = (path: string, { seo }: { seo: Seo }) => (seo.noIndex ? [] : [linkItem(seo.title, url(path), seo.description)]);
 
   return toText([
     ...intro(c),
     ...section(
-      "## Services",
+      `## ${H.services}`,
       c.services.map((s) => linkItem(s.title, url(`/services/${s.slug}`), s.summary)),
     ),
     ...section(
-      "## Case studies",
+      `## ${H.caseStudies}`,
       c.projects.map((p) => linkItem(p.title, url(`/work/${p.slug}`), `${p.summary} (${p.client.name}, ${p.year})`)),
     ),
     ...section(
-      "## Insights",
+      `## ${H.insights}`,
       c.insights.map((i) => linkItem(i.title, url(`/insights/${i.slug}`), i.excerpt)),
     ),
-    ...section("## Company", [
+    ...section(`## ${H.company}`, [
       ...page("/about", pages.about),
       ...(pages.about.seo.noIndex || c.process.length === 0
         ? []
-        : [linkItem("How a project runs", url("/about#process"), c.process.map((step) => step.title).join(" → "))]),
+        : [linkItem(H.process, url("/about#process"), c.process.map((step) => step.title).join(" → "))]),
       ...page("/services", pages.services),
       ...page("/work", pages.work),
       ...page("/insights", pages.insights),
       ...page("/contact", pages.contact),
     ]),
-    ...section("## Optional", [
-      linkItem("Full content", url(LLMS_FULL_PATH), "every service, case study, article and FAQ in one Markdown file"),
-      ...(c.insights.length ? [linkItem("Insights RSS feed", url(FEED_PATH))] : []),
+    ...section(`## ${H.optional}`, [
+      linkItem(L.fullContent, url(LLMS_FULL_PATH), L.fullContentDescription),
+      ...(c.insights.length ? [linkItem(L.feed, url(FEED_PATH))] : []),
       ...page("/privacy", pages.privacy),
       ...page("/terms", pages.terms),
     ]),
@@ -162,8 +165,12 @@ export async function llmsFullTxt(): Promise<string> {
   const md = (text: string) => inlineMarkdown(text, s.url);
   const tech = (slugs: string[]) => slugs.flatMap((slug) => c.technologies.get(slug)?.name ?? []);
   const serviceName = new Map(c.allServices.map((service) => [service.slug, service.title]));
-  const { about, services: servicesPage, contact } = c.pages;
+  const { about, services: servicesPage, work, insights: insightsPage, contact } = c.pages;
   const { aftercare } = servicesPage;
+  const { headings: H, labels: L } = s.llms;
+  const serviceLabels = servicesPage.detail;
+  const workLabels = work.detail;
+  const insightLabels = insightsPage.detail;
   const fill = (text: string) => md(interpolate(text, { days: aftercare.warranty.days }));
 
   const qa = (faqs: Faq[]) => faqs.flatMap((f) => ["", `**${f.question}**`, md(f.answer)]);
@@ -174,26 +181,29 @@ export async function llmsFullTxt(): Promise<string> {
 
   const aboutSection = [
     "",
-    `## About ${s.name}`,
+    `## ${interpolate(H.about, { name: s.name })}`,
     ...(about.seo.noIndex ? [] : ["", md(about.hero.lede), ...about.story.paragraphs.flatMap((p) => ["", md(p)]), "", md(about.story.highlight)]),
     ...section(
-      "### What we stand for",
+      `### ${H.principles}`,
       c.principles.map((p) => `- **${p.title}**: ${md(p.summary)}`),
     ),
-    ...section("### How a project runs", [
-      ...(about.seo.noIndex ? [] : [`More: ${url("/about#process")}`, ""]),
+    ...section(`### ${H.process}`, [
+      ...(about.seo.noIndex ? [] : [`${L.more}: ${url("/about#process")}`, ""]),
       ...c.process.map(
-        (step, i) => `${i + 1}. **${step.title}** (${step.duration}): ${md(step.summary)} Deliverables: ${step.deliverables.join(", ")}.`,
+        (step, i) =>
+          `${i + 1}. **${step.title}** (${step.duration}): ${md(step.summary)} ${L.deliverables}: ${step.deliverables.join(", ")}.`,
       ),
     ]),
     ...(about.seo.noIndex
       ? []
       : section(
-          "### Ways to work together",
-          about.engagement.models.map((m) => `- **${m.title}** (${m.duration}): ${md(m.summary)} Best for: ${md(m.bestFor)}`),
+          `### ${H.engagement}`,
+          about.engagement.models.map(
+            (m) => `- **${m.title}** (${m.duration}): ${md(m.summary)} ${about.engagement.bestForLabel}: ${md(m.bestFor)}`,
+          ),
         )),
     "",
-    "### After launch",
+    `### ${H.aftercare}`,
     "",
     `**${fill(aftercare.warranty.title)}**: ${fill(aftercare.warranty.text)}`,
     ...list(
@@ -203,86 +213,89 @@ export async function llmsFullTxt(): Promise<string> {
     ...list(
       aftercare.plans.label,
       aftercare.plans.items.map(
-        (plan) => `**${plan.name}**: ${fill(plan.summary)} First response: ${plan.response}. Best for: ${fill(plan.bestFor)}`,
+        (plan) =>
+          `**${plan.name}**: ${fill(plan.summary)} ${aftercare.plans.responseLabel}: ${plan.response}. ${aftercare.plans.bestForLabel}: ${fill(plan.bestFor)}`,
       ),
     ),
     ...(aftercare.plans.note ? ["", fill(aftercare.plans.note)] : []),
   ];
 
   const servicesSection = section(
-    "## Services",
+    `## ${H.services}`,
     c.services.flatMap((service) => [
       "",
       `### ${service.title}`,
       "",
-      `URL: ${url(`/services/${service.slug}`)}`,
+      `${L.url}: ${url(`/services/${service.slug}`)}`,
       service.tagline,
       "",
       md(service.summary),
       ...service.description.flatMap((p) => ["", md(p)]),
-      ...list("Deliverables", service.deliverables.map(md)),
-      ...list("Capabilities", service.capabilities.map((x) => `**${x.title}**: ${md(x.description)}`)),
-      ...list("Approach", service.approach.map((x) => `**${x.title}**: ${md(x.description)}`), true),
-      ...(service.technologies.length ? ["", `**Technologies**: ${tech(service.technologies).join(", ")}`] : []),
-      ...(faqsFor(service.slug).length ? ["", `**Questions about ${service.title}**`, ...qa(faqsFor(service.slug))] : []),
+      ...list(serviceLabels.deliverablesHeading, service.deliverables.map(md)),
+      ...list(serviceLabels.capabilitiesHeading, service.capabilities.map((x) => `**${x.title}**: ${md(x.description)}`)),
+      ...list(serviceLabels.approachHeading, service.approach.map((x) => `**${x.title}**: ${md(x.description)}`), true),
+      ...(service.technologies.length ? ["", `**${serviceLabels.technologiesHeading}**: ${tech(service.technologies).join(", ")}`] : []),
+      ...(faqsFor(service.slug).length
+        ? ["", `**${interpolate(L.serviceQuestions, { title: service.title })}**`, ...qa(faqsFor(service.slug))]
+        : []),
     ]),
   );
 
   const projectsSection = section(
-    "## Case studies",
+    `## ${H.caseStudies}`,
     c.projects.flatMap((project) => [
       "",
       `### ${project.title}`,
       "",
-      `URL: ${url(`/work/${project.slug}`)}`,
+      `${L.url}: ${url(`/work/${project.slug}`)}`,
       [project.client.name, project.category, project.client.industry, project.client.region, project.year, project.duration].join(" · "),
-      `Services: ${project.services.map((slug) => serviceName.get(slug) ?? slug).join(", ")}`,
+      `${workLabels.services}: ${project.services.map((slug) => serviceName.get(slug) ?? slug).join(", ")}`,
       "",
       md(project.summary),
       "",
-      `Outcome: ${md(project.outcome)}`,
+      `${L.outcome}: ${md(project.outcome)}`,
       ...(
         [
-          ["Challenge", project.challenge],
-          ["Approach", project.approach],
-          ["Solution", project.solution],
+          [workLabels.challenge, project.challenge],
+          [workLabels.approach, project.approach],
+          [workLabels.solution, project.solution],
         ] as const
       ).flatMap(([label, texts]) => ["", `**${label}**`, ...texts.flatMap((p) => ["", md(p)])]),
-      ...list("Highlights", project.highlights.map(md)),
-      ...list("Results", project.results.map((m) => `**${m.value}** ${m.label}`)),
-      ...(project.stack.length ? ["", `**Stack**: ${tech(project.stack).join(", ")}`] : []),
+      ...list(workLabels.highlights, project.highlights.map(md)),
+      ...list(workLabels.results, project.results.map((m) => `**${m.value}** ${m.label}`)),
+      ...(project.stack.length ? ["", `**${workLabels.stack}**: ${tech(project.stack).join(", ")}`] : []),
     ]),
   );
 
   const insightsSection = section(
-    "## Insights",
+    `## ${H.insights}`,
     c.insights.flatMap((insight) => [
       "",
       `### ${insight.title}`,
       "",
-      `URL: ${url(`/insights/${insight.slug}`)}`,
+      `${L.url}: ${url(`/insights/${insight.slug}`)}`,
       [
-        `Published ${insight.publishedAt}`,
-        ...(insight.updatedAt ? [`Updated ${insight.updatedAt}`] : []),
-        `${insight.readingTime} min read`,
+        `${L.published} ${insight.publishedAt}`,
+        ...(insight.updatedAt ? [`${insightLabels.updated} ${insight.updatedAt}`] : []),
+        `${insight.readingTime} ${insightLabels.minRead}`,
         insight.category.label,
-        ...(insight.tags.length ? [`Tags: ${insight.tags.join(", ")}`] : []),
+        ...(insight.tags.length ? [`${L.tags}: ${insight.tags.join(", ")}`] : []),
       ].join(" · "),
       "",
-      `**Key takeaway:** ${md(insight.takeaway)}`,
+      `**${insightLabels.takeaway}:** ${md(insight.takeaway)}`,
       "",
-      blocksToMarkdown(insight.body, s.url, 2),
+      blocksToMarkdown(insight.body, s.url, s.ui.callouts, 2),
     ]),
   );
 
   const contactSection = [
     "",
-    "## Contact",
+    `## ${H.contact}`,
     "",
-    ...(contact.seo.noIndex ? [] : [md(contact.hero.lede), "", `Start a project: ${url("/contact")}`, ""]),
-    `- Email: ${s.contact.email}`,
-    ...(s.contact.phone ? [`- Phone: ${s.contact.phone}`] : []),
-    ...(s.contact.bookingUrl ? [`- Book a call: ${s.contact.bookingUrl}`] : []),
+    ...(contact.seo.noIndex ? [] : [md(contact.hero.lede), "", `${L.startProject}: ${url("/contact")}`, ""]),
+    `- ${contact.details.emailLabel}: ${s.contact.email}`,
+    ...(s.contact.phone ? [`- ${L.phone}: ${s.contact.phone}`] : []),
+    ...(s.contact.bookingUrl ? [`- ${contact.details.bookingLabel}: ${s.contact.bookingUrl}`] : []),
     `- ${s.contact.responseTime}`,
     ...list(
       contact.steps.heading,
@@ -294,12 +307,12 @@ export async function llmsFullTxt(): Promise<string> {
   return toText([
     ...intro(c),
     "",
-    `The site's content in one Markdown file, for AI assistants. The short index: ${url(LLMS_PATH)}`,
+    interpolate(s.llms.fullLede, { url: url(LLMS_PATH) }),
     ...aboutSection,
     ...servicesSection,
     ...projectsSection,
     ...insightsSection,
-    ...section("## Frequently asked questions", qa(generalFaqs)),
+    ...section(`## ${H.faq}`, qa(generalFaqs)),
     ...contactSection,
   ]);
 }

@@ -1,0 +1,75 @@
+{
+  "key": "cards",
+  "seo": {
+    "title": "Business cards",
+    "description": "Digital business cards for the growthGrid team: scan the code, save the contact to your phone, or share a card with a single link.",
+    "noIndex": true
+  },
+  "hero": {
+    "eyebrow": "Business cards",
+    "headline": "Say hello, *the easy way*",
+    "lede": "Every card works on a phone: scan the code, save the contact or send the link on. Download the artwork whenever you need it printed."
+  },
+  "breadcrumb": "Business cards",
+  "member": {
+    "eyebrow": "Business card",
+    "seoTitle": "{name}, {role}",
+    "seoDescription": "{name}'s business card at {site}: save the contact to your phone, scan the QR code or share the card with one link.",
+    "shareText": "{name}'s business card at {site}"
+  },
+  "labels": {
+    "front": "Front",
+    "back": "Back",
+    "flipHint": "Tap the card to flip it",
+    "flip": "Flip the card",
+    "open": "Open card",
+    "all": "All cards",
+    "saveContact": "Save contact",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "copied": "Link copied",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "download": "Download",
+    "downloadHint": "PNG for phones and screens · SVG for designers · PDF for the print shop, 3.5 × 2 in with 3 mm bleed.",
+    "preparing": "Preparing…",
+    "details": "Get in touch",
+    "phone": "Phone",
+    "emailLabel": "Email",
+    "website": "Website",
+    "cardAlt": "{name}'s business card, {side}",
+    "empty": "No cards to show yet.",
+    "print": "Print-ready PDF (3 mm bleed)"
+  },
+  "design": {
+    "front": {
+      "background": "#0f2e2e",
+      "logo": "#6cc499",
+      "wordmark": "#ffffff",
+      "qrPanel": "#6cc499",
+      "qrInk": "#000000",
+      "qr": "card"
+    },
+    "back": {
+      "background": "#ebebe6",
+      "logo": "#6cc499",
+      "wordmark": "#173f3a",
+      "rows": [
+        "phone",
+        "name",
+        "email",
+        "website"
+      ],
+      "pill": "#6cc499",
+      "pillInk": "#173f3a",
+      "highlight": "name",
+      "highlightPill": "#17423e",
+      "highlightInk": "#ffffff",
+      "sideTab": true
+    },
+    "shape": {
+      "corners": 28,
+      "radius": 33
+    }
+  }
+}

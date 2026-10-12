@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { AlertTriangle, Info, Lightbulb } from "lucide-react";
 import type { ReactNode } from "react";
+import { CopyCodeButton } from "@/components/content/copy-code-button";
 import { BrandCase } from "@/components/ui/brand-case";
 import { InlineText, plainText } from "@/components/ui/rich-text";
-import type { Block, HeadingBlock } from "@/lib/schemas";
+import type { Block, HeadingBlock, Settings } from "@/lib/schemas";
 import { cn, slugify } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────
@@ -32,7 +33,10 @@ const CALLOUT: Record<"info" | "tip" | "warning", { icon: ReactNode; classes: st
   warning: { icon: <AlertTriangle className="size-4" />, classes: "border-warn/30 bg-warn/[0.06] text-warn" },
 };
 
-function BlockView({ block }: { block: Block }) {
+/** Site settings › Interface text the blocks use: the copy-code button and untitled callouts. */
+export type BlockLabels = Pick<Settings["ui"], "copyCode" | "copiedCode" | "copyCodeLabel" | "callouts">;
+
+function BlockView({ block, labels }: { block: Block; labels: BlockLabels }) {
   switch (block.type) {
     case "heading": {
       const Tag = block.level === 2 ? "h2" : "h3";
@@ -79,7 +83,7 @@ function BlockView({ block }: { block: Block }) {
         <aside className={cn("rounded-card border p-5 md:p-6", tone.classes)}>
           <p className="flex items-center gap-2 font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em]">
             {tone.icon}
-            {block.title ?? block.tone}
+            {block.title ?? labels.callouts[block.tone]}
           </p>
           <p className="mt-3 text-dim">
             <InlineText text={block.text} />
@@ -92,8 +96,19 @@ function BlockView({ block }: { block: Block }) {
         <figure className="overflow-hidden rounded-card border border-line bg-surface">
           <div className="flex items-center justify-between border-b border-line px-4 py-2.5">
             <span className="label-mono">{block.language}</span>
+            <CopyCodeButton
+              code={block.code}
+              label={labels.copyCode}
+              copiedLabel={labels.copiedCode}
+              ariaLabel={labels.copyCodeLabel}
+            />
           </div>
-          <pre className="overflow-x-auto p-5 font-mono text-[0.85rem] leading-relaxed text-dim" data-lenis-prevent="">
+          {/* Only sideways gestures bypass smooth scroll (to pan long lines);
+              vertical wheel over the code keeps scrolling the page. */}
+          <pre
+            className="overflow-x-auto overscroll-x-contain p-5 font-mono text-[0.85rem] leading-relaxed text-dim"
+            data-lenis-prevent-horizontal=""
+          >
             <code>{block.code}</code>
           </pre>
           {block.caption && <figcaption className="border-t border-line px-4 py-3 text-sm text-muted">{block.caption}</figcaption>}
@@ -118,11 +133,11 @@ function BlockView({ block }: { block: Block }) {
   }
 }
 
-export function Blocks({ blocks, className }: { blocks: Block[]; className?: string }) {
+export function Blocks({ blocks, labels, className }: { blocks: Block[]; labels: BlockLabels; className?: string }) {
   return (
     <div className={cn("prose-gg", className)}>
       {blocks.map((block, i) => (
-        <BlockView key={i} block={block} />
+        <BlockView key={i} block={block} labels={labels} />
       ))}
     </div>
   );

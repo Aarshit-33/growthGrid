@@ -3,7 +3,7 @@ import { z, type ZodType } from "zod";
 import { collectionRegistry, type CollectionName } from "@/lib/content/registry";
 import type { ContentSnapshot } from "@/lib/content/validate";
 import { pageSchemas, settingsSchema, type PageKey } from "@/lib/schemas";
-import { AFTERCARE_META, BRAND_META, COLLECTION_META } from "./meta";
+import { AFTERCARE_META, BRAND_META, CARDS_META, COLLECTION_META } from "./meta";
 import type { FormContext, JsonSchema, RefMap, RefOption } from "./types";
 
 /* ─────────────────────────────────────────────────────────────
@@ -36,9 +36,10 @@ export const HIDDEN_FIELDS = {
   settings: [BRAND_META.field] as string[],
 };
 
-/** Parts of a page edited on a screen of their own (After launch: the services page's `aftercare`). */
+/** Parts of a page edited on a screen of their own (After launch: the services page's `aftercare`; Business cards: the cards page's `design`). */
 const OWN_SCREEN: Partial<Record<PageKey, string[]>> = {
   [AFTERCARE_META.page]: [AFTERCARE_META.field],
+  [CARDS_META.page]: [CARDS_META.field],
 };
 
 /** Where `featured` is the homepage switch, the Visibility panel owns it too. */
@@ -122,6 +123,7 @@ export function siteLinks(snapshot: ContentSnapshot): string[] {
     "/contact",
     "/privacy",
     "/terms",
+    "/cards",
     ...itemsOf(snapshot, "services").map((s) => `/services/${text(s.slug)}`),
     ...itemsOf(snapshot, "projects").map((p) => `/work/${text(p.slug)}`),
     ...itemsOf(snapshot, "insights").map((i) => `/insights/${text(i.slug)}`),
@@ -156,6 +158,22 @@ export function aftercareForm(snapshot: ContentSnapshot): FormContext {
     ...pageForm(snapshot, AFTERCARE_META.page),
     focus: AFTERCARE_META.field,
     panels: AFTERCARE_META.panels,
+  };
+}
+
+/**
+ * The Business cards screen: only the cards page's `design` (front, back and
+ * shape), a panel each. The page's copy rides along untouched, so saving,
+ * conflicts and History work exactly as on Pages › Business cards.
+ */
+export function cardsForm(snapshot: ContentSnapshot): FormContext {
+  return {
+    schema: jsonSchemaOf(pageSchemas[CARDS_META.page]),
+    refs: {},
+    links: siteLinks(snapshot),
+    hidden: [...HIDDEN_FIELDS.page],
+    focus: CARDS_META.field,
+    panels: CARDS_META.panels,
   };
 }
 

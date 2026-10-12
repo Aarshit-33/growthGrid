@@ -82,7 +82,7 @@ export const COLLECTION_META: Record<CollectionName, CollectionMeta> = {
     description: "Client quotes. Featured ones rotate on the homepage.",
     titleField: "author",
     subtitleField: "company",
-    sort: "array",
+    sort: "order",
     home: "featured",
     homeSection: "testimonials",
     appearsOn: "Homepage (featured) · Case studies",
@@ -108,7 +108,7 @@ export const COLLECTION_META: Record<CollectionName, CollectionMeta> = {
     subtitleField: "role",
     sort: "order",
     home: "none",
-    appearsOn: "About · Article bylines",
+    appearsOn: "About · Article bylines · Business cards",
     group: "studio",
   },
   process: {
@@ -247,9 +247,10 @@ export const PAGE_META: Record<PageKey, PageMeta> = {
   privacy: { label: "Privacy policy", description: "Legal text.", href: "/privacy" },
   terms: { label: "Terms", description: "Legal text.", href: "/terms" },
   "not-found": { label: "404 page", description: "Shown for unknown URLs." },
+  cards: { label: "Business cards", description: "Card page copy, labels and share text.", href: "/cards" },
 };
 
-export const PAGE_ORDER: PageKey[] = ["home", "about", "services", "work", "insights", "contact", "privacy", "terms", "not-found"];
+export const PAGE_ORDER: PageKey[] = ["home", "about", "services", "work", "insights", "contact", "cards", "privacy", "terms", "not-found"];
 
 /**
  * The After launch screen: the warranty, handover and care plans that follow
@@ -321,6 +322,43 @@ export const BRAND_META = {
   },
 } as const satisfies { label: string; path: string; field: string; panels: Record<string, PanelCopy> };
 
+/**
+ * The Business cards screen: colours, the QR code and the contact rows of
+ * every team member's card, with a live preview. Stored in the cards page
+ * (`design`); each person's own phone, email or website is on their Team entry.
+ */
+export const CARDS_META = {
+  label: "Business cards",
+  description: "Colours, QR code and contact rows for every team card.",
+  /** Its admin screen (src/app/admin/(panel)/business-cards). */
+  path: "/business-cards",
+  href: "/cards",
+  page: "cards",
+  field: "design",
+  panels: {
+    "design.front": {
+      label: "Front (dark side)",
+      description: "The logo and the QR code. Keep the code's colour much darker than its tile, or phones may not read it.",
+    },
+    "design.back": {
+      label: "Back (light side)",
+      description: "The logo and the contact rows. Rows with nothing to show (no phone number, say) are left out.",
+    },
+    "design.shape": {
+      label: "Shape",
+      description: "Corner roundness of the card and of the tiles and rows on it.",
+    },
+  },
+} as const satisfies {
+  label: string;
+  description: string;
+  path: string;
+  href: string;
+  page: PageKey;
+  field: string;
+  panels: Record<string, PanelCopy>;
+};
+
 export interface HomeSectionMeta {
   label: string;
   description: string;
@@ -372,8 +410,8 @@ export const FIELD_HINTS: Record<string, string> = {
   "consent.accept": "Analytics on: the button that turns analytics on for the visitor.",
   "consent.decline": "Analytics on: the button that keeps analytics off.",
   "consent.essentialMessage":
-    "Analytics off: no cookies are set, only a few essential settings (like this choice) in the browser, so say that rather than ask for consent. Empty: a built-in line.",
-  "consent.acknowledge": "Analytics off: the banner's only button; it just closes it. Empty: “Accept”.",
+    "Analytics off: no cookies are set, only a few essential settings (like this choice) in the browser, so say that rather than ask for consent.",
+  "consent.acknowledge": "Analytics off: the banner's only button; it just closes it.",
   "consent.settings": "Footer link that reopens the banner.",
   // Branding (settings `brand`)
   "brand.logo.image":
@@ -434,4 +472,85 @@ export const FIELD_HINTS: Record<string, string> = {
   "aftercare.plans.items[].features": "What the plan includes (homepage only). Press Enter to add the next one.",
   "aftercare.plans.items[].featured": "Highlight it as the most chosen plan. Only one plan can be featured.",
   "aftercare.plans.items[].cta": "No prices: each plan asks for a quote. /contact?plan=Name starts the message with the plan's name.",
+  // Site settings: structured data and app manifest (settings `seo`)
+  "seo.areaServed": "Structured data: where the studio works, e.g. “Worldwide” or a country.",
+  "seo.availableLanguages": "Structured data: languages you answer enquiries in, e.g. English.",
+  "seo.contactType": "Structured data: the kind of contact, e.g. “sales” or “customer support”.",
+  "seo.offerCatalogName": "Structured data: the name of your list of services.",
+  "seo.deliverablesName": "Structured data: a service's list of deliverables. Write {title} for the service's title.",
+  "seo.category": "Page metadata category, e.g. “technology”.",
+  "seo.manifestCategories": "App store-style categories for the installed app, lowercase (business, productivity, design…).",
+  // Site settings: screen-reader names and code blocks (settings `ui`)
+  "ui.homeLinkLabel": "Screen readers: the logo link in the header and footer. Write {name} for the site's name.",
+  "ui.primaryNavLabel": "Screen readers: the header's main navigation.",
+  "ui.footerNavLabel": "Screen readers: the footer's link columns.",
+  "ui.breadcrumbLabel": "Screen readers: the breadcrumb trail on inner pages.",
+  "ui.copyCode": "Code blocks in articles and legal pages: the copy button.",
+  "ui.copiedCode": "Code blocks: the button once the code is copied.",
+  "ui.copyCodeLabel": "Code blocks: what screen readers call the copy button.",
+  "ui.callouts": "Callout titles in articles and legal pages when a callout has no title of its own.",
+  // Site settings: /llms.txt and /llms-full.txt (settings `llms`)
+  llms: "The site as Markdown for AI assistants (/llms.txt, /llms-full.txt). Write headings and labels without Markdown: ## and : are added.",
+  "llms.fullLede": "Under the intro of /llms-full.txt. Write {url} for the address of /llms.txt.",
+  "llms.headings.about": "Write {name} for the site's name.",
+  "llms.headings.process": "Also the name of the /llms.txt link to the process.",
+  "llms.labels.fullContent": "The /llms.txt link to /llms-full.txt.",
+  "llms.labels.fullContentDescription": "After that link.",
+  "llms.labels.more": "Before the link to the process on the About page.",
+  "llms.labels.deliverables": "After each process step.",
+  "llms.labels.url": "Before each page's address.",
+  "llms.labels.serviceQuestions": "Over a service's own FAQs. Write {title} for the service's title.",
+  "llms.labels.startProject": "Before the link to the contact page.",
+  // Pages: labels screen readers hear
+  "work.prevLabel": "Screen readers: the previous-project button.",
+  "work.nextLabel": "Screen readers: the next-project button.",
+  "testimonials.carouselLabel": "Screen readers: what the carousel is, e.g. “carousel”.",
+  "testimonials.slideRoleLabel": "Screen readers: what each quote is, e.g. “slide”.",
+  "insights.readLabel": "Call to action on the open article card, e.g. “Read article”.",
+  "insights.prevLabel": "Screen readers: the previous-article button.",
+  "insights.nextLabel": "Screen readers: the next-article button.",
+  "aftercare.warranty.icon": "Icon beside the warranty's label.",
+  "detail.shareOn": "Platform names in the share buttons (“Share on X”).",
+  "form.planMessage": "Starts the message when a visitor picks a care plan (/contact?plan=…). Write {plan} for the plan's name.",
+  // Contact page: the emails each enquiry sends
+  emails:
+    "Sent for every enquiry. Placeholders: {name}, {firstName}, {company}, {site} (the site's name) and {host} (its domain).",
+  "emails.alert": "To the studio (the owners and LEAD_EMAIL_TO).",
+  "emails.alert.senderName": "Sender name, unless LEAD_EMAIL_FROM sets one.",
+  "emails.alert.subjectWithCompany": "Subject when the visitor gave a company.",
+  "emails.alert.notSavedPrefix": "Before the subject when the enquiry couldn't be saved to the database.",
+  "emails.confirmation": "To the visitor, confirming you got their message.",
+  // Business cards: the design (cards page `design`)
+  "design.front.background": "The dark side's background.",
+  "design.front.logo": "The symbol and “Grid” in the wordmark.",
+  "design.front.wordmark": "“growth” in the wordmark.",
+  "design.front.qrPanel": "The tile behind the QR code. A light colour scans best.",
+  "design.front.qrInk": "The QR code itself. Keep it dark (black or near-black) on a light tile.",
+  "design.front.qr":
+    "What scanning opens. Card: this person's card page (save the contact, share it). Contact: adds the contact straight to the phone (a denser code). Website: their website, or the studio's.",
+  "design.back.background": "The light side's background.",
+  "design.back.logo": "The symbol and “Grid” in the wordmark.",
+  "design.back.wordmark": "“growth” in the wordmark.",
+  "design.back.rows": "Up to five rows, top to bottom, each at most once. Phone, email and website fall back to the studio's when a person has none of their own.",
+  "design.back.pill": "The rows' colour (and the tab on the left edge).",
+  "design.back.pillInk": "Text and icons on the rows.",
+  "design.back.highlight": "The row drawn in the highlight colours, usually the name.",
+  "design.back.highlightPill": "The highlighted row's colour.",
+  "design.back.highlightInk": "Text and icon on the highlighted row.",
+  "design.back.sideTab": "The rounded tab on the left edge.",
+  "design.shape.corners": "Card corners on screen, 0–60 (at the card's 1050 px width). Downloads stay square-cornered, ready for print.",
+  "design.shape.radius": "The QR tile, side tab and rows, 0–40. 33 or more makes the rows full pills.",
+  // Business cards: page copy
+  "member.seoTitle": "Title of each person's card page and its share sheet. {name}, {role} and {site} are filled in.",
+  "member.seoDescription": "Search snippet of each person's card page. {name}, {role} and {site} are filled in.",
+  "member.shareText": "Sent with a shared link (WhatsApp, email, the phone's share sheet). {name}, {role} and {site} are filled in.",
+  "labels.cardAlt": "What screen readers hear for the card. {name} and {side} are filled in.",
+  "labels.downloadHint": "Under the download buttons.",
+  // Team: each person's business card (team `card`)
+  card: "Their business card at /cards/<slug>. Anything left empty uses the studio's details from Site settings.",
+  "card.enabled": "Off: no card for this person. Hidden team members never get one.",
+  "card.name": "Only if the card should spell the name differently from the About page.",
+  "card.phone": "Their direct line, written as it should read, e.g. +91 83204 81381. Empty: the studio's number.",
+  "card.email": "Empty: the studio's email.",
+  "card.website": "A personal site or booking page. Empty: the studio's website.",
 };

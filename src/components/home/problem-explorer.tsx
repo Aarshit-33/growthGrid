@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useLocale } from "@/components/layout/locale-context";
 import { journey } from "@/components/three/store";
 import { Icon } from "@/components/ui/icon";
 import { WindowFrame } from "@/components/ui/window-frame";
@@ -33,11 +34,11 @@ const LEVEL_TONE: Record<Level, string> = {
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
-function formatRange(r: Range, t: number) {
+function formatRange(locale: string, r: Range, t: number) {
   const value = r.from + (r.to - r.from) * t;
   const digits = r.decimals ?? 0;
   return (
-    value.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits }) + (r.suffix ?? "")
+    value.toLocaleString(locale, { minimumFractionDigits: digits, maximumFractionDigits: digits }) + (r.suffix ?? "")
   );
 }
 
@@ -66,6 +67,7 @@ export function ProblemExplorer({
   children: ReactNode;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
   const [heal, setHeal] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
 
@@ -226,7 +228,7 @@ export function ProblemExplorer({
                       good ? "text-em" : key === "warnings" ? "text-warn" : "text-danger",
                     )}
                   >
-                    {formatRange(range, t)}
+                    {formatRange(locale, range, t)}
                   </dd>
                 </div>
               ))}

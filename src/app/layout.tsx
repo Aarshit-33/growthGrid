@@ -42,12 +42,11 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(settings.url),
     title: { default: settings.seo.defaultTitle, template: settings.seo.titleTemplate },
     description: settings.seo.description,
-    keywords: settings.seo.keywords,
     applicationName: settings.name,
     authors: [{ name: settings.legalName, url: settings.url }],
     creator: settings.legalName,
     publisher: settings.legalName,
-    category: "technology",
+    category: settings.seo.category,
     formatDetection: { email: false, address: false, telephone: false },
     openGraph: {
       type: "website",

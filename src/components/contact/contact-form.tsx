@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore, type ChangeEvent, type FormEvent, type ReactNode } from "react";
+import { useLocale } from "@/components/layout/locale-context";
 import { Button } from "@/components/ui/button";
 import { useReducedMotionSafe } from "@/hooks/use-media-query";
 import { leadFieldErrors } from "@/lib/leads/errors";
@@ -164,6 +165,7 @@ export function ContactForm({
   privacyNote: ReactNode;
 }) {
   const reduce = useReducedMotionSafe();
+  const locale = useLocale();
   const [values, setValues] = useState<Values>(EMPTY);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSummary, setShowSummary] = useState(false);
@@ -513,7 +515,7 @@ export function ContactForm({
                     messageLength > MESSAGE_MAX * 0.9 ? "text-warn" : "text-faint",
                   )}
                 >
-                  {messageLength.toLocaleString("en-US")} / {MESSAGE_MAX.toLocaleString("en-US")}
+                  {messageLength.toLocaleString(locale)} / {MESSAGE_MAX.toLocaleString(locale)}
                 </span>
               </div>
               <FieldError field="message" message={errors.message} />

@@ -16,6 +16,7 @@ import {
 /** collection: `testimonials` */
 export const testimonialSchema = z.object({
   id: slugSchema,
+  order: z.number().int().nonnegative(),
   published: publishedSchema,
   quote: z.string().min(20),
   author: z.string().min(1),
@@ -26,6 +27,23 @@ export const testimonialSchema = z.object({
   featured: z.boolean(),
 });
 export type Testimonial = z.infer<typeof testimonialSchema>;
+
+/**
+ * A team member's business card (/cards/<slug>). Every field is optional:
+ * an empty one falls back to the studio's contact details (Site settings).
+ */
+export const teamCardSchema = z.object({
+  /** Off: no card for this person (they stay on the About page). Missing = on. */
+  enabled: z.boolean().optional(),
+  /** The name as printed on the card, when it differs from `name`. */
+  name: z.string().trim().min(1).optional(),
+  /** Direct line, written as it should read, e.g. "+91 83204 81381". */
+  phone: z.string().trim().regex(/^\+?[\d\s().-]{6,24}$/, "Use digits, spaces and + ( ) - only, e.g. +91 83204 81381").optional(),
+  email: z.email().optional(),
+  /** Personal site or booking page; empty: the studio's website. */
+  website: z.url().optional(),
+});
+export type TeamCard = z.infer<typeof teamCardSchema>;
 
 /** collection: `team` */
 export const teamMemberSchema = z.object({
@@ -38,6 +56,7 @@ export const teamMemberSchema = z.object({
   focus: z.array(z.string().min(1)).min(1),
   avatar: imageSchema.nullable(),
   socials: z.array(z.object({ platform: socialPlatformSchema, url: z.url() })),
+  card: teamCardSchema.optional(),
 });
 export type TeamMember = z.infer<typeof teamMemberSchema>;
 

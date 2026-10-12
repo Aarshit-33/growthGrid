@@ -2,8 +2,10 @@ import "server-only";
 import type { SendMailOptions } from "nodemailer";
 import { z } from "zod";
 import { adminHref, getAdminConfig } from "@/lib/admin/config";
-import { getSettings } from "@/lib/data";
+import { getPage, getSettings } from "@/lib/data";
 import type { NewLead } from "@/lib/leads/store";
+import type { ContactPage, Settings } from "@/lib/schemas";
+import { interpolate, localeLanguage } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────
    Email alert for every new enquiry, sent over SMTP (nodemailer),
@@ -76,11 +78,16 @@ export function leadMailConfig(env: NodeJS.ProcessEnv = process.env): { config: 
 
 /* ── The message ──────────────────────────────────────────── */
 
+/** Contact page › Emails: every word of both emails (placeholders: see the schema). */
+export type LeadMailCopy = ContactPage["emails"];
+
 export interface LeadMailContext {
-  /** e.g. "growthGrid": the header and the sender's name. */
+  /** e.g. "growthGrid": the header, {site} and the sender's name. */
   siteName: string;
-  /** e.g. "growthgrid.studio", for the footer. */
-  siteHost?: string;
+  /** e.g. "growthgrid.studio": {host}, in the footer. */
+  siteHost: string;
+  /** `<html lang>`, from Site settings › Locale (e.g. "en"). */
+  lang: string;
   /** Studio › Leads, when the Studio is on. */
   studioUrl?: string;
   /** False: saving failed, so this email is the only stored copy of the enquiry. */
@@ -97,57 +104,67 @@ const oneLine = (value: string) => value.replace(/\s+/g, " ").trim();
 
 const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
 
-const UNSAVED =
-  "This enquiry couldn't be saved to Studio › Leads, so this email is the only copy. Check MONGODB_URI and the server logs.";
-
-export function buildLeadMail(lead: NewLead, context: LeadMailContext): LeadMail {
+/** The visitor's name, first name and company, plus the site's name and host, for the copy's placeholders. */
+function placeholders(lead: NewLead, site: { siteName: string; siteHost?: string }) {
   const name = oneLine(lead.name);
-  const company = oneLine(lead.company);
-  const firstName = name.split(" ")[0] || name;
-  const subject = `${context.saved ? "" : "[Not saved] "}New enquiry from ${name}${company ? ` (${company})` : ""}`.slice(0, 160);
-  const footer = `Sent by the contact form${context.siteHost ? ` on ${context.siteHost}` : ""}. Reply to this email to answer ${firstName} directly.`;
+  return {
+    name,
+    firstName: name.split(" ")[0] || name,
+    company: oneLine(lead.company),
+    site: site.siteName,
+    host: site.siteHost ?? "",
+  };
+}
 
-  const details: [label: string, value: string][] = [
-    ["Email", lead.email],
-    ["Services", lead.services.join(", ")],
-    ["Timeline", lead.timeline],
-    ["Page", lead.source ?? ""],
+export function buildLeadMail(lead: NewLead, copy: LeadMailCopy["alert"], context: LeadMailContext): LeadMail {
+  const values = placeholders(lead, context);
+  const { name, company } = values;
+  const fill = (template: string) => interpolate(template, values);
+  const subject = `${context.saved ? "" : `${copy.notSavedPrefix} `}${fill(company ? copy.subjectWithCompany : copy.subject)}`.slice(0, 160);
+  const footer = fill(copy.footer);
+  const notSaved = `${copy.notSavedTitle} ${copy.notSaved}`;
+
+  const details: [label: string, value: string, email?: boolean][] = [
+    [copy.emailLabel, lead.email, true],
+    [copy.servicesLabel, lead.services.join(", ")],
+    [copy.timelineLabel, lead.timeline],
+    [copy.pageLabel, lead.source ?? ""],
   ];
   const filled = details.filter(([, value]) => value.trim() !== "");
 
   const text = [
-    ...(context.saved ? [] : [`NOT SAVED: ${UNSAVED}`, ""]),
-    `New enquiry on ${context.siteName}`,
+    ...(context.saved ? [] : [notSaved, ""]),
+    fill(copy.heading),
     "",
-    `Name: ${name}`,
-    ...(company ? [`Company: ${company}`] : []),
+    `${copy.nameLabel}: ${name}`,
+    ...(company ? [`${copy.companyLabel}: ${company}`] : []),
     ...filled.map(([label, value]) => `${label}: ${value}`),
     "",
-    "Message:",
+    `${copy.messageLabel}:`,
     lead.message,
     "",
     "--",
     footer,
-    ...(context.studioUrl ? [`Studio › Leads: ${context.studioUrl}`] : []),
+    ...(context.studioUrl ? [`${copy.leadsLabel}: ${context.studioUrl}`] : []),
   ].join("\n");
 
   const e = escapeHtml;
   const label = "font-size:11px;line-height:1.4;letter-spacing:1.2px;text-transform:uppercase;color:#6b7b88;";
   const rows = filled
-    .map(([key, value]) => {
-      const shown = key === "Email" ? `<a href="mailto:${e(value)}" style="color:#0a7d55;text-decoration:none;">${e(value)}</a>` : e(value);
-      return `<tr><td style="${label}padding:9px 16px 7px 0;width:90px;white-space:nowrap;vertical-align:top;">${key}</td><td style="padding:7px 0;font-size:15px;line-height:1.5;color:#0b1419;vertical-align:top;">${shown}</td></tr>`;
+    .map(([key, value, email]) => {
+      const shown = email ? `<a href="mailto:${e(value)}" style="color:#0a7d55;text-decoration:none;">${e(value)}</a>` : e(value);
+      return `<tr><td style="${label}padding:9px 16px 7px 0;width:90px;white-space:nowrap;vertical-align:top;">${e(key)}</td><td style="padding:7px 0;font-size:15px;line-height:1.5;color:#0b1419;vertical-align:top;">${shown}</td></tr>`;
     })
     .join("");
   const button = (href: string, text: string, primary: boolean) =>
     `<a href="${e(href)}" style="display:inline-block;margin:0 8px 8px 0;padding:12px 20px;border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;${
       primary ? "background:#3ce49a;color:#04070a;" : "background:#ffffff;color:#0b1419;border:1px solid #d5dde3;"
     }">${e(text)}</a>`;
-  const replyHref = `mailto:${lead.email}?subject=${encodeURIComponent(`Re: your enquiry to ${context.siteName}`)}`;
+  const replyHref = `mailto:${lead.email}?subject=${encodeURIComponent(fill(copy.replySubject))}`;
   const preheader = [name, lead.services.join(", "), lead.timeline, oneLine(lead.message).slice(0, 90)].filter(Boolean).join(" · ");
 
   const html = `<!doctype html>
-<html lang="en">
+<html lang="${e(context.lang)}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -161,13 +178,13 @@ export function buildLeadMail(lead: NewLead, context: LeadMailContext): LeadMail
 <tr><td style="background:#04070a;padding:18px 28px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 <td style="font-size:18px;font-weight:700;letter-spacing:-0.4px;color:#f0f4f7;">${e(context.siteName)}</td>
-<td align="right"><span style="display:inline-block;padding:5px 12px;border-radius:999px;border:1px solid #1f6b4c;color:#3ce49a;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">New enquiry</span></td>
+<td align="right"><span style="display:inline-block;padding:5px 12px;border-radius:999px;border:1px solid #1f6b4c;color:#3ce49a;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;">${e(copy.badge)}</span></td>
 </tr></table>
 </td></tr>
 ${
   context.saved
     ? ""
-    : `<tr><td style="padding:14px 28px;background:#fff4e5;border-bottom:1px solid #ffd8a8;font-size:14px;line-height:1.5;color:#7a4b00;"><strong>Not saved.</strong> ${e(UNSAVED)}</td></tr>`
+    : `<tr><td style="padding:14px 28px;background:#fff4e5;border-bottom:1px solid #ffd8a8;font-size:14px;line-height:1.5;color:#7a4b00;"><strong>${e(copy.notSavedTitle)}</strong> ${e(copy.notSaved)}</td></tr>`
 }
 <tr><td style="padding:28px 28px 4px;">
 <h1 style="margin:0;font-size:22px;line-height:1.3;color:#0b1419;">${e(name)}</h1>
@@ -175,10 +192,10 @@ ${company ? `<p style="margin:4px 0 0;font-size:15px;color:#5b6b78;">${e(company
 </td></tr>
 <tr><td style="padding:14px 28px 4px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${rows}</table></td></tr>
 <tr><td style="padding:14px 28px 4px;">
-<div style="${label}">Message</div>
+<div style="${label}">${e(copy.messageLabel)}</div>
 <div style="margin-top:8px;padding:14px 16px;background:#f5f8fa;border-left:3px solid #3ce49a;border-radius:8px;font-size:15px;line-height:1.6;color:#0b1419;">${e(lead.message).replace(/\r?\n/g, "<br>")}</div>
 </td></tr>
-<tr><td style="padding:20px 28px 12px;">${button(replyHref, `Reply to ${firstName}`, true)}${context.studioUrl ? button(context.studioUrl, "Open Studio › Leads", false) : ""}</td></tr>
+<tr><td style="padding:20px 28px 12px;">${button(replyHref, fill(copy.replyLabel), true)}${context.studioUrl ? button(context.studioUrl, copy.openLeadsLabel, false) : ""}</td></tr>
 <tr><td style="padding:16px 28px 22px;border-top:1px solid #edf1f4;font-size:12px;line-height:1.5;color:#8a9aaa;">${e(footer)}</td></tr>
 </table>
 </td></tr>
@@ -189,20 +206,17 @@ ${company ? `<p style="margin:4px 0 0;font-size:15px;color:#5b6b78;">${e(company
   return { subject, text, html };
 }
 
-export function buildLeadConfirmationMail(lead: NewLead, siteName: string): LeadMail {
-  const firstName = oneLine(lead.name).split(" ")[0] || "there";
-  const subject = `Thanks for contacting ${siteName}`;
-  const text = [
-    `Hi ${firstName},`,
-    "",
-    `Thanks for reaching out to ${siteName}. We've received your message and will get back to you soon.`,
-    "",
-    "Best,",
-    `${siteName}`,
-  ].join("\n");
+export function buildLeadConfirmationMail(
+  lead: NewLead,
+  copy: LeadMailCopy["confirmation"],
+  context: Pick<LeadMailContext, "siteName" | "lang">,
+): LeadMail {
+  const fill = (template: string) => interpolate(template, placeholders(lead, context));
+  const subject = fill(copy.subject);
+  const text = [fill(copy.greeting), "", fill(copy.body), "", fill(copy.signOff), context.siteName].join("\n");
   const e = escapeHtml;
   const html = `<!doctype html>
-<html lang="en">
+<html lang="${e(context.lang)}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -210,10 +224,10 @@ export function buildLeadConfirmationMail(lead: NewLead, siteName: string): Lead
 </head>
 <body style="margin:0;padding:32px 12px;background:#eef2f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #dfe5ea;border-radius:14px;">
-<tr><td style="background:#04070a;padding:18px 28px;font-size:18px;font-weight:700;color:#f0f4f7;">${e(siteName)}</td></tr>
+<tr><td style="background:#04070a;padding:18px 28px;font-size:18px;font-weight:700;color:#f0f4f7;">${e(context.siteName)}</td></tr>
 <tr><td style="padding:28px;color:#0b1419;font-size:16px;line-height:1.6;">
-<h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;">Thanks for reaching out, ${e(firstName)}.</h1>
-<p style="margin:0;">We've received your message and will get back to you soon.</p>
+<h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;">${e(fill(copy.heading))}</h1>
+<p style="margin:0;">${e(fill(copy.message))}</p>
 </td></tr>
 </table>
 </body>
@@ -270,15 +284,26 @@ export async function emailLead(lead: NewLead, { saved = true }: { saved?: boole
     return false;
   }
 
+  // Both emails are written in the admin (Contact page › Emails). Without that content nothing is sent and
+  // emailLead reports failure, so an enquiry that also couldn't be saved asks the visitor to try again.
+  let settings: Settings;
+  let copy: LeadMailCopy;
   try {
-    const settings = await getSettings().catch(() => null);
-    const siteName = settings?.name ?? "growthGrid";
-    const siteUrl = settings?.url;
+    [settings, { emails: copy }] = await Promise.all([getSettings(), getPage("contact")]);
+  } catch (error) {
+    console.warn(`[lead-email] Not sent: couldn't load the site settings or contact page content (${error instanceof Error ? error.name : "unknown error"}).`);
+    return false;
+  }
+
+  try {
+    const siteName = settings.name;
+    const lang = localeLanguage(settings.locale);
     const admin = getAdminConfig();
-    const mail = buildLeadMail(lead, {
+    const mail = buildLeadMail(lead, copy.alert, {
       siteName,
-      siteHost: siteUrl ? new URL(siteUrl).host : undefined,
-      studioUrl: siteUrl && admin.enabled ? new URL(adminHref(admin.base, "/leads"), siteUrl).href : undefined,
+      siteHost: new URL(settings.url).host,
+      lang,
+      studioUrl: admin.enabled ? new URL(adminHref(admin.base, "/leads"), settings.url).href : undefined,
       saved,
     });
 
@@ -294,7 +319,7 @@ export async function emailLead(lead: NewLead, { saved = true }: { saved?: boole
       socketTimeout: TIMEOUT_MS,
     });
     const message: SendMailOptions = {
-      from: config.from.includes("<") ? config.from : { name: `${siteName} website`, address: config.from },
+      from: config.from.includes("<") ? config.from : { name: interpolate(copy.alert.senderName, { site: siteName }), address: config.from },
       to: config.to,
       replyTo: { name: oneLine(lead.name), address: lead.email },
       subject: mail.subject,
@@ -312,7 +337,7 @@ export async function emailLead(lead: NewLead, { saved = true }: { saved?: boole
 
       console.info(`[lead-email] Enquiry emailed to ${config.to.length === 1 ? "1 address" : `${config.to.length} addresses`}.`);
       try {
-        const confirmation = buildLeadConfirmationMail(lead, siteName);
+        const confirmation = buildLeadConfirmationMail(lead, copy.confirmation, { siteName, lang });
         await sendWithRetry(transport, {
           from: message.from,
           to: lead.email,

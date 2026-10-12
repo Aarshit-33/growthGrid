@@ -124,7 +124,9 @@ export function Cursor() {
             <motion.span
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="font-mono text-[0.64rem] font-medium uppercase tracking-[0.14em] text-bg"
+              // Centred lines; the left pad offsets the trailing letter-spacing
+              // so the text sits optically in the middle of the ring.
+              className="block px-2 pl-[calc(0.5rem+0.14em)] text-center font-mono text-[0.64rem] font-medium uppercase leading-[1.35] tracking-[0.14em] text-balance text-bg"
             >
               {label}
             </motion.span>

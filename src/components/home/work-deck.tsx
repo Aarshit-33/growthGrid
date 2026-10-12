@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { scrollToTarget } from "@/components/layout/smooth-scroll";
+import { OutcomeValue } from "@/components/services/outcome-value";
 import { journey } from "@/components/three/store";
 import { ArrowSwap, ButtonLink } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -86,10 +87,10 @@ function DeckCard({
 
         <dl className="mt-5 grid grid-cols-3 gap-x-4 gap-y-5 border-t border-line pt-5 lg:mt-auto lg:gap-x-6 lg:pt-6 [@media(min-width:64rem)_and_(max-height:860px)]:pt-5">
           {project.results.slice(0, 3).map((m) => (
-            <div key={m.label} className="flex flex-col-reverse">
+            <div key={m.label} className="flex min-w-0 flex-col-reverse">
               <dt className="mt-1.5 text-xs leading-snug text-muted">{m.label}</dt>
-              <dd className="font-display text-[1.5rem] font-medium leading-none tracking-[-0.045em] text-ink lg:text-[2.1rem]">
-                {m.value}
+              <dd className="break-words font-display text-[1.5rem] font-medium leading-none tracking-[-0.045em] text-ink lg:text-[2.1rem]">
+                <OutcomeValue value={m.value} count={false} />
               </dd>
             </div>
           ))}
@@ -124,8 +125,8 @@ export function WorkDeck({
   intro,
   index,
   headingId,
-  prevLabel = "Previous project",
-  nextLabel = "Next project",
+  prevLabel,
+  nextLabel,
 }: {
   projects: Project[];
   labels: WorkPage["detail"];
@@ -135,8 +136,8 @@ export function WorkDeck({
   index?: string;
   headingId?: string;
   /** Accessible labels for the side arrows. */
-  prevLabel?: string;
-  nextLabel?: string;
+  prevLabel: string;
+  nextLabel: string;
 }) {
   const n = projects.length;
   const scope = useRef<HTMLDivElement>(null);

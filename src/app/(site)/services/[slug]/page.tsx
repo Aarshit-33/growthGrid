@@ -32,7 +32,9 @@ import { pad } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const dynamicParams = false;
+/* Slugs not known at build time render on demand (a service added in the
+   Studio goes live without a redeploy); unknown ones still 404 via notFound(). */
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const services = await getServices();
@@ -116,9 +118,9 @@ export default async function ServicePage({ params }: Props) {
             </div>
             <dl className="relative mt-8 grid grid-cols-2 gap-x-6 gap-y-7">
               {service.outcomes.map((m) => (
-                <div key={m.label} className="flex flex-col-reverse">
+                <div key={m.label} className="flex min-w-0 flex-col-reverse">
                   <dt className="mt-2 text-sm leading-snug text-muted">{m.label}</dt>
-                  <dd className="font-display text-[clamp(2rem,1.5rem+1.5vw,2.8rem)] font-medium leading-none tracking-[-0.05em] text-ink">
+                  <dd className="break-words font-display text-[clamp(2rem,1.5rem+1.5vw,2.8rem)] font-medium leading-none tracking-[-0.05em] text-ink">
                     <OutcomeValue value={m.value} />
                   </dd>
                 </div>

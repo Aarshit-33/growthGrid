@@ -2,12 +2,13 @@
 
 import { animate } from "motion/react";
 import { useEffect, useRef } from "react";
+import { useLocale } from "@/components/layout/locale-context";
 import { cn } from "@/lib/utils";
 
-function format(n: number, decimals: number, prefix: string, suffix: string) {
+function format(locale: string, n: number, decimals: number, prefix: string, suffix: string) {
   return (
     prefix +
-    n.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) +
+    n.toLocaleString(locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) +
     suffix
   );
 }
@@ -35,6 +36,7 @@ export function Counter({
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
+  const locale = useLocale();
 
   useEffect(() => {
     const el = ref.current;
@@ -42,7 +44,7 @@ export function Counter({
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight && rect.bottom > 0) return;
 
-    el.textContent = format(from, decimals, prefix, suffix);
+    el.textContent = format(locale, from, decimals, prefix, suffix);
     let stop: (() => void) | undefined;
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -52,7 +54,7 @@ export function Counter({
           duration,
           ease: [0.16, 1, 0.3, 1],
           onUpdate: (v) => {
-            el.textContent = format(v, decimals, prefix, suffix);
+            el.textContent = format(locale, v, decimals, prefix, suffix);
           },
         });
         stop = () => controls.stop();
@@ -63,11 +65,11 @@ export function Counter({
     return () => {
       io.disconnect();
       stop?.();
-      el.textContent = format(value, decimals, prefix, suffix);
+      el.textContent = format(locale, value, decimals, prefix, suffix);
     };
-  }, [value, from, decimals, prefix, suffix, duration]);
+  }, [locale, value, from, decimals, prefix, suffix, duration]);
 
-  const final = format(value, decimals, prefix, suffix);
+  const final = format(locale, value, decimals, prefix, suffix);
   return (
     <span className={cn("tabular-nums", className)}>
       <span className="sr-only">{final}</span>

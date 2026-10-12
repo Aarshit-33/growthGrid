@@ -4,11 +4,13 @@ import { animate, motion, useMotionValue, useTransform } from "motion/react";
 import {
   useEffect,
   useId,
+  useMemo,
   useRef,
   useState,
   type KeyboardEvent,
   type PointerEvent,
 } from "react";
+import { useLocale } from "@/components/layout/locale-context";
 import { WindowFrame } from "@/components/ui/window-frame";
 import type { DashboardShowcase as DashboardData } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
@@ -24,8 +26,6 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const MORPH = { duration: 0.8, ease: EASE };
 const INSTANT = { duration: 0 };
 
-const compact = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 });
-const whole = new Intl.NumberFormat("en-US");
 
 /** Round the axis top up to a "nice" step so gridlines land on readable values. */
 function scaleFor(max: number, ticks = 4) {
@@ -67,15 +67,16 @@ function smoothPath(xs: number[], ys: number[]) {
   return d;
 }
 
-function formatMetric(value: number, metric: Metric) {
+function formatMetric(locale: string, value: number, metric: Metric) {
   const digits = { minimumFractionDigits: metric.decimals, maximumFractionDigits: metric.decimals };
-  return `${metric.prefix}${value.toLocaleString("en-US", digits)}${metric.suffix}`;
+  return `${metric.prefix}${value.toLocaleString(locale, digits)}${metric.suffix}`;
 }
 
 /** Counts from the previous view's figure to this one; static on first paint. */
 function MetricValue({ metric, from }: { metric: Metric; from: number | null }) {
+  const locale = useLocale();
   const value = useMotionValue(from ?? metric.value);
-  const text = useTransform(value, (v) => formatMetric(v, metric));
+  const text = useTransform(value, (v) => formatMetric(locale, v, metric));
 
   useEffect(() => {
     if (from === null) return;
@@ -95,6 +96,9 @@ export function DashboardShowcase({ data }: { data: DashboardData }) {
   const { days, views } = data;
   const n = days.length;
   const uid = useId();
+  const locale = useLocale();
+  const compact = useMemo(() => new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 1 }), [locale]);
+  const whole = useMemo(() => new Intl.NumberFormat(locale), [locale]);
   const gradientId = `dash-fill-${uid.replace(/[^\w-]/g, "")}`;
   const [active, setActive] = useState(0);
   const [previous, setPrevious] = useState<number | null>(null);
