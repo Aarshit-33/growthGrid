@@ -85,5 +85,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Business cards: one switch (the cards page's noIndex) covers the list and every card.
     ...entry("/cards", cards.seo, { changeFrequency: "monthly", priority: 0.3 }),
     ...cardPeople.flatMap((person) => entry(cardPath(person.slug), cards.seo, { changeFrequency: "monthly", priority: 0.3 })),
+
+    // ── Manually added entries ──────────────────────────────────
+    // SEO service page (not yet in services.json)
+    { url: url("/services/seo"), changeFrequency: "monthly", priority: 0.8 },
+    // SEO optimization case studies (not yet in projects.json on main)
+    { url: url("/work/ecommerce-llm-seo-growth"), changeFrequency: "monthly", priority: 0.7 },
+    { url: url("/work/local-seo-visibility-growth"), changeFrequency: "monthly", priority: 0.7 },
+    { url: url("/work/b2b-aeo-optimization"), changeFrequency: "monthly", priority: 0.7 },
+    // Business cards for specific team members (bypasses cards page noIndex)
+    { url: url(cardPath("arshit-jolapara")), changeFrequency: "monthly", priority: 0.3 },
+    { url: url(cardPath("rana-rajdeep-sinh")), changeFrequency: "monthly", priority: 0.3 },
+    { url: url(cardPath("anjali-bokhiriya")), changeFrequency: "monthly", priority: 0.3 },
   ];
 }
