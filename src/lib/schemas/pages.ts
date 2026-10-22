@@ -417,6 +417,20 @@ export const contactPageSchema = z.object({
       /** HTML version: heading and message. */
       heading: z.string().min(1),
       message: z.string().min(1),
+      /* The rest of the HTML version. Each is optional: a built-in English
+         line is used when it's empty (CONFIRMATION_DEFAULTS in lib/leads/email.ts). */
+      /** Pill in the dark header, e.g. "Enquiry received". */
+      badge: z.string().min(1).optional(),
+      /** Alt text of the picture under the header. */
+      heroAlt: z.string().min(1).optional(),
+      /** Heading of the card that repeats the services and timeline the visitor picked. */
+      summaryLabel: z.string().min(1).optional(),
+      /** The button to the work page. */
+      ctaLabel: z.string().min(1).optional(),
+      /** Above the contact details: how to add to the enquiry. */
+      replyNote: z.string().min(1).optional(),
+      /** Small print at the very bottom: why they got this email. */
+      footer: z.string().min(1).optional(),
     }),
   }),
 });

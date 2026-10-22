@@ -1,8 +1,16 @@
 {
   "key": "privacy",
   "seo": {
-    "title": "Privacy Policy",
-    "description": "How growthGrid collects, uses and protects personal information when you visit our website or contact us about a project."
+    "title": "Privacy Policy | growthGrid Studio",
+    "description": "How growthGrid collects, uses and protects personal information when you visit growthgrid.studio, contact us or work with us on a project.",
+    "keywords": [
+      "growthGrid privacy policy",
+      "privacy policy",
+      "data protection policy",
+      "personal information privacy",
+      "website privacy policy",
+      "growthGrid Studio"
+    ]
   },
   "eyebrow": "Legal",
   "title": "Privacy policy",
@@ -12,7 +20,7 @@
   "body": [
     {
       "type": "paragraph",
-      "text": "This policy explains what personal information growthGrid Studio (\"growthGrid\", \"we\", \"us\") collects when you visit **growthgrid.studio** or contact us, how we use it and the choices you have. We keep it short because we collect very little."
+      "text": "This Privacy Policy explains how growthGrid (\"growthGrid\", \"we\", \"us\" or \"our\") collects, uses, stores and shares information when you visit our website, contact us, or inquire about our website design, UI/UX design and digital services.\n\nPlease read this Policy carefully. By using our website, you acknowledge that you have read it. Where consent is required by applicable law, we will ask for consent before processing the relevant information or placing non-essential cookies or similar technologies."
     },
     {
       "type": "heading",
@@ -23,47 +31,59 @@
       "type": "list",
       "style": "bullet",
       "items": [
-        "**Enquiries.** When you use our contact form or email us, we receive the details you choose to share — typically your name, email address, company and a description of your project.",
-        "**Technical data.** Our hosting provider automatically records standard server logs (such as IP address, browser type and pages requested) to keep the website secure and reliable.",
-        "**Usage analytics.** Only if you accept analytics in our cookie banner, we use Google Analytics to measure visits and, when the site is hosted on Vercel, Vercel Web Analytics for aggregated page views (referrers, device categories) and Vercel Speed Insights for performance metrics such as Core Web Vitals. Both Vercel tools are cookieless. IP addresses are not stored by Google Analytics 4, and advertising features are switched off."
+        "We collect information that you choose to provide and certain technical information generated when you use our website.",
+        "Contact details, such as your name, email address, phone number and company name, if you provide them.",
+        "Information included in messages, project briefs, inquiry forms or other communications you send to us.",
+        "Any other information you choose to share when discussing a potential or ongoing project."
       ]
     },
     {
+      "type": "heading",
+      "text": "Information collected automatically",
+      "level": 3
+    },
+    {
       "type": "paragraph",
-      "text": "We do not use advertising cookies, and we never sell or rent personal information."
+      "text": "When you visit the website, our website hosting, security and analytics tools may process technical information such as your IP address, browser and device information, pages viewed, referring page, timestamps and diagnostic or usage data. The exact information depends on the tools enabled on the website and your cookie or privacy choices.\n\nPlease do not submit sensitive personal information through general contact forms."
+    },
+    {
+      "type": "heading",
+      "text": "Cookies and similar technologies",
+      "level": 2
+    },
+    {
+      "type": "paragraph",
+      "text": "Our website may use essential cookies or similar technologies needed for website operation, security, or to remember a privacy preference. If analytics or other non-essential technologies are enabled, they may help us understand how visitors use the website.\n\nWhere required by applicable law, we will seek your consent before using non-essential cookies or similar technologies. You can manage available choices through the website's cookie settings, if provided, and you can also control cookies through your browser. Blocking some cookies may affect certain website features.\n\nA browser setting alone may not stop all forms of analytics or similar data collection. Your choices and the technologies actually enabled on the website determine what is used."
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Cookies"
-    },
-    {
-      "type": "paragraph",
-      "text": "The site works without analytics. Google Analytics cookies (named _ga and _ga_*, lasting up to 13 months) are only set after you choose **Accept analytics** in the cookie banner. Vercel Analytics and Speed Insights, when available on Vercel-hosted pages, are cookieless and also run only after you accept. If you choose **Reject**, none of these tools load and no analytics cookies are stored. Your choice is remembered in your browser's local storage so we don't ask again. You can change your mind at any time with the **Cookie settings** link in the footer; rejecting stops analytics and removes Google Analytics cookies."
-    },
-    {
-      "type": "heading",
-      "level": 2,
-      "text": "How we use your information"
+      "text": "How we use information"
     },
     {
       "type": "list",
       "style": "bullet",
       "items": [
-        "To reply to your enquiry and discuss a potential project.",
-        "To prepare proposals and, if we work together, to deliver and manage the engagement.",
-        "To keep the website secure, prevent abuse and diagnose technical problems.",
-        "To meet legal, accounting and regulatory obligations."
+        "To respond to inquiries and communicate with you about our services.",
+        "To understand project requirements, prepare proposals and provide requested services.",
+        "To operate, maintain, protect and troubleshoot the website.",
+        "To understand website performance and usage, where the relevant analytics tools are enabled and permitted.",
+        "To prevent spam, fraud, misuse and security incidents.",
+        "To comply with applicable legal obligations and establish, exercise or defend legal claims."
       ]
+    },
+    {
+      "type": "paragraph",
+      "text": "We do not state that we use information for targeted advertising unless such tools are actually enabled and disclosed."
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Legal basis"
+      "text": "Legal basis and consent"
     },
     {
       "type": "paragraph",
-      "text": "Where data-protection laws such as the GDPR apply, we process enquiry data on the basis of our **legitimate interest** in responding to people who contact us, or to take steps at your request before entering into a contract. Server logs are processed on the basis of our legitimate interest in operating a secure website."
+      "text": "Where applicable privacy law requires a legal basis, we process information as appropriate to respond to your request, perform or take steps toward a contract, comply with legal obligations, protect the website and our legitimate business interests, or rely on your consent. Where processing relies on consent, you may withdraw it at any time. Withdrawal does not affect processing that took place before withdrawal.\n\nThe legal basis available to us may differ depending on your location, the type of information and the purpose of processing. We will not rely on consent where it is not an appropriate legal basis.\n"
     },
     {
       "type": "heading",
@@ -72,25 +92,34 @@
     },
     {
       "type": "paragraph",
-      "text": "We share personal information only with trusted service providers that help us run the studio — for example website hosting, email and document storage — and only to the extent they need it to provide their service. They are bound by contractual confidentiality and data-protection obligations. We may also disclose information where required by law."
+      "text": "We may share information with service providers who help us operate the website or run our business, such as website hosting and infrastructure providers, security providers, analytics providers, email providers and tools used to manage inquiries or projects. They may process information on our behalf for the services they provide.\n\nWe may also disclose information where reasonably necessary to comply with law, respond to valid legal requests, protect rights and safety, investigate misuse, or support a business reorganisation. We do not sell personal information for money. If our use of advertising or tracking technologies changes, we will update this Policy and provide choices or notices required by applicable law."
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "How long we keep it"
+      "text": "Third-party services"
     },
     {
       "type": "paragraph",
-      "text": "Enquiries that don't lead to a project are deleted within **24 months**. If we work together, project records are kept for as long as needed to deliver the work and meet legal and accounting requirements. Server logs are retained for a short period, typically no more than 30 days."
+      "text": "Our website may use hosting, security and analytics services, potentially including Vercel and Google Analytics, depending on the tools enabled at the time of your visit. These providers may process technical or usage data under their own privacy terms. Their actual use, settings and data flows should be checked against the live website configuration. We do not list advertising or email-marketing providers here unless they are actually used.\n\nThird-party websites linked from our website are governed by their own privacy policies. We are not responsible for their content or privacy practices."
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Your rights"
+      "text": "How long we keep information"
     },
     {
       "type": "paragraph",
-      "text": "Depending on where you live, you may have the right to access, correct, delete or export your personal information, and to object to or restrict how we use it. To exercise any of these rights, email [hello@growthgrid.studio](mailto:hello@growthgrid.studio). You also have the right to complain to your local data-protection authority."
+      "text": "We keep personal information only for as long as reasonably necessary for the purpose for which it was collected, including responding to inquiries, managing projects, maintaining records, resolving disputes and meeting legal or security requirements. Retention periods depend on the type of information and the circumstances.\n\nWe aim to delete or securely dispose of information when it is no longer needed, unless it must be retained for legal, accounting, security or legitimate business reasons. We will not promise a fixed deletion period unless our actual processes and backups support it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Your privacy rights"
+    },
+    {
+      "type": "paragraph",
+      "text": "Depending on your location and applicable law, you may have rights to request access to, correction of or deletion of personal information; withdraw consent; object to or restrict certain processing; request a copy of information; or raise a complaint with a relevant authority. These rights are subject to legal conditions and exceptions.\n\nTo make a privacy request, contact hello@growthgrid.studio. We may need to verify your identity and will respond within the period required by applicable law. If a right does not apply to your circumstances, we will explain this where appropriate."
     },
     {
       "type": "heading",
@@ -99,7 +128,7 @@
     },
     {
       "type": "paragraph",
-      "text": "We use encrypted connections (HTTPS), access controls and reputable infrastructure providers to protect your information. No method of transmission or storage is completely secure, but we work hard to keep your data safe."
+      "text": "We use reasonable technical and organizational measures designed to protect information against unauthorized access, loss, misuse, alteration or disclosure. No method of transmission or storage is completely secure, and we cannot guarantee absolute security. Please avoid sending confidential or sensitive information through a general website form."
     },
     {
       "type": "heading",
@@ -108,25 +137,34 @@
     },
     {
       "type": "paragraph",
-      "text": "We are a remote-first studio and our providers may process data in other countries. Where required, we rely on appropriate safeguards such as standard contractual clauses."
+      "text": "Our service providers may process or store information in countries other than the country where you live. Data protection laws in those countries may differ. Where required, we will use appropriate safeguards or other lawful transfer mechanisms for international transfers."
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Changes to this policy"
+      "text": "Children's privacy"
     },
     {
       "type": "paragraph",
-      "text": "We may update this policy from time to time. The date at the top of the page shows when it last changed. Significant changes will be highlighted on this page."
+      "text": "Our website and services are intended for businesses and general audiences, not specifically for children. We do not knowingly seek to collect children's personal information in circumstances where parental consent or other protections are required. If you believe a child has provided personal information to us, contact us so we can review the request and take appropriate action."
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Contact"
+      "text": "Changes to this Policy"
     },
     {
       "type": "paragraph",
-      "text": "Questions about privacy? Email [hello@growthgrid.studio](mailto:hello@growthgrid.studio) and we'll get back to you."
+      "text": "We may update this Privacy Policy when our website, services, data practices or legal obligations change. We will publish the updated version on this page and revise the effective date. Please review this page periodically."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Contact us"
+    },
+    {
+      "type": "paragraph",
+      "text": "For questions, concerns or requests relating to this Privacy Policy, contact:\nEmail: hello@growthgrid.studio\nWebsite: https://growthgrid.studio/\nOrganization name: growthGrid"
     }
   ]
 }

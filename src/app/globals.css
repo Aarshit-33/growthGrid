@@ -769,16 +769,19 @@ html.lenis body {
     background-color 0.5s var(--ease-out-expo);
 }
 
-[data-reveal]:not([data-inview]) {
+/* Hidden start states only for browsers the motion gate opted in
+   (layout/intro-gate.ts sets <html data-motion> before first paint).
+   Crawlers, link previewers and no-JS visitors see the finished page. */
+:root[data-motion] [data-reveal]:not([data-inview]) {
   opacity: 0;
   transform: translate3d(0, 1.75rem, 0);
 }
 
-[data-reveal="fade"]:not([data-inview]) {
+:root[data-motion] [data-reveal="fade"]:not([data-inview]) {
   transform: none;
 }
 
-[data-reveal="scale"]:not([data-inview]) {
+:root[data-motion] [data-reveal="scale"]:not([data-inview]) {
   transform: scale(0.96);
   filter: blur(6px);
 }
@@ -807,12 +810,12 @@ html.lenis body {
 /* Only scroll-revealed headings start hidden. Load headings get their start
    state from the animation's `both` fill, so if animations are disabled the
    h1 (the LCP element) is still visible. */
-[data-split="view"]:not([data-inview]) .split-word>span {
+:root[data-motion] [data-split="view"]:not([data-inview]) .split-word>span {
   transform: translate3d(0, 108%, 0);
 }
 
 /* Above-the-fold headings animate on load with pure CSS (no JS needed). */
-[data-split="load"] .split-word>span {
+:root[data-motion] [data-split="load"] .split-word>span {
   animation: split-in 1.15s var(--ease-out-expo) both;
   animation-delay: calc(var(--i, 0) * 45ms + var(--split-delay, 120ms));
   transition: none;
@@ -828,7 +831,7 @@ html.lenis body {
   }
 }
 
-.load-fade {
+:root[data-motion] .load-fade {
   animation: load-fade 1.2s var(--ease-out-expo) both;
   animation-delay: var(--delay, 0ms);
 }
@@ -1280,8 +1283,8 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 
-  [data-reveal]:not([data-inview]),
-  [data-split]:not([data-inview]) .split-word>span {
+  :root[data-motion] [data-reveal]:not([data-inview]),
+  :root[data-motion] [data-split]:not([data-inview]) .split-word>span {
     opacity: 1;
     transform: none;
     filter: none;

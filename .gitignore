@@ -43,3 +43,10 @@ next-env.d.ts
 
 # local lead submissions (dev fallback when MongoDB is not configured)
 /.data/
+.agents/
+
+# package
+package-lock.json
+
+#downloads
+public/downloads/

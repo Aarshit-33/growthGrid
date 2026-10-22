@@ -17,19 +17,19 @@
     "services": [
       "business-systems"
     ],
-    "summary": "Four disconnected systems and a clipboard became one continuous flow — intake to follow-up, with nothing re-typed along the way.",
+    "summary": "Four disconnected systems and a clipboard became one continuous flow, from intake to follow-up, with nothing re-typed along the way.",
     "outcome": "Problem → Platform → 60% less admin time",
     "challenge": [
       "Patient details were captured on paper at reception, re-typed into a practice management system, copied again into a separate billing tool and chased by phone for follow-ups. Every hand-off added delay and risk.",
       "Clinicians were spending more time on admin than with patients, and roughly one in five follow-ups was missed entirely."
     ],
     "approach": [
-      "We shadowed reception, clinical and billing teams across three sites to map the real journey — including the workarounds that never made it into any process document.",
+      "We shadowed reception, clinical and billing teams across three sites to map how work really moved, including the workarounds that never made it into any process document.",
       "A clickable prototype of the new flow was tested with staff in week three, and each workflow shipped to a single pilot site before rolling out to the group."
     ],
     "solution": [
       "A single care-operations platform where intake is captured once and carried forward. Triage scores cases automatically, care plans pre-fill from history and consent, and every discharge schedules its own follow-up with escalation rules.",
-      "Role-based views give reception, clinicians and billing exactly what they need — all from the same record."
+      "Role-based views give reception, clinicians and billing exactly what they need, all from the same record."
     ],
     "highlights": [
       "Digital intake with validation and consent capture",
@@ -62,7 +62,7 @@
     "showcase": {
       "type": "flow",
       "label": "care-ops · live",
-      "hint": "Interactive — pick a stage",
+      "hint": "Interactive: pick a stage",
       "runLabel": "Run the flow",
       "kpiLabels": [
         "Before",
@@ -74,7 +74,7 @@
           "label": "Intake",
           "time": "0:40",
           "title": "One intake, once",
-          "copy": "Details are captured a single time and carried forward — reception, clinic and billing all read the same record.",
+          "copy": "Details are captured once and carried forward. Reception, clinic and billing all read the same record.",
           "kpis": [
             "12 min",
             "4 min",
@@ -127,7 +127,7 @@
     "publishedAt": "2025-11-12",
     "seo": {
       "title": "Case Study: Unified Patient Workflow Platform",
-      "description": "How growthGrid replaced four disconnected clinic systems with one care-operations platform — cutting admin time per patient by 60% in 11 weeks."
+      "description": "How growthGrid replaced four disconnected clinic systems with one care-operations platform, cutting admin time per patient by 60% in 11 weeks."
     }
   },
   {
@@ -149,7 +149,7 @@
       "digital-products",
       "business-systems"
     ],
-    "summary": "Three disconnected tools replaced by one live view of orders, inventory and revenue — so the morning stand-up stops being an archaeology session.",
+    "summary": "Three disconnected tools replaced by one live view of orders, inventory and revenue, so the morning stand-up stops being an archaeology session.",
     "outcome": "Problem → Dashboard → Single source of truth",
     "challenge": [
       "Orders lived in the storefront, stock in a warehouse system and revenue in a finance spreadsheet updated weekly. Every decision started with an hour of exporting and reconciling data.",
@@ -160,7 +160,7 @@
       "Event streams from the storefront and warehouse were normalized into one data model with near real-time sync."
     ],
     "solution": [
-      "A live operations hub showing orders, inventory, fulfillment and growth in one place — with alerts for stock thresholds, fulfillment delays and revenue anomalies.",
+      "A live operations hub showing orders, inventory, fulfillment and growth in one place, with alerts for stock thresholds, fulfillment delays and revenue anomalies.",
       "Drill-downs let any team move from a headline number to the individual orders behind it in two clicks."
     ],
     "highlights": [
@@ -194,7 +194,7 @@
     "showcase": {
       "type": "dashboard",
       "label": "ops · realtime",
-      "hint": "Interactive — switch views, scrub the chart",
+      "hint": "Interactive: switch views, scrub the chart",
       "days": [
         "Mon",
         "Tue",
@@ -340,7 +340,7 @@
     "publishedAt": "2025-08-20",
     "seo": {
       "title": "Case Study: Real-Time E-commerce Operations Hub",
-      "description": "How growthGrid unified storefront, warehouse and finance data into one live operations dashboard — replacing three tools with a single source of truth."
+      "description": "How growthGrid unified storefront, warehouse and finance data into one live operations dashboard, replacing three tools with a single source of truth."
     }
   },
   {
@@ -361,15 +361,15 @@
     "services": [
       "ai-automation"
     ],
-    "summary": "Incoming queries are classified, routed and answered before a human opens the queue — and the ones that need a person arrive with context attached.",
+    "summary": "Incoming queries are classified, routed and answered before a human opens the queue, and the ones that need a person arrive with context attached.",
     "outcome": "Problem → AI pipeline → 12× faster response",
     "challenge": [
-      "A small support team was drowning in repetitive questions — order status, refunds, stock availability — while complex cases waited hours in the same queue.",
+      "A small support team was drowning in repetitive questions (order status, refunds, stock availability) while complex cases waited hours in the same queue.",
       "Average first response time had crept past four hours, and customer satisfaction scores were falling month on month."
     ],
     "approach": [
       "We analyzed six months of tickets to find the handful of intents that covered most of the volume, then built an evaluation set from real conversations before choosing any model.",
-      "Confidence thresholds decide what is answered automatically and what is routed to a person — with the full context pre-attached."
+      "Confidence thresholds decide what is answered automatically and what is routed to a person, with the full context already attached."
     ],
     "solution": [
       "An AI triage pipeline that classifies every incoming message, pulls order, account and history data, and either resolves it instantly or routes it to the right specialist with a drafted reply.",
@@ -406,7 +406,7 @@
     "showcase": {
       "type": "triage",
       "label": "triage · pipeline",
-      "hint": "Interactive — send a query",
+      "hint": "Interactive: send a query",
       "baseline": "was ~4h",
       "queries": [
         {
@@ -449,7 +449,7 @@
     "publishedAt": "2026-03-04",
     "seo": {
       "title": "Case Study: AI Customer Support Triage Pipeline",
-      "description": "How growthGrid built an AI triage pipeline that classifies, routes and answers support queries — cutting first response time 12× with zero lost tickets."
+      "description": "How growthGrid built an AI triage pipeline that classifies, routes and answers support queries, cutting first response time 12× with zero lost tickets."
     }
   },
   {
@@ -470,7 +470,7 @@
     "services": [
       "websites"
     ],
-    "summary": "A slow, template-built site rebuilt as a fast, search-ready growth engine — with a CMS the marketing team runs on its own.",
+    "summary": "A slow, template-built site rebuilt as a fast, search-ready growth engine, with a CMS the marketing team runs on its own.",
     "outcome": "Problem → Website → 2.3× demo requests",
     "challenge": [
       "The company's website took over five seconds to load on mobile, ranked for almost none of its core keywords and needed a developer for every copy change.",
@@ -482,7 +482,7 @@
     ],
     "solution": [
       "A statically generated Next.js site with a headless CMS, structured data on every template and Core Web Vitals comfortably in the green.",
-      "Every CTA, form and scroll depth is tracked, so the team can see which pages create pipeline — not just traffic."
+      "Every CTA, form and scroll depth is tracked, so the team can see which pages create pipeline, not just traffic."
     ],
     "highlights": [
       "Information architecture built from search and sales data",
@@ -524,7 +524,7 @@
     "publishedAt": "2026-05-18",
     "seo": {
       "title": "Case Study: B2B SaaS Website Relaunch",
-      "description": "How growthGrid rebuilt a slow B2B SaaS website on Next.js and a headless CMS — delivering 2.3× more demo requests and 142% more organic traffic."
+      "description": "How growthGrid rebuilt a slow B2B SaaS website on Next.js and a headless CMS, delivering 2.3× more demo requests and 142% more organic traffic."
     }
   },
   {
@@ -546,18 +546,18 @@
       "mobile-apps",
       "business-systems"
     ],
-    "summary": "Paper job sheets replaced with a mobile app that works with no signal — and syncs the moment it finds one.",
+    "summary": "Paper job sheets replaced with a mobile app that works with no signal and syncs the moment it finds one.",
     "outcome": "Problem → Mobile app → 38% more jobs per day",
     "challenge": [
       "Technicians worked from printed job sheets, called the office for changes and re-entered everything at the end of the day. Jobs were double-booked, photos went missing and invoices went out a week late.",
-      "Many sites had little or no mobile coverage — which had sunk two previous attempts at an app."
+      "Many sites had little or no mobile coverage, which had sunk two previous attempts at an app."
     ],
     "approach": [
       "We rode along with technicians to understand their day, then designed for gloves, bright sunlight and one-handed use.",
       "An offline-first sync engine was proven on real devices in week two, before any interface polish."
     ],
     "solution": [
-      "A cross-platform app with route-optimized job lists, checklists, photo capture, signatures and parts tracking — all available offline and synced conflict-free when a connection returns.",
+      "A cross-platform app with route-optimized job lists, checklists, photo capture, signatures and parts tracking, all available offline and synced conflict-free when a connection returns.",
       "Office staff dispatch and monitor jobs from a live web console, and invoices are generated the moment a job is signed off."
     ],
     "highlights": [
@@ -601,7 +601,7 @@
     "publishedAt": "2025-10-02",
     "seo": {
       "title": "Case Study: Offline-First Field Service App",
-      "description": "How growthGrid replaced paper job sheets with an offline-first React Native app — lifting jobs completed per day by 38% and invoicing on sign-off."
+      "description": "How growthGrid replaced paper job sheets with an offline-first React Native app, lifting jobs completed per day by 38% and invoicing on sign-off."
     }
   },
   {
@@ -623,11 +623,11 @@
       "modernization",
       "business-systems"
     ],
-    "summary": "A 15-year-old ERP modernized piece by piece — faster, cheaper to run and ready for new products, without a single minute of downtime.",
+    "summary": "A 15-year-old ERP modernized piece by piece: faster, cheaper to run and ready for new products, without a single minute of downtime.",
     "outcome": "Problem → Re-platform → 70% faster, zero downtime",
     "challenge": [
       "The manufacturer's ERP ran on an unsupported framework and a single on-premise server. Screens took seconds to load, every change risked breaking something else, and only one engineer understood the codebase.",
-      "A full rewrite had been quoted at two years — time the business simply didn't have."
+      "A full rewrite had been quoted at two years, time the business simply didn't have."
     ],
     "approach": [
       "We mapped modules by business value and risk, wrapped critical flows in characterization tests and introduced an API layer in front of the legacy database.",
@@ -678,7 +678,7 @@
     "publishedAt": "2026-07-09",
     "seo": {
       "title": "Case Study: Legacy ERP Modernization",
-      "description": "How growthGrid modernized a 15-year-old manufacturing ERP incrementally — 70% faster response times, 45% lower infrastructure cost and zero downtime."
+      "description": "How growthGrid modernized a 15-year-old manufacturing ERP incrementally: 70% faster response times, 45% lower infrastructure cost and zero downtime."
     }
   },
   {
@@ -700,7 +700,7 @@
       "business-systems",
       "websites"
     ],
-    "summary": "A Kanban board and issue tracker that syncs every movement, edit, and comment in real time, while maintaining a comprehensive history for every ticket.",
+    "summary": "A Kanban board and issue tracker that syncs every movement, edit, and comment in real time, while keeping a full history for every ticket.",
     "outcome": "Scattered updates → Live board → One shared picture",
     "challenge": [
       "Small teams run projects across chat threads, spreadsheets and a tracker nobody keeps current. By the time the weekly check-in starts, half the board is already out of date.",
@@ -1059,7 +1059,7 @@
           "chip": "Q3 targets",
           "query": "q3 revenue target by region",
           "category": "DECK_DATA",
-          "context": "q3-review.pptx · slides 6–7",
+          "context": "q3-review.pptx · slides 6-7",
           "route": "table + 2 citations",
           "confidence": 88,
           "time": "1.6s"
@@ -1113,7 +1113,7 @@
     ],
     "approach": [
       "We wrote three rules before any design: dump, don't manage; the backend decides and the frontend obeys; one screen per mode.",
-      "A background worker reads each dump and turns it into tasks with dates and effort, using Gemini when a key is configured and a simple one-dump-one-task rule when it isn't — so the app never stops working.",
+      "A background worker reads each dump and turns it into tasks with dates and effort, using Gemini when a key is configured and a simple one-dump-one-task rule when it isn't, so the app never stops working.",
       "Every screen was designed phone-first, for one thumb and a few seconds of attention."
     ],
     "solution": [
@@ -1284,10 +1284,10 @@
     "services": [
       "modernization"
     ],
-    "summary": "A 2022 PHP learning portal, moved to Next.js and a typed API one module at a time — old and new side by side, with no big-bang cutover.",
+    "summary": "A 2022 PHP learning portal, moved to Next.js and a typed API one module at a time, with old and new side by side and no big-bang cutover.",
     "outcome": "Legacy PHP → Module by module → No big-bang cutover",
     "challenge": [
-      "Our 2022 learning portal — institute, faculty and student dashboards in plain PHP — still did its job, but every change risked breaking another page. SQL lived inside the templates, sessions handled sign-in, and each dashboard was effectively its own app.",
+      "Our 2022 learning portal (institute, faculty and student dashboards in plain PHP) still did its job, but every change risked breaking another page. SQL lived inside the templates, sessions handled sign-in, and each dashboard was effectively its own app.",
       "A full rewrite would have frozen the product for months. The goal was a modern platform without ever switching everything over in one night."
     ],
     "approach": [
@@ -1373,7 +1373,7 @@
         },
         {
           "label": "Materials",
-          "time": "wk 4–5",
+          "time": "wk 4-5",
           "title": "Study material from storage",
           "copy": "Uploads move off the web server into object storage and are served through short-lived signed links.",
           "kpis": [
@@ -1408,5 +1408,230 @@
       "title": "Re-Platforming a Legacy PHP LMS",
       "description": "How a 2022 PHP learning portal moves to Next.js and a typed API one module at a time, with old and new running side by side and no big-bang cutover."
     }
+  },
+  {
+    "slug": "ecommerce-llm-seo-growth",
+    "approach": [
+      "We reviewed relevant search terms, identified keyword opportunities, audited important pages, and prioritized technical and content improvements."
+    ],
+    "category": "SEO Optimization",
+    "challenge": [
+      "Product pages had limited visibility for relevant product searches. Keyword targeting and page content needed improvement to better match what potential customers were searching for. "
+    ],
+    "client": {
+      "name": "E-commerce Client",
+      "industry": "E-commerce",
+      "region": "India",
+      "anonymized": true
+    },
+    "cover": {
+      "src": "/images/uploads/modern-e-commerce-analytics-workspace-1.png",
+      "alt": "E-commerce SEO dashboard showing product listings, search optimization, and organic growth analytics.",
+      "width": 1672,
+      "height": 941
+    },
+    "duration": "3-4 months",
+    "featured": false,
+    "gallery": [],
+    "highlights": [
+      "Keyword research and search intent analysis",
+      "Product page SEO improvements",
+      "Technical SEO checks and fixes",
+      "AI search friendly content structure",
+      "Project Link : - https://dyulabs.com"
+    ],
+    "order": 13,
+    "outcome": "Improved targeting of product related keywords, a stronger technical SEO foundation, and better structured content to support organic search growth.",
+    "publishedAt": "2026-09-09",
+    "results": [
+      {
+        "value": "+32%",
+        "label": "Illustrative increase in organic traffic"
+      },
+      {
+        "value": "+24%",
+        "label": "Illustrative increase in search impressions for target keywords"
+      }
+    ],
+    "seo": {
+      "title": "E-commerce SEO and LLM Growth",
+      "description": "Improve product search visibility with e-commerce SEO, keyword research, technical optimization, and content structured for AI search.",
+      "keywords": [
+        "e-commerce SEO",
+        "product page SEO",
+        "LLM SEO",
+        "AI search optimization",
+        "organic traffic growth"
+      ]
+    },
+    "services": [
+      "seo-optimization",
+      "websites"
+    ],
+    "showcase": null,
+    "solution": [
+      "We focused on page titles, meta descriptions, product information, internal links, technical SEO issues, and clear content structures to improve search engine understanding."
+    ],
+    "stack": [
+      "google-analytics-4",
+      "google-search-console",
+      "google-keyword-planner",
+      "google-tag-manager",
+      "semrush"
+    ],
+    "summary": "An SEO improvement project focused on helping product pages appear in relevant search results. The work covered keyword research, on page SEO, technical improvements, and clearer product information to support traditional search and AI powered discovery. ",
+    "testimonial": null,
+    "title": "E-commerce SEO and LLM Growth",
+    "year": 2026
+  },
+  {
+    "slug": "local-seo-visibility-growth",
+    "approach": [
+      "We identified relevant local search terms, reviewed the business profile, and checked how consistently business information appeared across important online listings."
+    ],
+    "category": "SEO Optimization",
+    "challenge": [
+      "The business had limited visibility in local search results, making it harder for nearby customers to discover its services and contact the business."
+    ],
+    "client": {
+      "name": "Local Business Client",
+      "industry": "Local Business Services",
+      "region": "India",
+      "anonymized": true
+    },
+    "cover": {
+      "src": "/images/uploads/local-search-analytics-dashboard-2.png",
+      "alt": "Local SEO dashboard showing map listings, local search results, customer reviews, and business visibility analytics.",
+      "width": 1672,
+      "height": 941
+    },
+    "duration": "2-3 months",
+    "featured": false,
+    "gallery": [],
+    "highlights": [
+      "Local keyword research",
+      "Google Business Profile optimization",
+      "Business information consistency checks",
+      "Local landing page improvements"
+    ],
+    "order": 14,
+    "outcome": "A stronger local search foundation, improved business information, and better opportunities to attract nearby customers through Google Search and Maps.",
+    "publishedAt": "2026-10-12",
+    "results": [
+      {
+        "value": "+38%",
+        "label": "Illustrative increase in profile interactions"
+      },
+      {
+        "value": "+21%",
+        "label": "Illustrative increase in website clicks"
+      }
+    ],
+    "seo": {
+      "title": "Local SEO Services and Visibility",
+      "description": "Improve local search visibility with Google Business Profile optimization, local keyword research, and website SEO for nearby customers.",
+      "keywords": [
+        "local SEO",
+        "local SEO services",
+        "Google Business Profile optimization",
+        "local search rankings",
+        "local business SEO"
+      ]
+    },
+    "services": [
+      "seo-optimization",
+      "websites"
+    ],
+    "showcase": null,
+    "solution": [
+      "We focused on Google Business Profile optimization, local keyword targeting, accurate business details, service descriptions, and location relevant website content."
+    ],
+    "stack": [
+      "google-business-profile",
+      "semrush",
+      "brightlocal-localfalcon",
+      "looker-studio",
+      "google-analytics-4",
+      "google-search-console"
+    ],
+    "summary": "A local SEO project focused on helping customers discover a business through relevant location based searches. The work includes Google Business Profile improvements, local keyword research, and consistent business information across online listings.",
+    "testimonial": null,
+    "title": "Local SEO and Business Visibility",
+    "year": 2026
+  },
+  {
+    "slug": "b2b-aeo-optimization",
+    "approach": [
+      "We identified relevant customer questions, reviewed existing content, and planned improvements around FAQs, service information, product details, and structured data where appropriate."
+    ],
+    "category": "SEO Optimization",
+    "challenge": [
+      "Important service and product information was not structured around the questions potential B2B customers search for. The website needed clearer answers and better organized information to support search visibility."
+    ],
+    "client": {
+      "name": "B2B Manufacturing Client",
+      "industry": "Botanical Extracts and B2B Manufacturing",
+      "region": "India",
+      "anonymized": true
+    },
+    "cover": {
+      "src": "/images/uploads/botanical-tech-analytics-workspace-3.png",
+      "alt": "B2B answer engine optimization concept showing structured questions, search results, analytics, and botanical research products.",
+      "width": 1672,
+      "height": 941
+    },
+    "duration": "3-6 months",
+    "featured": false,
+    "gallery": [],
+    "highlights": [
+      "Customer question and keyword research",
+      "FAQ and answer focused content optimization",
+      "Structured data review",
+      "Clearer B2B product and service information",
+      "Project website: https://www.plpl.in"
+    ],
+    "order": 15,
+    "outcome": "A stronger content structure, clearer answers to customer questions, and an improved foundation for organic search visibility and potential discovery through AI powered search tools.",
+    "publishedAt": "2026-09-15",
+    "results": [
+      {
+        "value": "+29%",
+        "label": "Illustrative increase in search impressions"
+      },
+      {
+        "value": "+22%",
+        "label": "Illustrative increase in organic clicks"
+      }
+    ],
+    "seo": {
+      "title": "B2B Answer Engine Optimization",
+      "description": "Improve B2B search visibility with answer focused content, FAQ optimization, structured data, and clear product and service information.",
+      "keywords": [
+        "answer engine optimization",
+        "AEO services",
+        "B2B SEO",
+        "AI search optimization",
+        "FAQ SEO"
+      ]
+    },
+    "services": [
+      "seo-optimization",
+      "websites"
+    ],
+    "showcase": null,
+    "solution": [
+      "We organized key information into clear sections, improved FAQ content, strengthened page headings, and reviewed relevant structured data to help search engines interpret the website more effectively."
+    ],
+    "stack": [
+      "google-analytics-4",
+      "google-search-console",
+      "google-keyword-planner",
+      "google-tag-manager",
+      "semrush"
+    ],
+    "summary": "An Answer Engine Optimization project focused on making business information easier to understand and discover through search engines and AI powered search experiences. The strategy centers on useful answers, well structured content, clear service information, and relevant frequently asked questions.",
+    "testimonial": null,
+    "title": "B2B Answer Engine Optimization",
+    "year": 2026
   }
 ]

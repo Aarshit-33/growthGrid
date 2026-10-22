@@ -1,8 +1,8 @@
 {
   "key": "home",
   "seo": {
-    "title": "Software Development & AI Solutions Company | growthGrid",
-    "description": "Build smarter with growthGrid. We develop custom software, AI, SaaS, web apps and automation solutions for startups and growing businesses.",
+    "title": "Custom Software, Web & AI Development Studio | growthGrid",
+    "description": "growthGrid builds websites, web apps, mobile apps and AI automation for growing businesses in the US, UK and beyond. One remote team, from strategy to launch.",
     "keywords": [
       "Digital product service",
       "software development company",
@@ -61,18 +61,18 @@
       "healedState": "Healthy",
       "hint": "Scroll to watch the system heal",
       "brokenLogs": [
-        { "level": "err", "text": "[DB-001] Connection pool exhausted — max 50 reached" },
-        { "level": "warn", "text": "[API] Response time 4.2s — threshold exceeded (800ms)" },
+        { "level": "err", "text": "[DB-001] Connection pool exhausted: max 50 reached" },
+        { "level": "warn", "text": "[API] Response time 4.2s, threshold exceeded (800ms)" },
         { "level": "err", "text": "[SVC] Service mesh timeout: payments → inventory" },
-        { "level": "warn", "text": "[CACHE] Miss rate 78% — consider warming strategy" },
-        { "level": "err", "text": "[AUTH] Token refresh loop detected — session degraded" }
+        { "level": "warn", "text": "[CACHE] Miss rate 78%, consider warming strategy" },
+        { "level": "err", "text": "[AUTH] Token refresh loop detected, session degraded" }
       ],
       "healedLogs": [
-        { "level": "ok", "text": "[DEPLOY] v2.0.0 released — health checks passing" },
-        { "level": "ok", "text": "[DB-001] Pool rebalanced — 12/50 connections in use" },
-        { "level": "ok", "text": "[API] p95 response time 180ms — within budget" },
-        { "level": "info", "text": "[CACHE] Warm-up complete — hit rate 96%" },
-        { "level": "ok", "text": "[AUTH] Sessions stable — 0 refresh errors" }
+        { "level": "ok", "text": "[DEPLOY] v2.0.0 released, health checks passing" },
+        { "level": "ok", "text": "[DB-001] Pool rebalanced: 12/50 connections in use" },
+        { "level": "ok", "text": "[API] p95 response time 180ms, within budget" },
+        { "level": "info", "text": "[CACHE] Warm-up complete, hit rate 96%" },
+        { "level": "ok", "text": "[AUTH] Sessions stable, 0 refresh errors" }
       ],
       "stats": {
         "errors": { "label": "Errors", "from": 47, "to": 0 },
@@ -100,7 +100,7 @@
   "work": {
     "eyebrow": "Selected work",
     "heading": "Problems *we've solved.*",
-    "lede": "Recent engagements — and the numbers that moved because of them.",
+    "lede": "Recent engagements, and the numbers that moved because of them.",
     "cta": { "label": "View all case studies", "href": "/work" },
     "prevLabel": "Previous project",
     "nextLabel": "Next project"
@@ -113,7 +113,7 @@
   "technology": {
     "eyebrow": "Technology",
     "heading": "A modern stack, *chosen on purpose.*",
-    "lede": "Proven, well-supported tools across six disciplines — picked for what your product needs to do, not for what's fashionable.",
+    "lede": "Proven, well-supported tools across six disciplines - picked for what your product needs to do, not for what's fashionable.",
     "hint": "Hover or tap a planet or a logo to inspect it"
   },
   "audiences": {

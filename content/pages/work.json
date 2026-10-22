@@ -1,8 +1,8 @@
 {
   "key": "work",
   "seo": {
-    "title": "Our Work | Software & Digital Product Case Studies",
-    "description": "Explore growthGrid's portfolio of software, SaaS, AI and digital products built to solve real business challenges and deliver measurable results.",
+    "title": "Case Studies: Software, Web and AI Projects",
+    "description": "Case studies from growthGrid: web apps, SaaS products, AI assistants and SEO work, each with the problem, the approach and the numbers that changed.",
     "keywords": [
       "software development portfolio",
       "digital product portfolio",
@@ -23,13 +23,13 @@
   "filters": {
     "label": "Filter case studies by service",
     "all": "All work",
-    "empty": "No case studies for this service yet — check back soon.",
+    "empty": "No case studies for this service yet. Check back soon.",
     "count": "{count} of {total} case studies"
   },
   "cta": {
     "eyebrow": "Your project next?",
     "heading": "Let's write *your case study.*",
-    "lede": "Tell us about the problem you're facing. We'll show you how we'd approach it — and what success could look like.",
+    "lede": "Tell us about the problem you're facing. We'll show you how we'd approach it - and what success could look like.",
     "primary": { "label": "Start a project", "href": "/contact" },
     "secondary": { "label": "Explore services", "href": "/services" }
   },
@@ -45,7 +45,7 @@
     "highlights": "What we built",
     "results": "Results",
     "snapshot": "Live snapshot",
-    "snapshotLede": "An interactive recreation of the product's core flow — try it.",
+    "snapshotLede": "An interactive recreation of the product's core flow - try it.",
     "stack": "Stack",
     "testimonial": "In their words",
     "next": "Next case study",

@@ -341,7 +341,16 @@ const contactPage = () =>
             "notSaved",
           ),
         ),
-        confirmation: required(requiredStrings("subject", "greeting", "body", "signOff", "heading", "message")),
+        confirmation: required(
+          withOptional(requiredStrings("subject", "greeting", "body", "signOff", "heading", "message"), {
+            badge: opt,
+            heroAlt: opt,
+            summaryLabel: opt,
+            ctaLabel: opt,
+            replyNote: opt,
+            footer: opt,
+          }),
+        ),
       }),
     ),
   });

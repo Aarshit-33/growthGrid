@@ -2,7 +2,7 @@
   "key": "about",
   "seo": {
     "title": "About growthGrid | Digital Product Development Studio",
-    "description": "Meet growthGrid, a digital product studio helping businesses turn ideas into scalable products through technology, AI and automation.",
+    "description": "growthGrid is a remote-first product studio with strategy, design and engineering in one team. We build websites, apps and AI automation for growing businesses.",
     "keywords": [
       "digital product studio",
       "product development studio",
@@ -17,14 +17,14 @@
   "hero": {
     "eyebrow": "About the studio",
     "headline": "We don't follow *what's next* We *build* it",
-    "lede": "We are growthGrid, a digital experience studio where strategy meets design and technology meets ambition. We turn complex challenges into meaningful digital solutions, helping ambitious brands move beyond limitations and build what comes next."
+    "lede": "We are growthGrid, a remote-first digital product studio. We bring strategy, design and engineering into one team, and we use it to turn complicated problems into software that works for the people who use it and the business that pays for it."
   },
   "story": {
     "eyebrow": "Our story",
     "heading": "Most agencies hand you a website *and disappear.*",
     "paragraphs": [
       "We started growthGrid with a clear vision: to change how businesses approach digital innovation.",
-      "Too often, software overlooks essential elements like performance, search visibility, analytics, and user experience. We saw an opportunity to do things differently by bringing strategy, design, and engineering together to create seamless, scalable digital solutions that deliver lasting business value.",
+      "Too often, software overlooks essential elements like performance, search visibility, analytics, and user experience. We saw an opportunity to do things differently by bringing strategy, design, and engineering together in one team, so the products we ship are fast, easy to use, and still paying off years later.",
       "We think beyond launch, using real insights and evolving technology to keep every solution relevant, effective, and ready to scale."
     ],
     "highlight": "Every decision has a purpose. Every solution has a direction. Every step is focused on your business success."
@@ -46,7 +46,7 @@
   "engagement": {
     "eyebrow": "Ways to work together",
     "heading": "Engagements that *fit the stage you're in.*",
-    "lede": "Whether you're shaping an idea, building a product, or scaling what already exists, we offer flexible ways to turn your vision into progress.",
+    "lede": "You might be shaping an idea, building a product, or growing one that already exists. Each stage calls for a different kind of engagement, and all three are below.",
     "bestForLabel": "Best for",
     "durationLabel": "Typical length",
     "models": [
@@ -55,20 +55,20 @@
         "icon": "compass",
         "summary": "We turn early ideas into actionable product strategies through research, planning, and interactive prototypes.",
         "bestFor": "New ideas, early-stage products, and businesses seeking direction before investing.",
-        "duration": "2–3 weeks"
+        "duration": "2-3 weeks"
       },
       {
         "title": "Product build",
         "icon": "rocket",
         "summary": "A dedicated team brings design and engineering together to build, test, and launch your product in focused two-week cycles.",
         "bestFor": "MVPs, web platforms, mobile apps, product rebuilds, and AI-powered solutions.",
-        "duration": "8–16 weeks"
+        "duration": "8-16 weeks"
       },
       {
         "title": "Growth partnership",
         "icon": "handshake",
         "summary": "We continuously improve your digital product through design, engineering, and data-driven optimization aligned with your goals.",
-        "bestFor": "Live products ready to scale, improve performance, and unlock new opportunities.",
+        "bestFor": "Live products that need to handle more users, run faster, or take on new markets.",
         "duration": "Monthly, ongoing"
       }
     ]
@@ -76,7 +76,7 @@
   "team": {
     "eyebrow": "The team",
     "heading": "Good work starts with the *right minds*",
-    "lede": "We combine creative thinking, technical expertise, and collaboration to build meaningful digital experiences.",
+    "lede": "We combine creative thinking, technical depth, and close collaboration to build digital products that earn their place.",
     "socialLabel": "{name} on {platform}"
   },
   "faq": {

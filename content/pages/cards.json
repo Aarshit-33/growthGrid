@@ -32,7 +32,7 @@
     "email": "Email",
     "download": "Download",
     "downloadHint": "PNG for phones and screens · SVG for designers · PDF for the print shop, 3.5 × 2 in with 3 mm bleed.",
-    "preparing": "Preparing…",
+    "preparing": "Preparing...",
     "details": "Get in touch",
     "phone": "Phone",
     "emailLabel": "Email",
@@ -48,7 +48,7 @@
       "wordmark": "#ffffff",
       "qrPanel": "#6cc499",
       "qrInk": "#000000",
-      "qr": "card"
+      "qr": "website"
     },
     "back": {
       "background": "#ebebe6",

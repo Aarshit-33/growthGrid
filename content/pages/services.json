@@ -2,7 +2,7 @@
   "key": "services",
   "seo": {
     "title": "Software & AI Development Services | growthGrid",
-    "description": "Explore growthGrid's software, AI, SaaS, web, mobile and automation services designed to help businesses build, scale and improve digital products.",
+    "description": "What growthGrid does: websites, web apps and SaaS, mobile apps, AI automation, business systems, modernization and SEO, with the process and timelines for each.",
     "keywords": [
       "software development services",
       "AI development services",
@@ -37,14 +37,14 @@
   "cta": {
     "eyebrow": "Not sure where to start?",
     "heading": "Tell us the problem. *We'll map the solution.*",
-    "lede": "Most projects span more than one service. Share what you're trying to achieve and we'll recommend the right mix — with an honest estimate.",
+    "lede": "Most projects span more than one service. Share what you're trying to achieve and we'll recommend the right mix, with an honest estimate.",
     "primary": { "label": "Start a project", "href": "/contact" },
     "secondary": { "label": "See case studies", "href": "/work" }
   },
   "aftercare": {
     "eyebrow": "After launch",
     "heading": "Launch day is just *the beginning*",
-    "lede": "We ensure long-term product success through seamless handovers, proactive maintenance, and ongoing technical support.",
+    "lede": "After launch we hand over properly, maintain the product proactively, and stay available for technical support.",
     "warranty": {
       "icon": "shield-check",
       "days": 30,
@@ -76,7 +76,7 @@
     },
     "plans": {
       "label": "Care plans",
-      "lede": "Pick the level of cover that fits. Every plan is tailored to your stack and quoted up front.",
+      "lede": "Pick the level of cover that fits. Every plan is matched to your stack and quoted up front.",
       "responseLabel": "Response time",
       "bestForLabel": "Best for",
       "featuredLabel": "Most chosen",
@@ -84,7 +84,7 @@
         {
           "name": "Essential",
           "icon": "shield-check",
-          "summary": "Keep it safe, backed up and online.",
+          "summary": "Keep your website secure, backed up, and running smoothly.",
           "bestFor": "Marketing sites and stable products",
           "response": "Next business day",
           "features": [

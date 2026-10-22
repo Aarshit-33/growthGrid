@@ -6,11 +6,36 @@
     "color": "#61dafb",
     "description": "Fast, accessible interfaces and content platforms.",
     "technologies": [
-      { "slug": "react", "name": "React", "short": "Re", "description": "Component-driven UIs, fast re-renders and reusable design systems." },
-      { "slug": "nextjs", "name": "Next.js", "short": "Nx", "description": "Full-stack React framework — server rendering, static generation and APIs in one codebase." },
-      { "slug": "typescript", "name": "TypeScript", "short": "TS", "description": "Type safety that catches bugs before they ever reach production." },
-      { "slug": "tailwind", "name": "Tailwind CSS", "short": "TW", "description": "Utility-first styling that keeps design consistent at any scale." },
-      { "slug": "headless-cms", "name": "Headless CMS", "short": "CMS", "description": "Structured, editor-friendly content your marketing team controls." }
+      {
+        "slug": "react",
+        "name": "React",
+        "short": "Re",
+        "description": "Component-driven UIs, fast re-renders and reusable design systems."
+      },
+      {
+        "slug": "nextjs",
+        "name": "Next.js",
+        "short": "Nx",
+        "description": "Full-stack React framework: server rendering, static generation and APIs in one codebase."
+      },
+      {
+        "slug": "typescript",
+        "name": "TypeScript",
+        "short": "TS",
+        "description": "Type safety that catches bugs before they ever reach production."
+      },
+      {
+        "slug": "tailwind",
+        "name": "Tailwind CSS",
+        "short": "TW",
+        "description": "Utility-first styling that keeps design consistent at any scale."
+      },
+      {
+        "slug": "headless-cms",
+        "name": "Headless CMS",
+        "short": "CMS",
+        "description": "Structured, editor-friendly content your marketing team controls."
+      }
     ]
   },
   {
@@ -20,10 +45,30 @@
     "color": "#8b9cf7",
     "description": "Cross-platform and native apps for iOS and Android.",
     "technologies": [
-      { "slug": "react-native", "name": "React Native", "short": "RN", "description": "One codebase for iOS and Android with genuinely native performance." },
-      { "slug": "expo", "name": "Expo", "short": "Ex", "description": "Managed builds, over-the-air updates and a fast release workflow." },
-      { "slug": "swift", "name": "Swift", "short": "Sw", "description": "Native iOS modules where platform-specific power really matters." },
-      { "slug": "kotlin", "name": "Kotlin", "short": "Kt", "description": "Native Android modules for deep platform integrations." }
+      {
+        "slug": "react-native",
+        "name": "React Native",
+        "short": "RN",
+        "description": "One codebase for iOS and Android with genuinely native performance."
+      },
+      {
+        "slug": "expo",
+        "name": "Expo",
+        "short": "Ex",
+        "description": "Managed builds, over-the-air updates and a fast release workflow."
+      },
+      {
+        "slug": "swift",
+        "name": "Swift",
+        "short": "Sw",
+        "description": "Native iOS modules where platform-specific power really matters."
+      },
+      {
+        "slug": "kotlin",
+        "name": "Kotlin",
+        "short": "Kt",
+        "description": "Native Android modules for deep platform integrations."
+      }
     ]
   },
   {
@@ -33,10 +78,30 @@
     "color": "#68d391",
     "description": "APIs and services engineered to last.",
     "technologies": [
-      { "slug": "nodejs", "name": "Node.js", "short": "Nd", "description": "Event-driven runtime — fast I/O and JavaScript end to end." },
-      { "slug": "python", "name": "Python", "short": "Py", "description": "Data pipelines, machine learning and rapid API prototyping." },
-      { "slug": "graphql", "name": "GraphQL", "short": "GQ", "description": "Query exactly the data you need — nothing more, nothing less." },
-      { "slug": "rest-apis", "name": "REST APIs", "short": "API", "description": "Standard, well-documented HTTP APIs built to scale." }
+      {
+        "slug": "nodejs",
+        "name": "Node.js",
+        "short": "Nd",
+        "description": "Event-driven runtime: fast I/O and JavaScript end to end."
+      },
+      {
+        "slug": "python",
+        "name": "Python",
+        "short": "Py",
+        "description": "Data pipelines, machine learning and rapid API prototyping."
+      },
+      {
+        "slug": "graphql",
+        "name": "GraphQL",
+        "short": "GQ",
+        "description": "Query exactly the data you need, nothing more and nothing less."
+      },
+      {
+        "slug": "rest-apis",
+        "name": "REST APIs",
+        "short": "API",
+        "description": "Standard, well-documented HTTP APIs built to scale."
+      }
     ]
   },
   {
@@ -46,9 +111,24 @@
     "color": "#f6ad55",
     "description": "Reliable storage, caching and real-time data.",
     "technologies": [
-      { "slug": "postgresql", "name": "PostgreSQL", "short": "PG", "description": "ACID-compliant relational database — complex queries, rock-solid integrity." },
-      { "slug": "mongodb", "name": "MongoDB", "short": "Mg", "description": "Flexible document store for nested and evolving data." },
-      { "slug": "redis", "name": "Redis", "short": "Rd", "description": "In-memory cache and pub/sub — response times in microseconds." }
+      {
+        "slug": "postgresql",
+        "name": "PostgreSQL",
+        "short": "PG",
+        "description": "ACID-compliant relational database: complex queries, rock-solid integrity."
+      },
+      {
+        "slug": "mongodb",
+        "name": "MongoDB",
+        "short": "Mg",
+        "description": "Flexible document store for nested and evolving data."
+      },
+      {
+        "slug": "redis",
+        "name": "Redis",
+        "short": "Rd",
+        "description": "In-memory cache and pub/sub: response times in microseconds."
+      }
     ]
   },
   {
@@ -58,10 +138,30 @@
     "color": "#4fd1c5",
     "description": "Observable infrastructure that scales on demand.",
     "technologies": [
-      { "slug": "aws", "name": "AWS", "short": "AWS", "description": "S3, Lambda, RDS and more — the backbone of most of what we deploy." },
-      { "slug": "docker", "name": "Docker", "short": "Dk", "description": "Containers that run identically from a laptop to production." },
-      { "slug": "ci-cd", "name": "CI/CD", "short": "CI", "description": "Automated pipelines that test, build and deploy on every push." },
-      { "slug": "terraform", "name": "Terraform", "short": "TF", "description": "Infrastructure as code — reproducible, auditable environments." }
+      {
+        "slug": "aws",
+        "name": "AWS",
+        "short": "AWS",
+        "description": "S3, Lambda, RDS and more: the backbone of most of what we deploy."
+      },
+      {
+        "slug": "docker",
+        "name": "Docker",
+        "short": "Dk",
+        "description": "Containers that run identically from a laptop to production."
+      },
+      {
+        "slug": "ci-cd",
+        "name": "CI/CD",
+        "short": "CI",
+        "description": "Automated pipelines that test, build and deploy on every push."
+      },
+      {
+        "slug": "terraform",
+        "name": "Terraform",
+        "short": "TF",
+        "description": "Infrastructure as code: reproducible, auditable environments."
+      }
     ]
   },
   {
@@ -71,9 +171,95 @@
     "color": "#b794f4",
     "description": "Applied AI grounded in your data and workflows.",
     "technologies": [
-      { "slug": "llms", "name": "LLMs", "short": "AI", "description": "Leading language models, integrated where reasoning adds real value." },
-      { "slug": "automation", "name": "Automation", "short": "Au", "description": "Workflows that remove manual steps and compound your team's output." },
-      { "slug": "rag", "name": "RAG", "short": "RAG", "description": "Retrieval-augmented generation — AI answers grounded in your own data." }
+      {
+        "slug": "llms",
+        "name": "LLMs",
+        "short": "AI",
+        "description": "Leading language models, integrated where reasoning adds real value."
+      },
+      {
+        "slug": "automation",
+        "name": "Automation",
+        "short": "Au",
+        "description": "Workflows that remove manual steps and compound your team's output."
+      },
+      {
+        "slug": "rag",
+        "name": "RAG",
+        "short": "RAG",
+        "description": "Retrieval-augmented generation: AI answers grounded in your own data."
+      }
+    ]
+  },
+  {
+    "key": "seo-optimization",
+    "color": "#3ce49a",
+    "description": "We help your business get noticed online by making it easier for people to find your website through search engines. From keyword research and website audits to technical SEO, content optimization, and local SEO, we focus on improving your website step by step. Our goal is to attract the right audience, build trust in your brand, and help you generate more inquiries and business opportunities over time.",
+    "name": "SEO Optimization",
+    "order": 7,
+    "technologies": [
+      {
+        "slug": "google-analytics-4",
+        "published": true,
+        "name": "Google Analytics 4",
+        "short": "GA4",
+        "description": "Traffic, behavior, engagement and conversions: what is working on the site and what isn't."
+      },
+      {
+        "slug": "google-search-console",
+        "published": true,
+        "name": "Google Search Console",
+        "short": "GSC",
+        "description": "Clicks, impressions, queries and indexing issues, straight from Google Search."
+      },
+      {
+        "slug": "google-keyword-planner",
+        "published": true,
+        "name": "Google Keyword Planner",
+        "short": "GKP",
+        "description": "Keyword ideas with search volume and competition, to plan content and SEO."
+      },
+      {
+        "slug": "google-tag-manager",
+        "name": "Google Tag Manager",
+        "short": "GTM",
+        "description": "Analytics events, conversion tracking and marketing tags in one place, with no code changes."
+      },
+      {
+        "slug": "screaming-frog-seo-spider",
+        "published": true,
+        "name": "Screaming Frog SEO Spider",
+        "short": "SF",
+        "description": "Crawls the site like a search engine: broken links, redirect chains, missing or duplicate titles."
+      },
+      {
+        "slug": "semrush",
+        "published": true,
+        "name": "Semrush",
+        "short": "SEMR",
+        "description": "Keyword research, competitor analysis, site audits and rank tracking."
+      },
+      {
+        "slug": "google-business-profile",
+        "published": true,
+        "name": "Google Business Profile",
+        "short": "GBP",
+        "description": "Business listings, reviews and local visibility on Google Search and Maps."
+      },
+      {
+        "slug": "brightlocal-localfalcon",
+        "published": true,
+        "name": "Bright Local / Local Falcon",
+        "short": "BLLF",
+        "description": "Local rankings, Google Maps visibility and competitor tracking."
+      },
+      {
+        "slug": "looker-studio",
+        "published": true,
+        "name": "Looker Studio",
+        "short": "LS",
+        "description": "Dashboards for SEO performance, traffic, rankings and campaign results."
+      }
     ]
   }
 ]

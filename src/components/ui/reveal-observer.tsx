@@ -14,6 +14,11 @@ export function RevealObserver() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // No IntersectionObserver (very old browsers): nothing may stay hidden.
+    if (!("IntersectionObserver" in window)) {
+      document.querySelectorAll(SELECTOR).forEach((el) => el.setAttribute("data-inview", ""));
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

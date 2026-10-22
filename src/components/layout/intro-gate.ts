@@ -35,6 +35,31 @@ export const INTRO_ATTR = "data-intro";
 /** sessionStorage flag: the intro has played in this tab. */
 export const INTRO_SEEN_KEY = "gg-intro";
 
+/* ── Motion gate ──────────────────────────────────────────────
+   Entrance animations (scroll reveals, the hero's word slide-up and
+   fades) start from a hidden state. Without JS that state would be
+   permanent, and crawlers that screenshot the page (Search Console's
+   URL inspection, link previewers) catch it mid-animation and show a
+   dark page. So the page is complete by default, and this script,
+   inline in <head> before first paint, opts real browsers in by setting
+   <html data-motion>; globals.css only applies the hidden start states
+   under it. Crawlers, previewers and no-JS visitors see the finished
+   page at once. Lighthouse is not excluded, so lab numbers match what
+   visitors get. */
+
+export const MOTION_ATTR = "data-motion";
+
+/** User agents that get the finished page on first paint. Case-insensitive:
+ *  Googlebot, Bingbot, DuckDuckBot, GPTBot, ClaudeBot, PerplexityBot, Applebot
+ *  and the social previewers all end their product token in "bot/" or
+ *  "bot;", plus the crawlers that don't. */
+export const CRAWLER_PATTERN = "bot[/ ;)]|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|quora link preview|pinterest|whatsapp|skypeuripreview|google-inspectiontool|googleother|mediapartners-google|adsbot";
+
+/** The inline motion gate (ES5, runs in <head> before first paint). */
+export function motionGateScript(): string {
+  return `(function(){try{if(!new RegExp(${JSON.stringify(CRAWLER_PATTERN)},"i").test(navigator.userAgent))document.documentElement.setAttribute(${JSON.stringify(MOTION_ATTR)},"")}catch(e){}})();`;
+}
+
 /** Pages that open with the intro, and the scenes each waits for (those on
  *  the first screen: a reload that restores a scrolled position skips any
  *  that are out of view). A page listed here must render <Stage />. */
@@ -67,6 +92,7 @@ export function introGateScript(): string {
   const s = JSON.stringify;
   return `(function(){try{
 var d=document,h=d.documentElement,w=window;
+if(new RegExp(${s(CRAWLER_PATTERN)},"i").test(navigator.userAgent))return;
 if(${s(Object.keys(INTRO_PAGES))}.indexOf(location.pathname)<0)return;
 if(sessionStorage.getItem(${s(INTRO_SEEN_KEY)}))return;
 if(d.visibilityState==="hidden")return;

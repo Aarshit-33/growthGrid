@@ -4,7 +4,7 @@
     "order": 1,
     "label": "Focus",
     "title": "Business-first thinking",
-    "summary": "We align technology with your business goals, crafting tailored digital solutions that address real challenges and drive meaningful growth.",
+    "summary": "We start from your business goals and build software that solves real problems and produces growth you can measure.",
     "instrument": { "name": "Decision prism", "shape": "prism" }
   },
   {
@@ -12,7 +12,7 @@
     "order": 2,
     "label": "Foundation",
     "title": "Technology built to scale",
-    "summary": "We build high-performance, scalable digital solutions using modern technologies and refined engineering.",
+    "summary": "We build fast, reliable software that holds up as your business grows, using modern, well-supported technology and careful engineering.",
     "instrument": { "name": "Load-bearing frame", "shape": "lattice" }
   },
   {
@@ -20,7 +20,7 @@
     "order": 3,
     "label": "Momentum",
     "title": "Design that drives action",
-    "summary": "We design intuitive, user-focused digital experiences that blend thoughtful design with seamless interactions to drive engagement and conversions.",
+    "summary": "We design products people find easy to use, with clear interfaces and smooth interactions that keep users engaged and help them convert.",
     "instrument": { "name": "Choice runway", "shape": "runway" }
   },
   {

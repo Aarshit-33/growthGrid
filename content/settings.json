@@ -17,20 +17,20 @@
     }
   },
   "tagline": "We build digital products that move businesses forward.",
-  "description": "growthGrid is a growth-focused digital product studio. Strategy, design and engineering in one system — websites, web apps, mobile apps and AI automation built to grow your business.",
+  "description": "growthGrid is a growth-focused digital product studio. Strategy, design and engineering in one team: websites, web apps, mobile apps and AI automation built to grow your business.",
   "url": "https://growthgrid.studio",
   "locale": "en_US",
   "contact": {
     "email": "hello@growthgrid.studio",
     "phone": "+918320481381",
     "bookingUrl": null,
-    "responseTime": "We reply to every enquiry within one business day."
+    "responseTime": "We reply to every inquiry within one business day."
   },
   "location": {
     "label": "Remote-first studio · Working worldwide",
     "city": "Ahmedabad",
     "country": "India",
-    "timezone": null
+    "timezone": "Asia/Kolkata"
   },
   "availability": {
     "status": "open",
@@ -67,7 +67,7 @@
     ]
   },
   "seo": {
-    "defaultTitle": "growthGrid — Digital Product Studio for Growing Businesses",
+    "defaultTitle": "growthGrid | Digital Product Studio for Growing Businesses",
     "titleTemplate": "%s | growthGrid",
     "description": "growthGrid builds websites, web apps, mobile apps and AI automation for growing businesses. Strategy, design and engineering in one accountable team.",
     "keywords": [
@@ -79,7 +79,9 @@
       "AI automation agency",
       "SaaS development",
       "Next.js development agency",
-      "SEO-friendly website development"
+      "SEO-friendly website development",
+      "remote software development partner",
+      "offshore software development company"
     ],
     "twitterHandle": "@growthgrid",
     "areaServed": "Worldwide",
@@ -104,7 +106,7 @@
     "backToTop": "Back to top",
     "rights": "All rights reserved.",
     "localTime": "Studio time",
-    "homeLinkLabel": "{name} — home",
+    "homeLinkLabel": "{name}: home",
     "primaryNavLabel": "Primary",
     "footerNavLabel": "Footer",
     "breadcrumbLabel": "Breadcrumb",

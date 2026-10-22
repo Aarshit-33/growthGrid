@@ -31,14 +31,14 @@
     "id": "after-launch",
     "order": 5,
     "question": "Does growthGrid provide support after launch?",
-    "answer": "Yes. We provide post-launch support, maintenance, performance monitoring, security updates, and ongoing technical assistance through tailored care plans.",
+    "answer": "Yes. We provide post-launch support, maintenance, performance monitoring, security updates, and ongoing technical help through care plans matched to your product and stack.",
     "scopes": ["home"]
   },
   {
     "id": "start-a-project",
     "order": 6,
     "question": "How can I start a project with growthGrid?",
-    "answer": "Simply fill out our contact form and get in touch with us. We’ll connect with you to understand your requirements and share a clear approach and proposal for your project.",
+    "answer": "Simply fill out our contact form and get in touch with us. We'll connect with you to understand your requirements and share a clear approach and proposal for your project.",
     "scopes": ["home"]
   },
   {
@@ -52,7 +52,7 @@
     "id": "saas-product",
     "order": 8,
     "question": "Can you build a custom SaaS product?",
-    "answer": "Yes. We design and develop scalable SaaS products with custom features, secure architecture, intuitive user experiences, and integrations tailored to your business.",
+    "answer": "Yes. We design and develop SaaS products with custom features, a secure architecture that handles growth, easy-to-use interfaces, and integrations with the tools your business already runs on.",
     "scopes": ["services"]
   },
   {
@@ -87,7 +87,7 @@
     "id": "ui-ux-design",
     "order": 13,
     "question": "Do you provide UI/UX design as part of your services?",
-    "answer": "Yes. Our UI/UX design process covers user flows, wireframes, prototypes, visual design, and design systems to create intuitive digital experiences.",
+    "answer": "Yes. Our UI/UX design process covers user flows, wireframes, prototypes, visual design, and design systems, so the finished product is clear and easy to use.",
     "scopes": ["services"]
   },
   {
@@ -108,7 +108,7 @@
     "id": "types-of-digital-products",
     "order": 16,
     "question": "What types of digital products can growthGrid build?",
-    "answer": "We build custom SaaS platforms, web applications, customer portals, dashboards, internal tools, and other scalable digital products tailored to specific business needs.",
+    "answer": "We build custom SaaS platforms, web applications, customer portals, dashboards, internal tools, and other digital products shaped around specific business needs.",
     "scopes": ["service:digital-products"]
   },
   {
@@ -122,7 +122,7 @@
     "id": "types-of-websites",
     "order": 18,
     "question": "What types of websites does growthGrid develop?",
-    "answer": "We develop custom business websites, corporate websites, e-commerce platforms, landing pages, and high-performance web experiences tailored to your goals.",
+    "answer": "We develop custom business websites, corporate websites, e-commerce platforms, landing pages, and fast, high-performance web experiences built around your goals.",
     "scopes": ["service:websites"]
   },
   {
@@ -143,7 +143,7 @@
     "id": "ai-automation",
     "order": 21,
     "question": "What AI and automation services does growthGrid provide?",
-    "answer": "We build AI-powered applications, intelligent workflows, AI assistants, LLM solutions, and automated business processes tailored to specific operational needs.",
+    "answer": "We build AI-powered applications, intelligent workflows, AI assistants, LLM solutions, and automated business processes designed for specific operational needs.",
     "scopes": ["service:ai-automation"]
   },
   {
@@ -157,7 +157,7 @@
     "id": "help-my-business",
     "order": 23,
     "question": "How can AI automation help my business?",
-    "answer": "AI automation can reduce repetitive work, streamline business processes, improve response times, and help teams make faster, more informed decisions.",
+    "answer": "AI automation can reduce repetitive work, cut manual steps out of business processes, improve response times, and help teams make faster, better-informed decisions.",
     "scopes": ["service:ai-automation"]
   },
   {
@@ -261,7 +261,7 @@
   {
     "id": "project-enquiry",
     "order": 38,
-    "question": "What information should I include in my project enquiry?",
+    "question": "What information should I include in my project inquiry?",
     "answer": "Share your goals, project requirements, expected timeline, and any existing product or technology details. The more context you provide, the better we can understand your needs.",
     "scopes": ["contact"]
   },
@@ -276,14 +276,14 @@
     "id": "what-happens-after-i-submit-the-contact-form",
     "order": 40,
     "question": "What happens after I submit the contact form?",
-    "answer": "We review your enquiry, connect with you to discuss your requirements, and then provide a clear approach, project scope, timeline, and proposal.",
+    "answer": "We review your inquiry, connect with you to discuss your requirements, and then provide a clear approach, project scope, timeline, and proposal.",
     "scopes": ["contact"]
   },
   {
     "id": "do-you-work-with-clients-remotely",
     "order": 41,
     "question": "Do you work with clients remotely?",
-    "answer": "Yes. growthGrid works with businesses remotely and can collaborate with teams across different locations and time zones.",
+    "answer": "Yes. growthGrid is a remote-first studio based in Ahmedabad, India (UTC+5:30), and works with businesses in other countries and time zones.",
     "scopes": ["contact"]
   }
 ]

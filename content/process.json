@@ -3,9 +3,9 @@
     "slug": "discover",
     "order": 1,
     "title": "Discover",
-    "summary": "We research your business, target audience, and market to understand your goals. This helps shape a clear digital product strategy, align priorities, and build a strong foundation for your project.",
+    "summary": "We research your business, target audience, and market to understand your goals. This helps shape a clear digital product strategy, align priorities, and build a strong foundation for your business.",
     "tags": ["Research", "Strategy", "Alignment"],
-    "duration": "Weeks 1–2",
+    "duration": "Weeks 1-2",
     "deliverables": ["Stakeholder interviews", "User research", "Opportunity map"]
   },
   {
@@ -14,25 +14,25 @@
     "title": "Define",
     "summary": "We shape your digital product strategy, technical architecture, and project roadmap around your business goals. With a clear scope and design direction, we turn ideas into a structured plan ready for development.",
     "tags": ["Architecture", "Roadmap", "Scope"],
-    "duration": "Weeks 2–3",
+    "duration": "Weeks 2-3",
     "deliverables": ["Product roadmap", "Technical architecture", "Fixed-scope plan"]
   },
   {
     "slug": "design",
     "order": 3,
     "title": "Design",
-    "summary": "We invent UI/UX designs that put the user in center of the design. The design uses user friendly interface that enables seamless communication with the end user",
+    "summary": "We design user-focused UI/UX with clear interfaces and easy navigation, keeping the people who will use the product at the center of every decision.",
     "tags": ["UI/UX", "Prototyping", "Systems"],
-    "duration": "Weeks 3–6",
+    "duration": "Weeks 3-6",
     "deliverables": ["User flows", "Clickable prototype", "Design system"]
   },
   {
     "slug": "build",
     "order": 4,
     "title": "Build",
-    "summary": "Utilizing cutting-edge technology and streamlined integrations, we create highly efficient and protected digital products that scale to meet your commercial needs.",
+    "summary": "We build with current, well-supported technology and clean integrations, so the product is efficient, secure, and able to handle more users and data as the business grows.",
     "tags": ["Engineering", "APIs", "Infrastructure"],
-    "duration": "Weeks 4–10",
+    "duration": "Weeks 4-10",
     "deliverables": ["Two-week sprints", "Automated tests", "Staging environment"]
   },
   {
@@ -48,7 +48,7 @@
     "slug": "grow",
     "order": 6,
     "title": "Grow",
-    "summary": "We help your digital product evolve through continuous improvement, data-driven insights, and performance optimization. By tracking user behaviour, refining features, and scaling technology, we support long-term business growth.",
+    "summary": "We help your digital product evolve through continuous improvement, data-driven insights, and performance optimization. By tracking user behavior, refining features, and scaling technology, we support long-term business growth.",
     "tags": ["Analytics", "Iteration", "Scale"],
     "duration": "Ongoing",
     "deliverables": ["Analytics reviews", "Experiment roadmap", "Performance tuning"]

@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { motionGateScript } from "@/components/layout/intro-gate";
 import { brandAssetUrl, resolveBrand } from "@/lib/brand";
 import { getSettings } from "@/lib/data";
 import type { Brand, Settings } from "@/lib/schemas";
 import { fontVariables } from "./fonts";
 import "./globals.css";
+
+const MOTION_GATE = motionGateScript();
 
 /** Icon links: the built-in .ico + SVG + touch icon, or PNGs rendered from the Branding icon. All served by /brand/[asset]. */
 function brandIcons(brand: Brand): Metadata["icons"] {
@@ -102,6 +105,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     // sets data-intro / data-gfx here before React hydrates. One level deep only.
     <html lang={settings.locale.replace("_", "-")} className={fontVariables} suppressHydrationWarning>
       <head>
+        {/* Motion gate: opts real browsers into entrance animations (components/layout/intro-gate.ts).
+            First in <head>, so it has run before anything paints. */}
+        <script dangerouslySetInnerHTML={{ __html: MOTION_GATE }} />
         {/* Google Tag Manager */}
         <script
           dangerouslySetInnerHTML={{

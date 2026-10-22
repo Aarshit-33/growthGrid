@@ -2,7 +2,7 @@
   "key": "contact",
   "seo": {
     "title": "Contact growthGrid | Start Your Software Project",
-    "description": "Contact growthGrid to discuss your software, AI, SaaS or digital product idea and explore how we can help bring your project to life.",
+    "description": "Tell growthGrid what you're building. We read every inquiry personally and reply within one business day with a clear next step, wherever you're based.",
     "keywords": [
       "hire software development team",
       "software development consultation",
@@ -16,7 +16,7 @@
   },
   "hero": {
     "eyebrow": "Start a project",
-    "headline": "Let's build something *meaningful*",
+    "headline": "Let's build something *that lasts*",
     "lede": "Every great project starts with a conversation. Tell us what you're planning, what you're solving, or where you want to go. We'll help you find the right way forward."
   },
   "form": {
@@ -31,13 +31,13 @@
     "timelineOptions": ["ASAP", "In a few months", "Just exploring"],
     "messageLabel": "Project details",
     "messagePlaceholder": "What are you building, who is it for, and what would success look like?",
-    "submitLabel": "Send enquiry",
-    "submittingLabel": "Sending…",
-    "successTitle": "Thanks — we've got it.",
+    "submitLabel": "Send inquiry",
+    "submittingLabel": "Sending...",
+    "successTitle": "Thanks, we've got it.",
     "successMessage": "A senior member of the team will reply within one business day. Keep an eye on your inbox (and your spam folder, just in case).",
     "errorMessage": "Something went wrong sending your message. Please try again, or email us directly.",
-    "privacyNote": "We only use your details to reply to this enquiry. See our [privacy policy](/privacy).",
-    "heading": "Project enquiry",
+    "privacyNote": "We only use your details to reply to this inquiry. See our [privacy policy](/privacy).",
+    "heading": "Project inquiry",
     "optionalLabel": "Optional",
     "honeypotLabel": "Leave this field empty",
     "resetLabel": "Send another message",
@@ -47,7 +47,7 @@
       "nameMax": "That name is a little long.",
       "email": "Please enter a valid email address.",
       "companyMax": "Please shorten the company name.",
-      "messageMin": "Tell us a little more — at least 20 characters.",
+      "messageMin": "Tell us a little more, at least 20 characters.",
       "messageMax": "Please keep it under 5,000 characters.",
       "invalid": "Please check this field.",
       "summary": "Please check the highlighted fields and try again.",
@@ -65,7 +65,7 @@
     "heading": "What happens next",
     "items": [
       {
-        "title": "We Review Your Enquiry",
+        "title": "We review your inquiry",
         "description": "We understand your goals and respond within one business day."
       },
       {
@@ -74,7 +74,7 @@
       },
       {
         "title": "A clear proposal",
-        "description": "You get a scoped plan with milestones, team and a fixed estimate — usually within a week."
+        "description": "You get a scoped plan with milestones, team and a fixed estimate, usually within a week."
       }
     ]
   },
@@ -85,10 +85,10 @@
   "emails": {
     "alert": {
       "senderName": "{site} website",
-      "subject": "New enquiry from {name}",
-      "subjectWithCompany": "New enquiry from {name} ({company})",
-      "badge": "New enquiry",
-      "heading": "New enquiry on {site}",
+      "subject": "New inquiry from {name}",
+      "subjectWithCompany": "New inquiry from {name} ({company})",
+      "badge": "New inquiry",
+      "heading": "New inquiry on {site}",
       "nameLabel": "Name",
       "companyLabel": "Company",
       "emailLabel": "Email",
@@ -97,21 +97,27 @@
       "pageLabel": "Page",
       "messageLabel": "Message",
       "replyLabel": "Reply to {firstName}",
-      "replySubject": "Re: your enquiry to {site}",
+      "replySubject": "Re: your inquiry to {site}",
       "leadsLabel": "Studio › Leads",
       "openLeadsLabel": "Open Studio › Leads",
       "footer": "Sent by the contact form on {host}. Reply to this email to answer {firstName} directly.",
       "notSavedPrefix": "[Not saved]",
       "notSavedTitle": "Not saved.",
-      "notSaved": "This enquiry couldn't be saved to Studio › Leads, so this email is the only copy. Check MONGODB_URI and the server logs."
+      "notSaved": "This inquiry couldn't be saved to Studio › Leads, so this email is the only copy. Check MONGODB_URI and the server logs."
     },
     "confirmation": {
-      "subject": "Thanks for contacting {site}",
+      "subject": "We've received your inquiry, {firstName}",
       "greeting": "Hi {firstName},",
-      "body": "Thanks for reaching out to {site}. We've received your message and will get back to you soon.",
-      "signOff": "Best,",
+      "body": "Thanks for reaching out to {site}. Your inquiry has reached the team, and a senior member will read it personally.",
+      "signOff": "Speak soon,",
       "heading": "Thanks for reaching out, {firstName}.",
-      "message": "We've received your message and will get back to you soon."
+      "message": "Your inquiry has reached the team. A senior member of {site} will read it personally and come back to you with clear next steps.",
+      "badge": "Inquiry received",
+      "heroAlt": "Your message has reached {site}",
+      "summaryLabel": "Your inquiry",
+      "ctaLabel": "Explore our work",
+      "replyNote": "Need to add anything, a link, a deck, a deadline? Just reply to this email and it lands straight with us.",
+      "footer": "You're receiving this email because you contacted {site} through {host}. We only use your details to reply to your inquiry."
     }
   }
 }

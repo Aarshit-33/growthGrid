@@ -20,7 +20,7 @@
     "body": [
       {
         "type": "paragraph",
-        "text": "Most AI projects we're asked to rescue began with a model and went looking for a problem. A team gets excited about a new release, wires it into a chat window, and six weeks later nobody uses it — because it doesn't fit how the work actually gets done."
+        "text": "Most AI projects we're asked to rescue began with a model and went looking for a problem. A team gets excited about a new release, wires it into a chat window, and six weeks later nobody uses it, because it doesn't fit how the work actually gets done."
       },
       {
         "type": "paragraph",
@@ -35,15 +35,15 @@
         "type": "list",
         "style": "bullet",
         "items": [
-          "**The job.** One sentence a person on the team would recognize — \"answer order-status questions\", not \"improve customer experience\".",
+          "**The job.** One sentence a person on the team would recognize: \"answer order-status questions\", not \"improve customer experience\".",
           "**The inputs.** The documents, records and history a person uses to do the job well today.",
           "**The output.** What \"done\" looks like: a routed ticket, a drafted reply, an extracted field.",
-          "**The handover point.** Where a person reviews, corrects or takes over — and how they'll know to."
+          "**The handover point.** Where a person reviews, corrects or takes over, and how they'll know to."
         ]
       },
       {
         "type": "paragraph",
-        "text": "If you can't fill in all four, the problem isn't ready for AI yet. That's a useful outcome too — it usually means the process needs fixing first."
+        "text": "If you can't fill in all four, the problem isn't ready for AI yet. That's a useful outcome too. It usually means the process needs fixing first."
       },
       { "type": "heading", "level": 2, "text": "Build the evaluation set first" },
       {
@@ -52,18 +52,18 @@
       },
       {
         "type": "paragraph",
-        "text": "With an evaluation set, choosing a model becomes a measurement instead of a debate. You can compare providers, prompts and retrieval strategies on the same data — and see immediately when a change makes things worse."
+        "text": "With an evaluation set, choosing a model becomes a measurement instead of a debate. You can compare providers, prompts and retrieval strategies on the same data, and see immediately when a change makes things worse."
       },
       {
         "type": "callout",
         "tone": "info",
         "title": "What we measure",
-        "text": "Accuracy on the evaluation set, time saved per task and **correction effort** — how long a person spends fixing the output. A model that is 90% accurate but slow to correct can cost more than doing the job by hand."
+        "text": "Accuracy on the evaluation set, time saved per task and **correction effort**, meaning how long a person spends fixing the output. A model that is 90% accurate but slow to correct can cost more than doing the job by hand."
       },
       { "type": "heading", "level": 2, "text": "Keep a person in control" },
       {
         "type": "paragraph",
-        "text": "Confidence thresholds decide what happens automatically and what goes to a person. High-confidence, low-risk tasks — like sending a tracking link — can run on their own. Anything involving money, policy exceptions or an unhappy customer is routed to the team, with the context already attached."
+        "text": "Confidence thresholds decide what happens automatically and what goes to a person. High-confidence, low-risk tasks, like sending a tracking link, can run on their own. Anything involving money, policy exceptions or an unhappy customer is routed to the team, with the context already attached."
       },
       {
         "type": "quote",
@@ -73,7 +73,7 @@
       { "type": "heading", "level": 2, "text": "Start narrow, then widen" },
       {
         "type": "paragraph",
-        "text": "In our [support triage pipeline](/work/intelligent-support-pipeline) project, we didn't try to automate support. We automated three intents that covered most of the volume, measured the results for two weeks, and only then widened the scope. First response time dropped twelvefold — and not a single ticket was lost."
+        "text": "In our [support triage pipeline](/work/intelligent-support-pipeline) project, we didn't try to automate support. We automated three intents that covered most of the volume, measured the results for two weeks, and only then widened the scope. First response time dropped twelvefold, and not a single ticket was lost."
       },
       {
         "type": "list",
@@ -81,7 +81,7 @@
         "items": [
           "Pick one narrow, high-volume task.",
           "Collect real examples and define what a good answer looks like.",
-          "Prototype against the evaluation set — not a demo script.",
+          "Prototype against the evaluation set, not a demo script.",
           "Ship with human review, then track time saved and correction effort.",
           "Widen the scope only when the numbers justify it."
         ]
@@ -93,7 +93,7 @@
     ],
     "seo": {
       "title": "Workflow-First AI: Start With the Job",
-      "description": "Why successful AI projects start with a specific workflow and an evaluation set — and how to measure time saved and correction effort before scaling up."
+      "description": "Why successful AI projects start with a specific workflow and an evaluation set, and how to measure time saved and correction effort before scaling up."
     }
   },
   {
@@ -117,7 +117,7 @@
     "body": [
       {
         "type": "paragraph",
-        "text": "Every system we inherit tells the same story. It started simple, grew one feature at a time, and one day a small change to pricing meant touching checkout, invoicing, the admin panel and three reports. Nobody designed it that way. It just happened — because nobody decided what was allowed to change independently."
+        "text": "Every system we inherit tells the same story. It started simple, grew one feature at a time, and one day a small change to pricing meant touching checkout, invoicing, the admin panel and three reports. Nobody designed it that way. It just happened, because nobody decided what was allowed to change independently."
       },
       {
         "type": "paragraph",
@@ -144,13 +144,13 @@
       { "type": "heading", "level": 2, "text": "Add the simplest seam that works" },
       {
         "type": "paragraph",
-        "text": "Once you know what's volatile, resist the urge to split everything into services. Most products don't need microservices — they need clear modules with narrow interfaces. A seam can be as simple as a single function the rest of the codebase must go through."
+        "text": "Once you know what's volatile, resist the urge to split everything into services. Most products don't need microservices. They need clear modules with narrow interfaces. A seam can be as simple as a single function the rest of the codebase must go through."
       },
       {
         "type": "code",
         "language": "typescript",
-        "code": "// pricing/index.ts — the only door into pricing logic\nexport function quote(input: QuoteInput): Quote {\n  const rules = loadActiveRules(input.region);\n  return applyRules(rules, input);\n}",
-        "caption": "A narrow interface: checkout, invoicing and reporting all call quote() — none of them know how prices are calculated."
+        "code": "// pricing/index.ts: the only door into pricing logic\nexport function quote(input: QuoteInput): Quote {\n  const rules = loadActiveRules(input.region);\n  return applyRules(rules, input);\n}",
+        "caption": "A narrow interface: checkout, invoicing and reporting all call quote(), and none of them know how prices are calculated."
       },
       {
         "type": "paragraph",
@@ -165,7 +165,7 @@
       { "type": "heading", "level": 2, "text": "Isolate the most volatile workflow first" },
       {
         "type": "paragraph",
-        "text": "You don't need to re-architect a product in one go. Pick the single workflow that changes most often — and causes the most regressions — and put a clean boundary around it. Measure how long changes take before and after. That number is what convinces a team to keep going."
+        "text": "You don't need to re-architect a product in one go. Pick the single workflow that changes most often and causes the most regressions, and put a clean boundary around it. Measure how long changes take before and after. That number is what convinces a team to keep going."
       },
       {
         "type": "quote",
@@ -175,7 +175,7 @@
       { "type": "heading", "level": 2, "text": "What this looks like in practice" },
       {
         "type": "paragraph",
-        "text": "On a recent [legacy ERP modernization](/work/legacy-erp-modernization), we didn't start with a rewrite. We wrapped the highest-risk flows in characterization tests, put an API layer in front of the legacy database and replaced modules one at a time. The in-house team went from quarterly releases to weekly ones — without a single minute of downtime."
+        "text": "On a recent [legacy ERP modernization](/work/legacy-erp-modernization), we didn't start with a rewrite. We wrapped the highest-risk flows in characterization tests, put an API layer in front of the legacy database and replaced modules one at a time. The in-house team went from quarterly releases to weekly ones, without a single minute of downtime."
       },
       {
         "type": "list",
@@ -218,7 +218,7 @@
     "body": [
       {
         "type": "paragraph",
-        "text": "Design reviews often focus on what a screen looks like: spacing, color, type, the hover state on a button. Those details matter — but they rarely explain why a product succeeds or fails."
+        "text": "Design reviews often focus on what a screen looks like: spacing, color, type, the hover state on a button. Those details matter, but they rarely explain why a product succeeds or fails."
       },
       {
         "type": "paragraph",
@@ -227,7 +227,7 @@
       { "type": "heading", "level": 2, "text": "Trace one task from start to finish" },
       {
         "type": "paragraph",
-        "text": "Pick the single task that creates the most value for the business — booking a demo, completing a first order, inviting a teammate — and walk through it as a new user would. Record every screen, field, decision and wait."
+        "text": "Pick the single task that creates the most value for the business (booking a demo, completing a first order, inviting a teammate) and walk through it as a new user would. Record every screen, field, decision and wait."
       },
       {
         "type": "list",
@@ -235,7 +235,7 @@
         "items": [
           "**Steps:** how many distinct actions does the task take?",
           "**Decisions:** where does the user have to stop and think?",
-          "**Waits:** where does the product make them wait — for a page, an email, an approval?",
+          "**Waits:** where does the product make them wait? For a page, an email, an approval?",
           "**Dead ends:** where can they get stuck with no obvious way forward?"
         ]
       },
@@ -246,32 +246,32 @@
       { "type": "heading", "level": 2, "text": "Every extra step should earn its place" },
       {
         "type": "paragraph",
-        "text": "For each step, ask a blunt question: what would happen if we removed it? Sometimes the answer is \"we'd lose information we genuinely need\". More often it's \"nothing — we just always did it that way\"."
+        "text": "For each step, ask a blunt question: what would happen if we removed it? Sometimes the answer is \"we'd lose information we genuinely need\". More often it's \"nothing, we just always did it that way\"."
       },
       {
         "type": "callout",
         "tone": "tip",
         "title": "A useful exercise",
-        "text": "Count the fields in your signup or checkout flow, then justify each one out loud to a colleague. Fields that survive the conversation stay. The rest can be collected later — or never."
+        "text": "Count the fields in your signup or checkout flow, then justify each one out loud to a colleague. Fields that survive the conversation stay. The rest can be collected later, or never."
       },
       { "type": "heading", "level": 2, "text": "Feedback is part of the path" },
       {
         "type": "paragraph",
-        "text": "Good products tell people what just happened and what to do next. Loading states, confirmations, inline validation and empty states aren't decoration — they're the difference between confidence and confusion."
+        "text": "Good products tell people what just happened and what to do next. Loading states, confirmations, inline validation and empty states aren't decoration. They're the difference between confidence and confusion."
       },
       {
         "type": "quote",
-        "text": "People don't read interfaces. They scan for the next useful action — and leave when they can't find it.",
+        "text": "People don't read interfaces. They scan for the next useful action, and leave when they can't find it.",
         "cite": "growthGrid design notes"
       },
       { "type": "heading", "level": 2, "text": "Measure momentum, not just conversion" },
       {
         "type": "paragraph",
-        "text": "Conversion rate tells you how many people finished. It doesn't tell you where the rest gave up. Instrument each step of the path and look for the biggest drop — that's where design effort pays off first."
+        "text": "Conversion rate tells you how many people finished. It doesn't tell you where the rest gave up. Instrument each step of the path and look for the biggest drop. That's where design effort pays off first."
       },
       {
         "type": "paragraph",
-        "text": "When we relaunched a [B2B SaaS website](/work/b2b-saas-website-relaunch), the biggest win wasn't the new visual design. It was shortening the path from landing page to demo request — which helped more than double demo requests within six months."
+        "text": "When we relaunched a [B2B SaaS website](/work/b2b-saas-website-relaunch), the biggest win wasn't the new visual design. It was shortening the path from landing page to demo request, which helped more than double demo requests within six months."
       }
     ],
     "seo": {
@@ -299,18 +299,18 @@
     "body": [
       {
         "type": "paragraph",
-        "text": "SEO is usually treated as a marketing task that happens after launch: write some meta descriptions, submit a sitemap, wait. By then, the decisions that matter most have already been made — by engineers who were never asked to think about search."
+        "text": "SEO is usually treated as a marketing task that happens after launch: write some meta descriptions, submit a sitemap, wait. By then, the decisions that matter most have already been made, by engineers who were never asked to think about search."
       },
       { "type": "heading", "level": 2, "text": "Rendering decides what search engines see" },
       {
         "type": "paragraph",
-        "text": "If your content only appears after JavaScript runs in the browser, search engines have to work harder to see it — and some never do. Static generation or server rendering puts complete HTML in front of crawlers on the very first request."
+        "text": "If your content only appears after JavaScript runs in the browser, search engines have to work harder to see it, and some never do. Static generation or server rendering puts complete HTML in front of crawlers on the very first request."
       },
       {
         "type": "list",
         "style": "bullet",
         "items": [
-          "**Static generation** for marketing pages, case studies and articles — fast, cacheable and fully crawlable.",
+          "**Static generation** for marketing pages, case studies and articles: fast, cacheable and fully crawlable.",
           "**Server rendering** for pages that must be fresh on every request.",
           "**Client rendering** only for interactive, logged-in experiences that don't need to rank."
         ]
@@ -326,7 +326,7 @@
         "title": "Before you migrate",
         "text": "Map every existing URL to its new home before launch day. A missing redirect map is the most common reason a redesigned site loses traffic."
       },
-      { "type": "heading", "level": 2, "text": "Performance ranks — and converts" },
+      { "type": "heading", "level": 2, "text": "Performance ranks, and it converts" },
       {
         "type": "paragraph",
         "text": "Core Web Vitals measure how fast a page loads, how quickly it responds and how stable it is while loading. They influence rankings, but they influence revenue even more: every extra second of load time costs conversions."
@@ -344,7 +344,7 @@
       { "type": "heading", "level": 2, "text": "Structured data tells search engines what things are" },
       {
         "type": "paragraph",
-        "text": "Schema markup describes your content in a language search engines understand: this page is an article, this is a service, this is a list of frequently asked questions. It can unlock rich results and helps your content surface in AI-generated answers."
+        "text": "Schema markup describes your content in a language search engines understand: this page is an article, this is a service, this is a list of frequently asked questions. It can earn rich results and helps your content show up in AI-generated answers."
       },
       {
         "type": "code",
@@ -359,7 +359,7 @@
     ],
     "seo": {
       "title": "Technical SEO Is an Architecture Decision",
-      "description": "Why rendering strategy, URL structure, Core Web Vitals and structured data decide how well a website can rank — and why SEO must be planned before the build."
+      "description": "Why rendering strategy, URL structure, Core Web Vitals and structured data decide how well a website can rank, and why SEO has to be planned before the build."
     }
   },
   {
@@ -452,7 +452,7 @@
       },
       {
         "type": "paragraph",
-        "text": "None of this needs a frontier model. Mistral 7B, an open-weight model, writes perfectly good answers when retrieval does its job — and it can run on infrastructure you control, which matters more than any benchmark when the documents are contracts or HR files."
+        "text": "None of this needs a frontier model. Mistral 7B, an open-weight model, writes perfectly good answers when retrieval does its job, and it can run on infrastructure you control, which matters more than any benchmark when the documents are contracts or HR files."
       }
     ],
     "seo": {
@@ -488,7 +488,7 @@
       { "type": "heading", "level": 2, "text": "Every change is an event" },
       {
         "type": "paragraph",
-        "text": "Instead of letting each feature detect changes its own way, every write — a move, an edit, a comment, a new assignee — produces one event: who, what, when, and the values before and after. The event is saved in the same transaction as the change itself."
+        "text": "Instead of letting each feature detect changes its own way, every write (a move, an edit, a comment, a new assignee) produces one event: who, what, when, and the values before and after. The event is saved in the same transaction as the change itself."
       },
       {
         "type": "code",
@@ -510,7 +510,7 @@
         "type": "callout",
         "tone": "warning",
         "title": "The classic bug",
-        "text": "Publish before the commit and a failed write still moves the card on everyone's screen. A refresh moves it back — and people quietly stop trusting the board."
+        "text": "Publish before the commit and a failed write still moves the card on everyone's screen. A refresh moves it back, and people quietly stop trusting the board."
       },
       { "type": "heading", "level": 2, "text": "When two people move the same card" },
       {
@@ -520,7 +520,7 @@
       { "type": "heading", "level": 2, "text": "Notifications are just another subscriber" },
       {
         "type": "paragraph",
-        "text": "Watchers subscribe to a ticket. When an event lands, the notifier checks who's watching and skips the person who made the change — nobody needs to hear about their own edit. Because notifications, history and the live board all read the same event, they can't disagree."
+        "text": "Watchers subscribe to a ticket. When an event lands, the notifier checks who's watching and skips the person who made the change, since nobody needs to hear about their own edit. Because notifications, history and the live board all read the same event, they can't disagree."
       },
       {
         "type": "list",
@@ -566,7 +566,7 @@
     "body": [
       {
         "type": "paragraph",
-        "text": "Most PHP apps that need modernizing aren't broken. They work, people rely on them every day — and that's exactly what makes a rewrite so risky. For months the business gets nothing new while a second system tries to catch up with the first."
+        "text": "Most PHP apps that need modernizing aren't broken. They work, people rely on them every day, and that's exactly what makes a rewrite so risky. For months the business gets nothing new while a second system tries to catch up with the first."
       },
       {
         "type": "paragraph",
@@ -632,7 +632,7 @@
       },
       {
         "type": "paragraph",
-        "text": "When the last PHP page stops receiving traffic, there's no dramatic switch-off. The old app simply goes quiet — which is exactly how a modernization should end."
+        "text": "When the last PHP page stops receiving traffic, there's no dramatic switch-off. The old app simply goes quiet, which is exactly how a modernization should end."
       }
     ],
     "seo": {

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import settings from "./content/settings.json";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -15,6 +16,19 @@ const securityHeaders = [
    fires when a proxy/CDN reports the original request was http. */
 const isProd = process.env.NODE_ENV === "production";
 const hsts = { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" };
+
+/* One hostname. The public URL (NEXT_PUBLIC_SITE_URL, else `url` in
+   content/settings.json, the same order the app resolves it) decides whether
+   the site lives on the apex or on www; the other one 308s to it. Without
+   this both hosts answered 200 with identical pages, so Google saw every URL
+   twice and had to pick a canonical by itself. Production only: previews on
+   *.vercel.app and the ngrok tunnel aren't on either hostname and are left alone. */
+function canonicalHost(): string | null {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim() || settings.url;
+  return raw && URL.canParse(raw) ? new URL(raw).host : null;
+}
+const host = canonicalHost();
+const otherHost = host ? (host.startsWith("www.") ? host.slice(4) : `www.${host}`) : null;
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -58,6 +72,17 @@ const nextConfig: NextConfig = {
   async redirects() {
     if (!isProd) return [];
     return [
+      // Non-canonical hostname → canonical, straight to https (one hop, never a chain).
+      ...(host && otherHost
+        ? [
+            {
+              source: "/:path*",
+              has: [{ type: "host" as const, value: otherHost.replaceAll(".", "\\.") }],
+              destination: `https://${host}/:path*`,
+              permanent: true,
+            },
+          ]
+        : []),
       {
         source: "/:path*",
         has: [

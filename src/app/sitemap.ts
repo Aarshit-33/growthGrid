@@ -50,7 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // The services index lists every service, so it changes when any of them does.
   const latestService = newest([saved.pages.services, ...services.map((s) => saved.services[s.slug])]);
 
-  return [
+  const entries: Entry[] = [
     ...entry("/", home.seo, { changeFrequency: "weekly", priority: 1, lastModified: newest([latestProject, latestInsight]) }),
     ...entry("/services", servicesPage.seo, { changeFrequency: "monthly", priority: 0.9, lastModified: latestService }),
     ...services.flatMap((service) =>
@@ -85,17 +85,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Business cards: one switch (the cards page's noIndex) covers the list and every card.
     ...entry("/cards", cards.seo, { changeFrequency: "monthly", priority: 0.3 }),
     ...cardPeople.flatMap((person) => entry(cardPath(person.slug), cards.seo, { changeFrequency: "monthly", priority: 0.3 })),
-
-    // ── Manually added entries ──────────────────────────────────
-    // SEO service page (not yet in services.json)
-    { url: url("/services/seo"), changeFrequency: "monthly", priority: 0.8 },
-    // SEO optimization case studies (not yet in projects.json on main)
-    { url: url("/work/ecommerce-llm-seo-growth"), changeFrequency: "monthly", priority: 0.7 },
-    { url: url("/work/local-seo-visibility-growth"), changeFrequency: "monthly", priority: 0.7 },
-    { url: url("/work/b2b-aeo-optimization"), changeFrequency: "monthly", priority: 0.7 },
-    // Business cards for specific team members (bypasses cards page noIndex)
-    { url: url(cardPath("arshit-jolapara")), changeFrequency: "monthly", priority: 0.3 },
-    { url: url(cardPath("rana-rajdeep-sinh")), changeFrequency: "monthly", priority: 0.3 },
-    { url: url(cardPath("anjali-bokhiriya")), changeFrequency: "monthly", priority: 0.3 },
   ];
+
+  /* Every entry above comes from published content, so a URL appears here
+     only when the page it names exists. A hand-written list would drift:
+     the one added in October listed the SEO case studies and three cards a
+     second time, and `/services/seo`, which doesn't exist (the slug is
+     `seo-optimization`), so the sitemap sent Google a 404. Dedupe as a
+     last guard against a slug ever being produced twice. */
+  const seen = new Set<string>();
+  return entries.filter((e) => (seen.has(e.url) ? false : (seen.add(e.url), true)));
 }
